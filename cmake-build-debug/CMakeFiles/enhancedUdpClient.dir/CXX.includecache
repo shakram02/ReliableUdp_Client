@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.cpp
+SocketClient.h
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
+
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
+stdio.h
+-
+sys/socket.h
+-
+netdb.h
+-
+memory.h
+-
+arpa/inet.h
+-
+errno.h
+-
+cstdlib
+-
+
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp
+stdio.h
+-
+sys/socket.h
+-
+netdb.h
+-
+memory.h
+-
+arpa/inet.h
+-
+errno.h
+-
+cstdlib
+-
+SocketClient.h
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
+
