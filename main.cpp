@@ -1,10 +1,3 @@
-#include<stdio.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <memory.h>
-#include <arpa/inet.h>
-#include <errno.h>
-#include <cstdlib>
 #include "SocketClient.h"
 
 #define PORT_NUM "4950"
@@ -13,6 +6,10 @@
 
 int main()
 {
-    SocketClient sock(SERVER_IP_ADDR, PORT_NUM);
+    SocketClient sock(SERVER_IP_ADDR, 4950);
+    const unsigned char *d = (unsigned char *) "asdas";
+    sock.SendPacket(d);
+
+    return 0;
 }
 
