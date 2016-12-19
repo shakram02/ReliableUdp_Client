@@ -123,6 +123,33 @@ enhancedUdpClient/fast:
 	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/build
 .PHONY : enhancedUdpClient/fast
 
+FileWriter.o: FileWriter.cpp.o
+
+.PHONY : FileWriter.o
+
+# target to build an object file
+FileWriter.cpp.o:
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o
+.PHONY : FileWriter.cpp.o
+
+FileWriter.i: FileWriter.cpp.i
+
+.PHONY : FileWriter.i
+
+# target to preprocess a source file
+FileWriter.cpp.i:
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.i
+.PHONY : FileWriter.cpp.i
+
+FileWriter.s: FileWriter.cpp.s
+
+.PHONY : FileWriter.s
+
+# target to generate assembly for a file
+FileWriter.cpp.s:
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.s
+.PHONY : FileWriter.cpp.s
+
 SocketClient.o: SocketClient.cpp.o
 
 .PHONY : SocketClient.o
@@ -149,6 +176,33 @@ SocketClient.s: SocketClient.cpp.s
 SocketClient.cpp.s:
 	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.s
 .PHONY : SocketClient.cpp.s
+
+home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.o: home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o
+
+.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.o
+
+# target to build an object file
+home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o:
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o
+.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o
+
+home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.i: home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i
+
+.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.i
+
+# target to preprocess a source file
+home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i:
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i
+.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i
+
+home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.s: home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s
+
+.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.s
+
+# target to generate assembly for a file
+home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s:
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s
+.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s
 
 main.o: main.cpp.o
 
@@ -186,9 +240,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... enhancedUdpClient"
+	@echo "... FileWriter.o"
+	@echo "... FileWriter.i"
+	@echo "... FileWriter.s"
 	@echo "... SocketClient.o"
 	@echo "... SocketClient.i"
 	@echo "... SocketClient.s"
+	@echo "... home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.o"
+	@echo "... home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.i"
+	@echo "... home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

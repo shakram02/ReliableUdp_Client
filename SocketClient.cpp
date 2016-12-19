@@ -4,56 +4,54 @@
 
 #include "SocketClient.h"
 
+
 /**
  * Creates a new client socket that connects to the specified server address and port
  * @param serverAddr Server Address
  * @param serverPort Port of the server
  */
-SocketClient::SocketClient(char *serverAddr, int serverPort)
+SocketClient::SocketClient(char *serverAddr, unsigned short serverPort)
 {
-    struct addrinfo hints;
-    struct addrinfo *serverinfo;
-    memset(&hints, 0, sizeof(hints));
-    hints.ai_socktype = SOCK_DGRAM; // UDP socket
-    hints.ai_family = AF_INET;    // IPv4 Only
-    hints.ai_flags = AI_PASSIVE;
 
+    int s, i, slen = sizeof(endpoint);
+    memset(&endpoint, 0, sizeof(endpoint));
 
-    struct addrinfo *res;
+    endpoint.sin_family = AF_INET;
+    endpoint.sin_port = htons(serverPort);
 
-    int err_status;
-
-    // Constructs the sockaddr_in values and save me lots of time
-    char *tempString = ToString(serverPort);
-    if ((err_status = getaddrinfo(serverAddr, tempString, &hints, &serverinfo) != 0))
+    // Fill the sin_addr using pton
+    if (inet_pton(AF_INET, serverAddr, &endpoint.sin_addr) == -1)
     {
-        printf("getaddrinfo:%s", gai_strerror(err_status));
+        log_error("Ip to network conversion");
+    }
+    if ((this->socketFd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1)
+    {
+        log_error("socket creation");
     }
 
-    for (res = serverinfo; res != NULL; res = res->ai_next)
-    {
-        if ((socketFileDescriptor = socket(res->ai_family, res->ai_socktype, res->ai_protocol)) == -1)
-        {
-            log_error("socket");
-            continue;
-        }
-        break;
-    }
 
-    this->serverAddressInfo = CopyAddressInfo(res);
-    freeaddrinfo(serverinfo);
+    timeval timeout;
+    memset(&timeout, 0, sizeof(timeout));
+    timeout.tv_sec = 3;
 
-    if ((socketFileDescriptor = socket(serverAddressInfo->ai_family, serverAddressInfo->ai_socktype,
-            serverAddressInfo->ai_protocol)) == -1)
+    if (!setsockopt(this->socketFd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeval)))
     {
-        log_error("socket");
-        exit(1);
+        log_error("set receive timeout");
     }
+    if (!setsockopt(this->socketFd, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(timeval)))
+    {
+        log_error("set send timeout");
+    }
+    isInitialized = true;
 }
 
 SocketClient::~SocketClient()
 {
-    close(this->socketFileDescriptor);
+    if (!isInitialized)
+    {
+        return;
+    }
+    close(this->socketFd);
 }
 
 /**
@@ -63,67 +61,60 @@ SocketClient::~SocketClient()
  */
 long int SocketClient::SendPacket(const unsigned char *bytes)
 {
+    if (!isInitialized)
+    {
+        fprintf(stderr, "An error occurred during initialization, can't call function SendPacket");
+        return -1;
+    }
+
     // TODO create a max payload and chunkize the incoming byte array if necessary
 
     long int num_bytes;
-    if ((num_bytes = sendto(socketFileDescriptor, bytes, sizeof(bytes), 0, serverAddressInfo->ai_addr,
-            serverAddressInfo->ai_addrlen)) == -1)
+    if ((num_bytes = sendto(socketFd, bytes, sizeof(bytes), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1)
     {
         log_error("send to server");
         exit(1);
     }
     else
     {
-        printf("Client:Sent %ld bytes to server", num_bytes);
+        printf("Client:Sent %ld bytes to UDP socket\n", num_bytes);
     }
     return num_bytes;
 }
 
-
-void log_error(const char *func_name)
+long int SocketClient::ReceivePacket(unsigned char buff[])
 {
-    printf("%s:%s\n", func_name, strerror(errno));
-}
-
-
-char *ToString(int num)
-{
-    // Get the exact number of digits in num
-    int digits, temp = num;
-    do
+    if (!isInitialized)
     {
-        digits++;
-        temp /= 10;
-    } while ((temp % 10) > 0);
+        fprintf(stderr, "An error occurred during initialization, can't call function ReceivePacket");
+        exit(-1);
+    }
+    const int buffLen = 512;
+    char buf[buffLen];
+    // TODO receive with timeout
+    long int num_bytes;
+    sockaddr remoteEP;
+    socklen_t remoteEpLength;
 
-    char *stringEquivalent = (char *) malloc(sizeof(char) * digits);
-    sprintf(stringEquivalent, "%d", num);
-    return stringEquivalent;
-}
+    num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0, &remoteEP, &remoteEpLength);
+    // TODO Create a logger class
 
-
-addrinfo *CopyAddressInfo(addrinfo *src)
-{
-    addrinfo *cpy = (addrinfo *) malloc(sizeof(addrinfo));
-    memset(cpy, 0, sizeof(cpy));
-
-    cpy->ai_addr = (sockaddr *) malloc(sizeof(src->ai_addr));
-    cpy->ai_canonname = (char *) malloc(sizeof(src->ai_canonname));
-
-    cpy->ai_addrlen = src->ai_addrlen;
-    cpy->ai_family = src->ai_family;
-    cpy->ai_flags = src->ai_flags;
-    cpy->ai_protocol = src->ai_protocol;
-    cpy->ai_socktype = src->ai_socktype;
-
-    if (src->ai_addr != NULL)
+    if (num_bytes == 0)
     {
-        memcpy(cpy->ai_addr, src->ai_addr, sizeof(src->ai_addr));
+        // TODO client closed connection
+
+        return 0;
+    }
+    else if (num_bytes == -1)
+    {
+        // TODO Log error
+        log_error("timeout");
+        return -1;
+    }
+    else
+    {
+        printf("Received %d bytes\n", num_bytes);
     }
 
-    if (src->ai_canonname != NULL)
-    {
-        memcpy(cpy->ai_canonname, src->ai_canonname, sizeof(src->ai_canonname));
-    }
-    return cpy;
 }
+

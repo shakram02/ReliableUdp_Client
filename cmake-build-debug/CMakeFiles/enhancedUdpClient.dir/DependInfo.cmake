@@ -1,9 +1,19 @@
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "C"
   "CXX"
   )
 # The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_C
+  "/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o"
+  )
+set(CMAKE_C_COMPILER_ID "GNU")
+
+# The include file search paths:
+set(CMAKE_C_TARGET_INCLUDE_PATH
+  )
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o"
   "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o"
   "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/main.cpp.o"
   )

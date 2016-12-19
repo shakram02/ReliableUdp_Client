@@ -2,23 +2,29 @@
 // Created by ahmed on 12/16/16.
 //
 
-#include<stdio.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <netdb.h>
-#include <memory.h>
-#include <arpa/inet.h>
-#include <errno.h>
-#include <cstdlib>
-
 
 #ifndef ENHANCEDUDPCLIENT_SOCKETCLIENT_H
 #define ENHANCEDUDPCLIENT_SOCKETCLIENT_H
 
+extern "C"
+{
+#include "../libs/netutils.h"
+};
+
+#include <cstdlib>
 
 class SocketClient
 {
 public:
+
+    /**
+    * Creates a new client socket that connects to the specified server address and port
+    * @param serverAddr Server Address
+    * @param serverPort Port of the server
+    */
+    SocketClient(char *serverAddr, unsigned short serverPort);
+
+
     /**
     * Sends an array of bytes (unsigned char) to the server
     * @param bytes Message content to be sent
@@ -26,12 +32,7 @@ public:
     */
     long int SendPacket(const unsigned char *bytes);
 
-    /**
-    * Creates a new client socket that connects to the specified server address and port
-    * @param serverAddr Server Address
-    * @param serverPort Port of the server
-    */
-    SocketClient(char *serverAddr, int serverPort);
+    long int ReceivePacket(unsigned char[]);
 
     ~SocketClient();
 
@@ -40,30 +41,9 @@ private:
     /**
      * File descriptor for the open socket
      */
-    int socketFileDescriptor;
-
-    addrinfo *serverAddressInfo;
+    int socketFd;
+    bool isInitialized = false;
+    sockaddr_in endpoint;
 };
-
-/**
- * Logs the errorno to output stream
- * @param func_name name of the function that caused the error
- */
-void log_error(const char *);
-
-/**
- * Converts the given integer number to a string
- * @param num number to be converted
- * @return String equivalent
- */
-char *ToString(int);
-
-/**
- * Copies Address info object to another one
- * @param src Source Address info object
- * @return Copy of src
- */
-addrinfo *CopyAddressInfo(addrinfo *src);
-
 
 #endif //ENHANCEDUDPCLIENT_SOCKETCLIENT_H

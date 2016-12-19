@@ -84,6 +84,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.cpp">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
@@ -91,6 +97,12 @@
 			<Option target="enhancedUdpClient"/>
 		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/CMakeLists.txt">
