@@ -105,28 +105,28 @@ CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o.provides: CMakeFiles/enhance
 CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o.provides.build: CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o
 
 
-CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o: CMakeFiles/enhancedUdpClient.dir/flags.make
-CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o: /home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o"
-	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o   -c /home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c
+CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o: CMakeFiles/enhancedUdpClient.dir/flags.make
+CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o: ../libs/netutils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o   -c /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/netutils.c
 
-CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i"
-	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c > CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i
+CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/netutils.c > CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.i
 
-CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s"
-	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c -o CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s
+CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/netutils.c -o CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.s
 
-CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o.requires:
+CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o.requires:
 
-.PHONY : CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o.requires
+.PHONY : CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o.requires
 
-CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o.provides: CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o.requires
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o.provides.build
-.PHONY : CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o.provides
+CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o.provides: CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o.requires
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o.provides.build
+.PHONY : CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o.provides
 
-CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o.provides.build: CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o
+CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o.provides.build: CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o
 
 
 CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o: CMakeFiles/enhancedUdpClient.dir/flags.make
@@ -157,7 +157,7 @@ CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o.provides.build: CMakeFiles/enh
 enhancedUdpClient_OBJECTS = \
 "CMakeFiles/enhancedUdpClient.dir/main.cpp.o" \
 "CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o" \
-"CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o" \
+"CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o" \
 "CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o"
 
 # External object files for target enhancedUdpClient
@@ -165,7 +165,7 @@ enhancedUdpClient_EXTERNAL_OBJECTS =
 
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/main.cpp.o
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o
-enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o
+enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/build.make
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/link.txt
@@ -179,7 +179,7 @@ CMakeFiles/enhancedUdpClient.dir/build: enhancedUdpClient
 
 CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/main.cpp.o.requires
 CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o.requires
-CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o.requires
+CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o.requires
 CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o.requires
 
 .PHONY : CMakeFiles/enhancedUdpClient.dir/requires

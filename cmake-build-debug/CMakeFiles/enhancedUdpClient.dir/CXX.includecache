@@ -6,6 +6,24 @@
 
 #IncludeRegexTransform: 
 
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/./libs/netutils.h
+stdio.h
+-
+sys/socket.h
+-
+unistd.h
+-
+netdb.h
+-
+memory.h
+-
+arpa/inet.h
+-
+errno.h
+-
+stdlib.h
+-
+
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp
 cstring
 -
@@ -25,8 +43,8 @@ SocketClient.h
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
 
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
-../libs/netutils.h
-/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.h
+./libs/netutils.h
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/./libs/netutils.h
 cstdlib
 -
 
@@ -35,22 +53,4 @@ SocketClient.h
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
 FileWriter.h
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h
-
-/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.h
-stdio.h
--
-sys/socket.h
--
-unistd.h
--
-netdb.h
--
-memory.h
--
-arpa/inet.h
--
-errno.h
--
-stdlib.h
--
 

@@ -177,32 +177,32 @@ SocketClient.cpp.s:
 	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.s
 .PHONY : SocketClient.cpp.s
 
-home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.o: home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o
+libs/netutils.o: libs/netutils.c.o
 
-.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.o
+.PHONY : libs/netutils.o
 
 # target to build an object file
-home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o
-.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.o
+libs/netutils.c.o:
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o
+.PHONY : libs/netutils.c.o
 
-home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.i: home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i
+libs/netutils.i: libs/netutils.c.i
 
-.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.i
+.PHONY : libs/netutils.i
 
 # target to preprocess a source file
-home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i
-.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.i
+libs/netutils.c.i:
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.i
+.PHONY : libs/netutils.c.i
 
-home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.s: home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s
+libs/netutils.s: libs/netutils.c.s
 
-.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.s
+.PHONY : libs/netutils.s
 
 # target to generate assembly for a file
-home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s
-.PHONY : home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.c.s
+libs/netutils.c.s:
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.s
+.PHONY : libs/netutils.c.s
 
 main.o: main.cpp.o
 
@@ -246,9 +246,9 @@ help:
 	@echo "... SocketClient.o"
 	@echo "... SocketClient.i"
 	@echo "... SocketClient.s"
-	@echo "... home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.o"
-	@echo "... home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.i"
-	@echo "... home/ahmed/code/c/ReliableUdpTransfer/libs/netutils.s"
+	@echo "... libs/netutils.o"
+	@echo "... libs/netutils.i"
+	@echo "... libs/netutils.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

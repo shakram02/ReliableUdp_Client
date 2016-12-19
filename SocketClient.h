@@ -8,7 +8,7 @@
 
 extern "C"
 {
-#include "../libs/netutils.h"
+#include "./libs/netutils.h"
 };
 
 #include <cstdlib>
