@@ -40,19 +40,12 @@ SocketClient::SocketClient(char *serverAddr, unsigned short serverPort)
     }
     if (!setsockopt(this->socketFd, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(timeval)))
     {
+        // Whatever we're sending might be locked, so a send timeout is set
         log_error("set send timeout");
     }
     isInitialized = true;
 }
 
-SocketClient::~SocketClient()
-{
-    if (!isInitialized)
-    {
-        return;
-    }
-    close(this->socketFd);
-}
 
 /**
  * Sends an array of bytes (unsigned char) to the server
@@ -93,11 +86,19 @@ long int SocketClient::ReceivePacket(unsigned char buff[])
     char buf[buffLen];
     // TODO receive with timeout
     long int num_bytes;
-    sockaddr remoteEP;
+    sockaddr_storage remoteEP;
     socklen_t remoteEpLength;
 
-    num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0, &remoteEP, &remoteEpLength);
+    num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0, (sockaddr *) &remoteEP, &remoteEpLength);
     // TODO Create a logger class
+
+    char host[NI_MAXHOST] = {0};
+
+    //getnameinfo((struct sockaddr *) remoteEP, remoteEpLength, host, sizeof(host), NULL, 0, NI_NUMERICHOST);
+    getnameinfo((struct sockaddr *) &remoteEP, remoteEpLength, host, sizeof(host), NULL, 0, NI_NUMERICHOST);
+    //inet_ntop(((struct sockaddr *) &remoteEP)->sa_family, &(((struct sockaddr_in *) &remoteEP)->sin_addr), host,INET_ADDRSTRLEN);
+
+    printf("Remote ip:%s\n", host);
 
     if (num_bytes == 0)
     {
@@ -113,8 +114,17 @@ long int SocketClient::ReceivePacket(unsigned char buff[])
     }
     else
     {
+        // DEBUG
         printf("Received %d bytes\n", num_bytes);
     }
-
+    return num_bytes;
 }
 
+SocketClient::~SocketClient()
+{
+    if (!isInitialized)
+    {
+        return;
+    }
+    close(this->socketFd);
+}
