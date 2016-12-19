@@ -4,6 +4,7 @@
 
 #include "SocketClient.h"
 
+#define BUF_LEN 50
 
 /**
  * Creates a new client socket that connects to the specified server address and port
@@ -12,14 +13,11 @@
  */
 SocketClient::SocketClient(char *serverAddr, unsigned short serverPort)
 {
-
-    int s, i, slen = sizeof(endpoint);
     memset(&endpoint, 0, sizeof(endpoint));
 
     endpoint.sin_family = AF_INET;
     endpoint.sin_port = htons(serverPort);
 
-    // Fill the sin_addr using pton
     if (inet_pton(AF_INET, serverAddr, &endpoint.sin_addr) == -1)
     {
         log_error("Ip to network conversion");
@@ -31,6 +29,7 @@ SocketClient::SocketClient(char *serverAddr, unsigned short serverPort)
 
 
     timeval timeout;
+    // Removing memset causes unidentified behaviour as the values are originally garbage
     memset(&timeout, 0, sizeof(timeout));
     timeout.tv_sec = 3;
 
@@ -70,40 +69,39 @@ long int SocketClient::SendPacket(const unsigned char *bytes)
     }
     else
     {
-        printf("Client:Sent %ld bytes to UDP socket\n", num_bytes);
+        cout << "Client:Sent " << num_bytes << " to UDP socket" << endl;
     }
     return num_bytes;
 }
 
-long int SocketClient::ReceivePacket(unsigned char buff[])
+long int SocketClient::ReceivePacket(void recvHandler(char *msg, char *ip))
 {
+
     if (!isInitialized)
     {
         fprintf(stderr, "An error occurred during initialization, can't call function ReceivePacket");
         exit(-1);
     }
-    const int buffLen = 512;
-    char buf[buffLen];
-    // TODO receive with timeout
+
+    char buf[BUF_LEN] = {0};
+    char host[NI_MAXHOST] = {0};
+
     long int num_bytes;
     sockaddr_storage remoteEP;
     socklen_t remoteEpLength;
 
     num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0, (sockaddr *) &remoteEP, &remoteEpLength);
+
     // TODO Create a logger class
-
-    char host[NI_MAXHOST] = {0};
-
     //getnameinfo((struct sockaddr *) remoteEP, remoteEpLength, host, sizeof(host), NULL, 0, NI_NUMERICHOST);
     getnameinfo((struct sockaddr *) &remoteEP, remoteEpLength, host, sizeof(host), NULL, 0, NI_NUMERICHOST);
     //inet_ntop(((struct sockaddr *) &remoteEP)->sa_family, &(((struct sockaddr_in *) &remoteEP)->sin_addr), host,INET_ADDRSTRLEN);
 
-    printf("Remote ip:%s\n", host);
+    cout << "Remote ip:" << host << endl;
 
     if (num_bytes == 0)
     {
         // TODO client closed connection
-
         return 0;
     }
     else if (num_bytes == -1)
@@ -115,7 +113,8 @@ long int SocketClient::ReceivePacket(unsigned char buff[])
     else
     {
         // DEBUG
-        printf("Received %d bytes\n", num_bytes);
+        cout << "Received " << num_bytes << " bytes" << endl;
+        recvHandler(buf, host);
     }
     return num_bytes;
 }

@@ -11,7 +11,10 @@ extern "C"
 #include "./libs/netutils.h"
 };
 
+#include <iostream>
 #include <cstdlib>
+
+using namespace std;
 
 class SocketClient
 {
@@ -32,7 +35,7 @@ public:
     */
     long int SendPacket(const unsigned char *bytes);
 
-    long int ReceivePacket(unsigned char[]);
+    long int ReceivePacket(void recvHandler(char *msg, char *ip));
 
     ~SocketClient();
 
