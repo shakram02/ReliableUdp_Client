@@ -4,7 +4,7 @@
 
 #include "SocketClient.h"
 
-#define BUF_LEN 50
+#define BUF_LEN 256
 
 /**
  * Creates a new client socket that connects to the specified server address and port
@@ -51,7 +51,7 @@ SocketClient::SocketClient(char *serverAddr, unsigned short serverPort)
  * @param bytes Message content to be sent
  * @return the number of bytes that were actually sent
  */
-long int SocketClient::SendPacket(const unsigned char *bytes)
+long int SocketClient::SendPacket(const char *bytes, unsigned int dataSize)
 {
     if (!isInitialized)
     {
@@ -59,10 +59,11 @@ long int SocketClient::SendPacket(const unsigned char *bytes)
         return -1;
     }
 
-    // TODO create a max payload and chunkize the incoming byte array if necessary
+    // TODO create a max payload and chunkize the incoming
+    // byte array if necessary (an upper class responsibility)
 
     long int num_bytes;
-    if ((num_bytes = sendto(socketFd, bytes, sizeof(bytes), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1)
+    if ((num_bytes = sendto(socketFd, bytes, dataSize, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1)
     {
         log_error("send to server");
         exit(1);
@@ -74,30 +75,30 @@ long int SocketClient::SendPacket(const unsigned char *bytes)
     return num_bytes;
 }
 
-long int SocketClient::ReceivePacket(void recvHandler(char *msg, char *ip))
+long int SocketClient::ReceivePacket(void recvHandler(char *msg))
 {
-
     if (!isInitialized)
     {
         fprintf(stderr, "An error occurred during initialization, can't call function ReceivePacket");
         exit(-1);
     }
-
+    cout << endl << endl << endl;
     char buf[BUF_LEN] = {0};
-    char host[NI_MAXHOST] = {0};
 
     long int num_bytes;
-    sockaddr_storage remoteEP;
+    sockaddr_in remoteEP;
     socklen_t remoteEpLength;
 
     num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0, (sockaddr *) &remoteEP, &remoteEpLength);
 
-    // TODO Create a logger class
-    //getnameinfo((struct sockaddr *) remoteEP, remoteEpLength, host, sizeof(host), NULL, 0, NI_NUMERICHOST);
-    getnameinfo((struct sockaddr *) &remoteEP, remoteEpLength, host, sizeof(host), NULL, 0, NI_NUMERICHOST);
-    //inet_ntop(((struct sockaddr *) &remoteEP)->sa_family, &(((struct sockaddr_in *) &remoteEP)->sin_addr), host,INET_ADDRSTRLEN);
+    cout << "#DEBUG received:" << num_bytes << " bytes" << endl;
 
-    cout << "Remote ip:" << host << endl;
+    // TODO Create a logger class, Check the sender is the server?
+
+    // string info[2];
+    // info[0] = (inet_ntoa(remoteEP.sin_addr));
+    // info[1] = to_string(ntohs(remoteEP.sin_port));
+    // cout << "Remote ip:" << info[0] << " Port:" << info[1] << endl;
 
     if (num_bytes == 0)
     {
@@ -114,7 +115,7 @@ long int SocketClient::ReceivePacket(void recvHandler(char *msg, char *ip))
     {
         // DEBUG
         cout << "Received " << num_bytes << " bytes" << endl;
-        recvHandler(buf, host);
+        recvHandler(buf);   // Fire the event
     }
     return num_bytes;
 }

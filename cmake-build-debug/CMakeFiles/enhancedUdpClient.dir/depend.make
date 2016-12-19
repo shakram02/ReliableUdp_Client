@@ -12,7 +12,7 @@ CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o: ../SocketClient.cpp
 CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o: ../SocketClient.h
 
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: .././libs/netutils.h
-CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../FileWriter.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../SocketClient.h
+CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../libs/data_packet.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../main.cpp
 

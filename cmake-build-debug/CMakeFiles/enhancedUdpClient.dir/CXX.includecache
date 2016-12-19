@@ -50,9 +50,11 @@ iostream
 cstdlib
 -
 
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/data_packet.h
+
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp
 SocketClient.h
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
-FileWriter.h
-/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h
+libs/data_packet.h
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/data_packet.h
 

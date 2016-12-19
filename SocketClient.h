@@ -33,9 +33,10 @@ public:
     * @param bytes Message content to be sent
     * @return the number of bytes that were actually sent
     */
-    long int SendPacket(const unsigned char *bytes);
+    long int SendPacket(const char *bytes, unsigned int dataSize);
 
-    long int ReceivePacket(void recvHandler(char *msg, char *ip));
+
+    long int ReceivePacket(void recvHandler(char *msg));
 
     ~SocketClient();
 
