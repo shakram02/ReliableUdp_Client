@@ -20,27 +20,34 @@ void woot(char *msg)
 
 int main()
 {
-    SocketClient sock(SERVER_IP_ADDR, PORT_NUM);
+    SocketClient sock(string(SERVER_IP_ADDR), PORT_NUM);
+//
+//    data_packet p;
+//    memset(&p, 0, sizeof(p));
+//    char msg[248] = {0};
 
-    data_packet p;
-    memset(&p, 0, sizeof(p));
-    char msg[20] = {0};
-    //string msg;
-    cout << "Type something:";
-    cin >> msg;
-    memcpy(p.data, msg, strlen(msg));
-
-    p.cksum = 128;
-    p.len = 64;
-    p.seqno = 128;
-
-    char *packed = reinterpret_cast<char *>(&p);
-
-    data_packet *pRec = reinterpret_cast<data_packet *>(packed);
-
-//    cout << "Unpacked:" << pRec->data << endl;
-    sock.SendPacket(packed, sizeof(data_packet));
+    sock.SendPacket("hndshk", sizeof("hndshk"));
     sock.ReceivePacket(woot);
+    //string msg;
+//    while (1)
+//    {
+//        cout << "Type something:";
+//        cin >> msg;
+//        memcpy(p.data, msg, strlen(msg));
+//
+//        p.cksum = 128;
+//        p.len = 64;
+//        p.seqno = 128;
+//
+//        char *packed = reinterpret_cast<char *>(&p);
+//
+//        data_packet *pRec = reinterpret_cast<data_packet *>(packed);
+//
+////    cout << "Unpacked:" << pRec->data << endl;
+//        sock.SendPacket(packed, sizeof(data_packet));
+//        sock.ReceivePacket(woot);
+//    }
+
 
 //    while (1)
 //    {

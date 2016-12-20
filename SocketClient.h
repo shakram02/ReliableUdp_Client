@@ -25,7 +25,7 @@ public:
     * @param serverAddr Server Address
     * @param serverPort Port of the server
     */
-    SocketClient(char *serverAddr, unsigned short serverPort);
+    SocketClient(const string &serverAddr, const unsigned short serverPort);
 
 
     /**
@@ -35,12 +35,20 @@ public:
     */
     long int SendPacket(const char *bytes, unsigned int dataSize);
 
-
+/**
+ * This function receives only 1 packet, when an attempt is made to connect to the server
+ * a handshake message is sent, then the server redirects the client to another port
+ * if a receive operation times out, this function will report to the caller
+ * @param recvHandler
+ * @return
+ */
     long int ReceivePacket(void recvHandler(char *msg));
 
     ~SocketClient();
 
 private:
+
+    void InitializeSocket(const unsigned short serverPort);
 
     /**
      * File descriptor for the open socket
@@ -48,6 +56,9 @@ private:
     int socketFd;
     bool isInitialized = false;
     sockaddr_in endpoint;
+    string serverAddr;
+
+    void SwitchToRedirectedSocket(char *message);
 };
 
 #endif //ENHANCEDUDPCLIENT_SOCKETCLIENT_H

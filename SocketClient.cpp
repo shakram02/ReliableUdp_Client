@@ -5,43 +5,18 @@
 #include "SocketClient.h"
 
 #define BUF_LEN 256
+#define WELCOME_HEADER "redirect"
 
 /**
  * Creates a new client socket that connects to the specified server address and port
  * @param serverAddr Server Address
  * @param serverPort Port of the server
  */
-SocketClient::SocketClient(char *serverAddr, unsigned short serverPort)
+SocketClient::SocketClient(const string &serverAddr, const unsigned short serverPort)
 {
-    memset(&endpoint, 0, sizeof(endpoint));
 
-    endpoint.sin_family = AF_INET;
-    endpoint.sin_port = htons(serverPort);
-
-    if (inet_pton(AF_INET, serverAddr, &endpoint.sin_addr) == -1)
-    {
-        log_error("Ip to network conversion");
-    }
-    if ((this->socketFd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1)
-    {
-        log_error("socket creation");
-    }
-
-
-    timeval timeout;
-    // Removing memset causes unidentified behaviour as the values are originally garbage
-    memset(&timeout, 0, sizeof(timeout));
-    timeout.tv_sec = 3;
-
-    if (!setsockopt(this->socketFd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeval)))
-    {
-        log_error("set receive timeout");
-    }
-    if (!setsockopt(this->socketFd, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(timeval)))
-    {
-        // Whatever we're sending might be locked, so a send timeout is set
-        log_error("set send timeout");
-    }
+    this->serverAddr = string(serverAddr);
+    InitializeSocket(serverPort);
     isInitialized = true;
 }
 
@@ -70,7 +45,7 @@ long int SocketClient::SendPacket(const char *bytes, unsigned int dataSize)
     }
     else
     {
-        cout << "Client:Sent " << num_bytes << " to UDP socket" << endl;
+        cout << "Client:Sent " << num_bytes << " bytes to UDP socket" << endl;
     }
     return num_bytes;
 }
@@ -115,9 +90,56 @@ long int SocketClient::ReceivePacket(void recvHandler(char *msg))
     {
         // DEBUG
         cout << "Received " << num_bytes << " bytes" << endl;
+        char redirectMessage[num_bytes + 1] = {0};
+        strncpy(redirectMessage, buf, (unsigned int) num_bytes);
+        redirectMessage[num_bytes] = '\0';
+
+        SwitchToRedirectedSocket(redirectMessage);
         recvHandler(buf);   // Fire the event
+        //SendPacket("OK", strlen("OK"));   // TEST
     }
     return num_bytes;
+}
+
+void SocketClient::SwitchToRedirectedSocket(char *message)
+{
+    string redirectMessage = string(message);
+    redirectMessage.replace(0, strlen(WELCOME_HEADER), "");
+    cout << "Redirect port:" << redirectMessage << endl;
+    InitializeSocket(stoi(redirectMessage));
+}
+
+void SocketClient::InitializeSocket(const unsigned short serverPort)
+{
+    memset(&endpoint, 0, sizeof(endpoint));
+
+    endpoint.sin_family = AF_INET;
+    endpoint.sin_port = htons(serverPort);
+
+    if (inet_pton(AF_INET, this->serverAddr.c_str(), &endpoint.sin_addr) == -1)
+    {
+        log_error("Ip to network conversion");
+    }
+    if ((this->socketFd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1)
+    {
+        log_error("socket creation");
+    }
+
+
+    timeval timeout;
+    // Removing memset causes unidentified behaviour as the values are originally garbage
+    memset(&timeout, 0, sizeof(timeout));
+    timeout.tv_sec = 3;
+
+    if (setsockopt(this->socketFd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeval)) < 0)
+    {
+        log_error("set receive timeout");
+    }
+    if (setsockopt(this->socketFd, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(timeval)) < 0)
+    {
+        // Whatever we're sending might be locked, so a send timeout is set
+        log_error("set send timeout");
+    }
 }
 
 SocketClient::~SocketClient()
