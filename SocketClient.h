@@ -13,8 +13,10 @@ extern "C"
 
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 
 using namespace std;
+typedef long int FileSize;
 
 class SocketClient
 {
@@ -22,18 +24,19 @@ public:
 
     /**
     * Creates a new client socket that connects to the specified server address and port
-    * @param serverAddr Server Address
-    * @param serverPort Port of the server
+    * @param server_addr Server Address
+    * @param server_port Port of the server
     */
-    SocketClient(const string &serverAddr, const unsigned short serverPort);
+    SocketClient(const string &server_addr, const unsigned short server_port,
+            void recv_callback(char *chunk, long chunk_size));
 
 
     /**
     * Sends an array of bytes (unsigned char) to the server
-    * @param bytes Message content to be sent
+    * @param data Message content to be sent
     * @return the number of bytes that were actually sent
     */
-    void SendPacket(const char *bytes, unsigned int dataSize);
+    void SendPacket(vector<char> &data);
 
 /**
  * This function receives only 1 packet, when an attempt is made to connect to the server
@@ -42,7 +45,7 @@ public:
  * @param recvHandler
  * @return
  */
-    long int ReceivePacket(void recvHandler(char *msg));
+    long int ReceivePacket();
 
     ~SocketClient();
 
@@ -50,15 +53,18 @@ public:
 
 private:
 
-    void InitializeSocket(const unsigned short serverPort);
+    void InitializeSocket(const unsigned short server_port);
 
     /**
      * File descriptor for the open socket
      */
-    int socketFd;
-    bool isInitialized = false;
+    int socket_fd = 0;
+    unsigned long int totalReceivedBytes = 0;
+    bool is_initialized = false;
     sockaddr_in endpoint;
-    string serverAddr;
+    string server_addr;
+
+    void (*recv_handler)(char *chunk, long chunk_size);
 
     void SwitchToRedirectedSocket(char *message);
 

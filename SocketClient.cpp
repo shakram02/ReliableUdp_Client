@@ -2,30 +2,31 @@
 // Created by ahmed on 12/16/16.
 //
 
-#include <vector>
+
 #include "SocketClient.h"
 
 #define BUF_LEN 256
 #define WELCOME_HEADER "redirect"
+#define REDIRECT_SUCCESS "REDIRECT SUCCESSFUL"
 
 /**
  * Creates a new client socket that connects to the specified server address and port
- * @param serverAddr Server Address
- * @param serverPort Port of the server
+ * @param server_addr Server Address
+ * @param server_port Port of the server
  */
-SocketClient::SocketClient(const string &serverAddr, const unsigned short serverPort)
+SocketClient::SocketClient(const string &server_addr, const unsigned short server_port,
+        void recv_callback(char *, long))
 {
-
-    this->serverAddr = string(serverAddr);
-    InitializeSocket(serverPort);
-
+    this->recv_handler = recv_callback;
+    this->server_addr = string(server_addr);
+    InitializeSocket(server_port);
 }
 
 
 int SocketClient::HandshakeServer(string &handshake)
 {
     // Don't check for byte count sent with UDP, it's meaningless
-    if ((sendto(socketFd, handshake.c_str(),
+    if ((sendto(socket_fd, handshake.c_str(),
             handshake.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
         log_error("send to server");
         exit(1);
@@ -35,9 +36,8 @@ int SocketClient::HandshakeServer(string &handshake)
 
     long int num_bytes;
 
-    num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0, (sockaddr *) NULL, NULL);
+    num_bytes = recvfrom(this->socket_fd, buf, sizeof(buf), 0, (sockaddr *) NULL, NULL);
 
-    cout << "#DEBUG Handshake received:" << buf << endl;
 
     if (num_bytes == -1) {
         // TODO Log error
@@ -45,54 +45,49 @@ int SocketClient::HandshakeServer(string &handshake)
         return -1;
     } else {
         // DEBUG
-        cout << "Received " << num_bytes << " bytes" << endl;
-        char redirectMessage[num_bytes + 1] = {0};
-        strncpy(redirectMessage, buf, (unsigned int) num_bytes);
-        redirectMessage[num_bytes] = '\0';
+        cout << "#DEBUG Handshake received:\"" << buf
+             << "\" Size:" << num_bytes << " bytes" << endl;
 
-        close(this->socketFd);  // Close the welcome socket
-        SwitchToRedirectedSocket(redirectMessage);
-        SendPacket("REDIRECT SUCCESSFUL",
-                (unsigned int) (sizeof(char) * (1 + strlen("REDIRECT_SUCCESSFUL"))));   // TEST
+        close(this->socket_fd);  // Close the welcome socket
+        SwitchToRedirectedSocket(buf);
+
+        vector<char> redirect_confirmation;
+        string success = REDIRECT_SUCCESS;
+
+        for (int i = 0; i < success.size(); i++) {
+            redirect_confirmation.push_back(success[i]);
+        }
+
+        SendPacket(redirect_confirmation);   // TEST
     }
 
-    isInitialized = true;
+    is_initialized = true;
 }
 
-//void SocketClient::RedirectToWorker()
-//{
-//
-//}
 
 /**
  * Sends an array of bytes (unsigned char) to the server
- * @param bytes Message content to be sent ( reason for char* )
+ * @param data Message content to be sent ( reason for char* )
  * @return the number of bytes that were actually sent
  */
-void SocketClient::SendPacket(const char *bytes, unsigned int dataSize)
+void SocketClient::SendPacket(vector<char> &data)
 {
-
-//    std::vector<char> d = {3, 4, 2, 1};
-//    char abytes[d.size()];
-//    for (int i = 0; i < d.size(); i++) {
-//        abytes[i] = d[i];
-//    }
-
-    if (!isInitialized) {
-        fprintf(stderr, "An error occurred during initialization, can't call function SendPacket");
-        exit(1);
+    unsigned long byte_count = data.size();
+    char bytes[byte_count];
+    for (int i = 0; i < byte_count; i++) {
+        bytes[i] = data[i];
     }
 
-    if ((sendto(socketFd, bytes, dataSize, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+    if ((sendto(socket_fd, bytes, byte_count, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
         log_error("send to server");
-        exit(1);
+        // TODO handle timeout or send failure
     }
     return;
 }
 
-long int SocketClient::ReceivePacket(void recvHandler(char *msg))
+long int SocketClient::ReceivePacket()
 {
-    if (!isInitialized) {
+    if (!is_initialized) {
         fprintf(stderr, "An error occurred during initialization, can't call function ReceivePacket");
         exit(-1);
     }
@@ -100,17 +95,10 @@ long int SocketClient::ReceivePacket(void recvHandler(char *msg))
     char buf[BUF_LEN] = {0};
 
     long int num_bytes;
-    num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0,
+    num_bytes = recvfrom(this->socket_fd, buf, sizeof(buf), 0,
             NULL, NULL);  // Don't care about the sender, it's known ( maybe add it back for more security checks)
 
     cout << "#DEBUG received:" << num_bytes << " bytes" << endl;
-
-    // TODO Create a logger class, Check the sender is the server?
-
-    // string info[2];
-    // info[0] = (inet_ntoa(remoteEP.sin_addr));
-    // info[1] = to_string(ntohs(remoteEP.sin_port));
-    // cout << "Remote ip:" << info[0] << " Port:" << info[1] << endl;
 
     if (num_bytes == 0) {
         // TODO client closed connection
@@ -122,38 +110,32 @@ long int SocketClient::ReceivePacket(void recvHandler(char *msg))
     } else {
         // DEBUG
         cout << "Received " << num_bytes << " bytes" << endl;
-        char redirectMessage[num_bytes + 1] = {0};
-        strncpy(redirectMessage, buf, (unsigned int) num_bytes);
-        redirectMessage[num_bytes] = '\0';
+        this->recv_handler(buf, num_bytes);   // Fire the event
 
-        close(this->socketFd);  // Close the welcome socket
-        SwitchToRedirectedSocket(redirectMessage);
-        recvHandler(buf);   // Fire the event
-        SendPacket("REDIRECT SUCCESSFUL",
-                (unsigned int) (sizeof(char) * (1 + strlen("REDIRECT_SUCCESSFUL"))));   // TEST
+        totalReceivedBytes += num_bytes;
     }
-    return num_bytes;
+    return totalReceivedBytes;
 }
 
 void SocketClient::SwitchToRedirectedSocket(char *message)
 {
-    string redirectMessage = string(message);
-    redirectMessage.replace(0, strlen(WELCOME_HEADER), "");
-    cout << "Redirect port:" << redirectMessage << endl;
-    InitializeSocket((unsigned short) stoi(redirectMessage));
+    string redirect_message = string(message);
+    redirect_message.replace(0, strlen(WELCOME_HEADER), "");
+    cout << "Redirect port:" << redirect_message << endl;
+    InitializeSocket((unsigned short) stoi(redirect_message));
 }
 
-void SocketClient::InitializeSocket(const unsigned short serverPort)
+void SocketClient::InitializeSocket(const unsigned short server_port)
 {
     memset(&endpoint, 0, sizeof(endpoint));
 
     endpoint.sin_family = AF_INET;
-    endpoint.sin_port = htons(serverPort);
+    endpoint.sin_port = htons(server_port);
 
-    if (inet_pton(AF_INET, this->serverAddr.c_str(), &endpoint.sin_addr) == -1) {
+    if (inet_pton(AF_INET, this->server_addr.c_str(), &endpoint.sin_addr) == -1) {
         log_error("Ip to network conversion");
     }
-    if ((this->socketFd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
+    if ((this->socket_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
         log_error("socket creation");
     }
 
@@ -163,10 +145,10 @@ void SocketClient::InitializeSocket(const unsigned short serverPort)
     memset(&timeout, 0, sizeof(timeout));
     timeout.tv_sec = 3;
 
-    if (setsockopt(this->socketFd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeval)) < 0) {
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeval)) < 0) {
         log_error("set receive timeout");
     }
-    if (setsockopt(this->socketFd, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(timeval)) < 0) {
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(timeval)) < 0) {
         // Whatever we're sending might be locked, so a send timeout is set
         log_error("set send timeout");
     }
@@ -174,8 +156,8 @@ void SocketClient::InitializeSocket(const unsigned short serverPort)
 
 SocketClient::~SocketClient()
 {
-    if (!isInitialized) {
+    if (!is_initialized) {
         return;
     }
-    close(this->socketFd);
+    close(this->socket_fd);
 }

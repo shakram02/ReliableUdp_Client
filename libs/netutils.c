@@ -8,7 +8,7 @@
 
 void log_error(const char *func_name)
 {
-    printf("%s:%s\n", func_name, strerror(errno));
+    fprintf(stderr, "%s:%s\n", func_name, strerror(errno));
 }
 
 
@@ -16,8 +16,7 @@ char *int_to_string(int num)
 {
     // Get the exact number of digits in num
     int digits = 0, temp = num;
-    do
-    {
+    do {
         digits++;
         temp /= 10;
     } while ((temp % 10) > 0);
@@ -42,13 +41,11 @@ addrinfo *copy_addr_info(addrinfo *src)
     cpy->ai_protocol = src->ai_protocol;
     cpy->ai_socktype = src->ai_socktype;
 
-    if (src->ai_addr != NULL)
-    {
+    if (src->ai_addr != NULL) {
         memcpy(cpy->ai_addr, src->ai_addr, sizeof(src->ai_addr));
     }
 
-    if (src->ai_canonname != NULL)
-    {
+    if (src->ai_canonname != NULL) {
         memcpy(cpy->ai_canonname, src->ai_canonname, sizeof(src->ai_canonname));
     }
     return cpy;
@@ -64,8 +61,7 @@ addrinfo *copy_addr_info(addrinfo *src)
 // Ugly function should remain hidden
 static void *get_in_addr(struct sockaddr *sa)
 {
-    if (sa->sa_family == AF_INET)
-    {
+    if (sa->sa_family == AF_INET) {
         return &(((struct sockaddr_in *) sa)->sin_addr);
     }
     return &(((struct sockaddr_in6 *) sa)->sin6_addr);
@@ -73,8 +69,7 @@ static void *get_in_addr(struct sockaddr *sa)
 
 static unsigned short get_port_num(struct sockaddr *sa)
 {
-    if (sa->sa_family == AF_INET)
-    {
+    if (sa->sa_family == AF_INET) {
         return ((struct sockaddr_in *) sa)->sin_port;
     }
     return ((struct sockaddr_in6 *) sa)->sin6_port;

@@ -11,7 +11,7 @@ using namespace std;
  * @param msg Contains the socket message
  * @param ip Contains the server ip
  */
-void woot(char *msg)
+void woot(char *msg, long int size)
 {
     //data_packet *rec = reinterpret_cast<data_packet *>(msg);
     //cout << "WOOT: \"" << rec->len << "\"" << endl;
@@ -21,7 +21,7 @@ void woot(char *msg)
 
 int main()
 {
-    SocketClient sock(string(SERVER_IP_ADDR), PORT_NUM);
+    SocketClient sock(string(SERVER_IP_ADDR), PORT_NUM, woot);
 //
 //    data_packet p;
 //    memset(&p, 0, sizeof(p));
