@@ -33,7 +33,7 @@ public:
     * @param bytes Message content to be sent
     * @return the number of bytes that were actually sent
     */
-    long int SendPacket(const char *bytes, unsigned int dataSize);
+    void SendPacket(const char *bytes, unsigned int dataSize);
 
 /**
  * This function receives only 1 packet, when an attempt is made to connect to the server
@@ -45,6 +45,8 @@ public:
     long int ReceivePacket(void recvHandler(char *msg));
 
     ~SocketClient();
+
+    int HandshakeServer(string &handshake);
 
 private:
 
@@ -59,6 +61,8 @@ private:
     string serverAddr;
 
     void SwitchToRedirectedSocket(char *message);
+
+
 };
 
 #endif //ENHANCEDUDPCLIENT_SOCKETCLIENT_H

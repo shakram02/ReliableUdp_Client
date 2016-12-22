@@ -27,8 +27,10 @@ int main()
 //    memset(&p, 0, sizeof(p));
 //    char msg[248] = {0};
 
-    sock.SendPacket("hndshk", sizeof("hndshk"));
-    sock.ReceivePacket(woot);
+    //sock.SendPacket("hndshk", sizeof("hndshk"));
+    //sock.ReceivePacket(woot);
+    string handshake_msg("hndshk");
+    sock.HandshakeServer(handshake_msg);
     //string msg;
 //    while (1)
 //    {

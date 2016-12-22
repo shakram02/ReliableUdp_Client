@@ -2,6 +2,7 @@
 // Created by ahmed on 12/16/16.
 //
 
+#include <vector>
 #include "SocketClient.h"
 
 #define BUF_LEN 256
@@ -17,33 +18,76 @@ SocketClient::SocketClient(const string &serverAddr, const unsigned short server
 
     this->serverAddr = string(serverAddr);
     InitializeSocket(serverPort);
+
+}
+
+
+int SocketClient::HandshakeServer(string &handshake)
+{
+    // Don't check for byte count sent with UDP, it's meaningless
+    if ((sendto(socketFd, handshake.c_str(),
+            handshake.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+        log_error("send to server");
+        exit(1);
+    }
+
+    char buf[64] = {0};
+
+    long int num_bytes;
+
+    num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0, (sockaddr *) NULL, NULL);
+
+    cout << "#DEBUG Handshake received:" << buf << endl;
+
+    if (num_bytes == -1) {
+        // TODO Log error
+        log_error("timeout");
+        return -1;
+    } else {
+        // DEBUG
+        cout << "Received " << num_bytes << " bytes" << endl;
+        char redirectMessage[num_bytes + 1] = {0};
+        strncpy(redirectMessage, buf, (unsigned int) num_bytes);
+        redirectMessage[num_bytes] = '\0';
+
+        close(this->socketFd);  // Close the welcome socket
+        SwitchToRedirectedSocket(redirectMessage);
+        SendPacket("REDIRECT SUCCESSFUL",
+                (unsigned int) (sizeof(char) * (1 + strlen("REDIRECT_SUCCESSFUL"))));   // TEST
+    }
+
     isInitialized = true;
 }
 
+//void SocketClient::RedirectToWorker()
+//{
+//
+//}
 
 /**
  * Sends an array of bytes (unsigned char) to the server
  * @param bytes Message content to be sent ( reason for char* )
  * @return the number of bytes that were actually sent
  */
-long int SocketClient::SendPacket(const char *bytes, unsigned int dataSize)
+void SocketClient::SendPacket(const char *bytes, unsigned int dataSize)
 {
+
+//    std::vector<char> d = {3, 4, 2, 1};
+//    char abytes[d.size()];
+//    for (int i = 0; i < d.size(); i++) {
+//        abytes[i] = d[i];
+//    }
+
     if (!isInitialized) {
         fprintf(stderr, "An error occurred during initialization, can't call function SendPacket");
-        return -1;
+        exit(1);
     }
 
-    // TODO create a max payload and chunkize the incoming
-    // byte array if necessary (an upper class responsibility)
-
-    long int num_bytes;
-    if ((num_bytes = sendto(socketFd, bytes, dataSize, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+    if ((sendto(socketFd, bytes, dataSize, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
         log_error("send to server");
         exit(1);
-    } else {
-        cout << "Client:Sent " << num_bytes << " bytes to UDP socket" << endl;
     }
-    return num_bytes;
+    return;
 }
 
 long int SocketClient::ReceivePacket(void recvHandler(char *msg))
@@ -56,10 +100,8 @@ long int SocketClient::ReceivePacket(void recvHandler(char *msg))
     char buf[BUF_LEN] = {0};
 
     long int num_bytes;
-    sockaddr_in remoteEP;
-    socklen_t remoteEpLength;
-
-    num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0, (sockaddr *) &remoteEP, &remoteEpLength);
+    num_bytes = recvfrom(this->socketFd, buf, sizeof(buf), 0,
+            NULL, NULL);  // Don't care about the sender, it's known ( maybe add it back for more security checks)
 
     cout << "#DEBUG received:" << num_bytes << " bytes" << endl;
 
