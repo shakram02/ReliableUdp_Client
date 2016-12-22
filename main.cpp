@@ -13,9 +13,10 @@ using namespace std;
  */
 void woot(char *msg)
 {
-    data_packet *rec = reinterpret_cast<data_packet *>(msg);
-    cout << "WOOT: \"" << rec->len << "\"" << endl;
-    cout << "Found:" << rec->data << endl;
+    //data_packet *rec = reinterpret_cast<data_packet *>(msg);
+    //cout << "WOOT: \"" << rec->len << "\"" << endl;
+    //cout << "Found:" << rec->data << endl;
+    cout << "Message:\"" << msg << "\"" << endl;
 }
 
 int main()
