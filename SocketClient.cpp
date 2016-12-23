@@ -27,7 +27,7 @@ int SocketClient::HandshakeServer(string &handshake)
 {
     // Don't check for byte count sent with UDP, it's meaningless
     if ((sendto(socket_fd, handshake.c_str(),
-            handshake.size(), 0, (sockaddr * ) & endpoint, sizeof(endpoint))) == -1) {
+            handshake.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
         log_error("send to server");
         exit(1);
     }
@@ -51,14 +51,20 @@ int SocketClient::HandshakeServer(string &handshake)
         close(this->socket_fd);  // Close the welcome socket
         SwitchToRedirectedSocket(buf);
 
-        vector<char> redirect_confirmation;
-        string success = REDIRECT_SUCCESS;
+//        vector<char> redirect_confirmation;
+//        string success = string(REDIRECT_SUCCESS);
 
-        for (int i = 0; i < success.size(); i++) {
-            redirect_confirmation.push_back(success[i]);
-        }
+        basic_string<char> str(string(REDIRECT_SUCCESS));
+        str.push_back('\0');
 
-        SendPacket(redirect_confirmation);   // TEST
+        // TODO refactor this into its function
+//        for (int i = 0; i < success.size(); i++) {
+//            redirect_confirmation.push_back(success[i]);
+//        }
+//        redirect_confirmation.push_back('\0');
+//
+
+        SendPacket(str);   // TEST
 
         memset(buf, 0, 64);
         int bytes = (int) recvfrom(this->socket_fd, buf, sizeof(buf), 0, NULL, NULL);
@@ -80,15 +86,9 @@ int SocketClient::HandshakeServer(string &handshake)
  * @param data Message content to be sent ( reason for char* )
  * @return the number of bytes that were actually sent
  */
-void SocketClient::SendPacket(vector<char> &data)
+void SocketClient::SendPacket(basic_string<char> &data)
 {
-    unsigned long byte_count = data.size();
-    char bytes[byte_count];
-    for (int i = 0; i < byte_count; i++) {
-        bytes[i] = data[i];
-    }
-
-    if ((sendto(socket_fd, bytes, byte_count, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+    if ((sendto(socket_fd, data.c_str(), data.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
         log_error("send to server");
         // TODO handle timeout or send failure
     }

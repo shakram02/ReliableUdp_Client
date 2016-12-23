@@ -36,7 +36,7 @@ public:
     * @param data Message content to be sent
     * @return the number of bytes that were actually sent
     */
-    void SendPacket(vector<char> &data);
+    void SendPacket(basic_string<char> &data);
 
 /**
  * This function receives only 1 packet, when an attempt is made to connect to the server

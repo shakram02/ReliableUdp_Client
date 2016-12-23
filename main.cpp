@@ -21,7 +21,7 @@ void woot(char *msg, long int size)
 
 int main()
 {
-    SocketClient sock(string(SERVER_IP_ADDR), PORT_NUM, woot);
+
 //
 //    data_packet p;
 //    memset(&p, 0, sizeof(p));
@@ -29,17 +29,17 @@ int main()
 
     //sock.SendPacket("hndshk", sizeof("hndshk"));
     //sock.ReceivePacket(woot);
-    string handshake_msg("hndshk");
-    sock.HandshakeServer(handshake_msg);
-    for (int i = 0; i < 10; ++i) {
+
+    for (int i = 0; i < 100000; ++i) {
+        SocketClient sock(string(SERVER_IP_ADDR), PORT_NUM, woot);
+        string handshake_msg("hndshk");
+        sock.HandshakeServer(handshake_msg);
+
         vector<char> dummy_msg;
         string success = "asd";
 
-        for (int i = 0; i < success.size(); i++) {
-            dummy_msg.push_back(success[i]);
-        }
-
-        sock.SendPacket(dummy_msg);
+        basic_string<char> d(success);
+        sock.SendPacket(d);
     }
     //string msg;
 //    while (1)
