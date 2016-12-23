@@ -31,6 +31,16 @@ int main()
     //sock.ReceivePacket(woot);
     string handshake_msg("hndshk");
     sock.HandshakeServer(handshake_msg);
+    for (int i = 0; i < 10; ++i) {
+        vector<char> dummy_msg;
+        string success = "asd";
+
+        for (int i = 0; i < success.size(); i++) {
+            dummy_msg.push_back(success[i]);
+        }
+
+        sock.SendPacket(dummy_msg);
+    }
     //string msg;
 //    while (1)
 //    {
@@ -52,6 +62,23 @@ int main()
 //    }
 
 
+//    while (1)
+//    {
+//        string in;
+//
+//        //cin >> in ;
+//        getline(cin, in);
+//        cout << "echo:" << in << endl;
+//
+//        const char *d = in.c_str();
+//        sock.SendPacket(packed);
+//        sock.ReceivePacket(woot);
+//
+//        if (in == "exit")
+//        {
+//            break;
+//        }
+//    }
 
 
     //FileWriter r("mizo.txt");

@@ -27,7 +27,7 @@ int SocketClient::HandshakeServer(string &handshake)
 {
     // Don't check for byte count sent with UDP, it's meaningless
     if ((sendto(socket_fd, handshake.c_str(),
-            handshake.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+            handshake.size(), 0, (sockaddr * ) & endpoint, sizeof(endpoint))) == -1) {
         log_error("send to server");
         exit(1);
     }
@@ -37,7 +37,7 @@ int SocketClient::HandshakeServer(string &handshake)
     long int num_bytes;
 
     num_bytes = recvfrom(this->socket_fd, buf, sizeof(buf), 0, (sockaddr *) NULL, NULL);
-
+    cout << " Socket:" << this->socket_fd << endl;
 
     if (num_bytes == -1) {
         // TODO Log error
@@ -59,6 +59,16 @@ int SocketClient::HandshakeServer(string &handshake)
         }
 
         SendPacket(redirect_confirmation);   // TEST
+
+        memset(buf, 0, 64);
+        int bytes = (int) recvfrom(this->socket_fd, buf, sizeof(buf), 0, NULL, NULL);
+        if (bytes < 1) {
+            cerr << "Confirmation not received" << endl;
+            log_error("Confirm Failed");
+            exit(2);
+        } else {
+            cout << "Server confirmation received" << endl;
+        }
     }
 
     is_initialized = true;
@@ -98,7 +108,6 @@ long int SocketClient::ReceivePacket()
     num_bytes = recvfrom(this->socket_fd, buf, sizeof(buf), 0,
             NULL, NULL);  // Don't care about the sender, it's known ( maybe add it back for more security checks)
 
-    cout << "#DEBUG received:" << num_bytes << " bytes" << endl;
 
     if (num_bytes == 0) {
         // TODO client closed connection
@@ -109,7 +118,7 @@ long int SocketClient::ReceivePacket()
         return -1;
     } else {
         // DEBUG
-        cout << "Received " << num_bytes << " bytes" << endl;
+        cout << "Received \"" << buf << "\"" << num_bytes << " bytes" << endl;
         this->recv_handler(buf, num_bytes);   // Fire the event
 
         totalReceivedBytes += num_bytes;
