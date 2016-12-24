@@ -8,6 +8,8 @@
 #define BUF_LEN 256
 #define WELCOME_HEADER "redirect"
 #define REDIRECT_SUCCESS "REDIRECT SUCCESSFUL"
+#define PROTOCOL_MAX_PACKET_LENGTH 64
+#define REDIRECT_OK "OK"
 
 /**
  * Creates a new client socket that connects to the specified server address and port
@@ -26,13 +28,14 @@ SocketClient::SocketClient(const string &server_addr, const unsigned short serve
 int SocketClient::HandshakeServer(string &handshake)
 {
     // Don't check for byte count sent with UDP, it's meaningless
+
     if ((sendto(socket_fd, handshake.c_str(),
             handshake.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
         log_error("send to server");
         exit(1);
     }
 
-    char buf[64] = {0};
+    char buf[PROTOCOL_MAX_PACKET_LENGTH] = {0};
 
     long int num_bytes;
 
@@ -51,29 +54,24 @@ int SocketClient::HandshakeServer(string &handshake)
         close(this->socket_fd);  // Close the welcome socket
         SwitchToRedirectedSocket(buf);
 
-//        vector<char> redirect_confirmation;
-//        string success = string(REDIRECT_SUCCESS);
+        string redirect_confirm(REDIRECT_SUCCESS);
 
-        basic_string<char> str(string(REDIRECT_SUCCESS));
-        str.push_back('\0');
+        cout << "Sending:" << redirect_confirm.c_str() << endl;
+        if ((sendto(socket_fd, redirect_confirm.c_str(),
+                redirect_confirm.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+            log_error("send to server");
+            exit(1);
+        }
 
-        // TODO refactor this into its function
-//        for (int i = 0; i < success.size(); i++) {
-//            redirect_confirmation.push_back(success[i]);
-//        }
-//        redirect_confirmation.push_back('\0');
-//
-
-        SendPacket(str);   // TEST
-
-        memset(buf, 0, 64);
+        memset(buf, 0, PROTOCOL_MAX_PACKET_LENGTH);
         int bytes = (int) recvfrom(this->socket_fd, buf, sizeof(buf), 0, NULL, NULL);
-        if (bytes < 1) {
-            cerr << "Confirmation not received" << endl;
+        if (string(buf) == string(REDIRECT_OK)) {
+            cout << "Server redirect confirmation received" << endl;
+        } else {
+            cerr << "Bad confirmation received:\"" << string(buf) << "\"" << endl;
             log_error("Confirm Failed");
             exit(2);
-        } else {
-            cout << "Server confirmation received" << endl;
+
         }
     }
 

@@ -4,7 +4,11 @@
 
 #ifndef ENHANCEDUDPCLIENT_DATAPACKETSTRUCT_H
 #define ENHANCEDUDPCLIENT_DATAPACKETSTRUCT_H
-struct data_packet
+
+#include <vector>
+#include <string>
+
+struct DataPacket
 {
     /* Header */
     unsigned short cksum;
@@ -14,5 +18,9 @@ struct data_packet
     /* Data */
     char data[248] = {0}; // Struct total size is 256 bytes
 
+    static DataPacket Create(std::basic_string<char> data, unsigned int seq_no);
 };
+
+
+
 #endif //ENHANCEDUDPCLIENT_DATAPACKETSTRUCT_H

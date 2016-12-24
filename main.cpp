@@ -1,5 +1,5 @@
 #include "SocketClient.h"
-#include "libs/data_packet.h"
+#include "libs/DataPacket.h"
 
 using namespace std;
 #define SERVER_IP_ADDR "192.168.1.7"
@@ -13,7 +13,7 @@ using namespace std;
  */
 void woot(char *msg, long int size)
 {
-    //data_packet *rec = reinterpret_cast<data_packet *>(msg);
+    //DataPacket *rec = reinterpret_cast<DataPacket *>(msg);
     //cout << "WOOT: \"" << rec->len << "\"" << endl;
     //cout << "Found:" << rec->data << endl;
     cout << "Message:\"" << msg << "\"" << endl;
@@ -23,20 +23,21 @@ int main()
 {
 
 //
-//    data_packet p;
+//    DataPacket p;
 //    memset(&p, 0, sizeof(p));
 //    char msg[248] = {0};
 
     //sock.SendPacket("hndshk", sizeof("hndshk"));
     //sock.ReceivePacket(woot);
 
-    for (int i = 0; i < 100000; ++i) {
+    for (int i = 0; i < 10; ++i) {
+        cout << endl << "#" << i << endl;
         SocketClient sock(string(SERVER_IP_ADDR), PORT_NUM, woot);
         string handshake_msg("hndshk");
         sock.HandshakeServer(handshake_msg);
 
         vector<char> dummy_msg;
-        string success = "asd";
+        string success = "FILE-mizo.txt";
 
         basic_string<char> d(success);
         sock.SendPacket(d);
@@ -54,10 +55,10 @@ int main()
 //
 //        char *packed = reinterpret_cast<char *>(&p);
 //
-//        data_packet *pRec = reinterpret_cast<data_packet *>(packed);
+//        DataPacket *pRec = reinterpret_cast<DataPacket *>(packed);
 //
 ////    cout << "Unpacked:" << pRec->data << endl;
-//        sock.SendPacket(packed, sizeof(data_packet));
+//        sock.SendPacket(packed, sizeof(DataPacket));
 //        sock.ReceivePacket(woot);
 //    }
 

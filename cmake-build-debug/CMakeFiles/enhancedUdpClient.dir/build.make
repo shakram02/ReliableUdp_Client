@@ -153,12 +153,112 @@ CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o.provides: CMakeFiles/enhancedU
 CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o.provides.build: CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o
 
 
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o: CMakeFiles/enhancedUdpClient.dir/flags.make
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o: ../Checksum.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o -c /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Checksum.cpp
+
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Checksum.cpp > CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.i
+
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Checksum.cpp -o CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.s
+
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o.requires:
+
+.PHONY : CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o.requires
+
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o.provides: CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o.requires
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o.provides.build
+.PHONY : CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o.provides
+
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o.provides.build: CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o
+
+
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o: CMakeFiles/enhancedUdpClient.dir/flags.make
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o: ../Serializer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o -c /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Serializer.cpp
+
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Serializer.cpp > CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.i
+
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Serializer.cpp -o CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.s
+
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o.requires:
+
+.PHONY : CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o.requires
+
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o.provides: CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o.requires
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o.provides.build
+.PHONY : CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o.provides
+
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o.provides.build: CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o
+
+
+CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o: CMakeFiles/enhancedUdpClient.dir/flags.make
+CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o: ../libs/DataPacket.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o -c /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/DataPacket.cpp
+
+CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/DataPacket.cpp > CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.i
+
+CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/DataPacket.cpp -o CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.s
+
+CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o.requires:
+
+.PHONY : CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o.requires
+
+CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o.provides: CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o.requires
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o.provides.build
+.PHONY : CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o.provides
+
+CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o.provides.build: CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o
+
+
+CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o: CMakeFiles/enhancedUdpClient.dir/flags.make
+CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o: ../libs/AckPacket.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o -c /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/AckPacket.cpp
+
+CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/AckPacket.cpp > CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.i
+
+CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/AckPacket.cpp -o CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.s
+
+CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o.requires:
+
+.PHONY : CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o.requires
+
+CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o.provides: CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o.requires
+	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o.provides.build
+.PHONY : CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o.provides
+
+CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o.provides.build: CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o
+
+
 # Object files for target enhancedUdpClient
 enhancedUdpClient_OBJECTS = \
 "CMakeFiles/enhancedUdpClient.dir/main.cpp.o" \
 "CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o" \
 "CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o" \
-"CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o"
+"CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o" \
+"CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o" \
+"CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o" \
+"CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o" \
+"CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o"
 
 # External object files for target enhancedUdpClient
 enhancedUdpClient_EXTERNAL_OBJECTS =
@@ -167,9 +267,13 @@ enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/main.cpp.o
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o
+enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o
+enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o
+enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o
+enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/build.make
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable enhancedUdpClient"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable enhancedUdpClient"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/enhancedUdpClient.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -181,6 +285,10 @@ CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/main
 CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o.requires
 CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o.requires
 CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o.requires
+CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o.requires
+CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o.requires
+CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o.requires
+CMakeFiles/enhancedUdpClient.dir/requires: CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o.requires
 
 .PHONY : CMakeFiles/enhancedUdpClient.dir/requires
 

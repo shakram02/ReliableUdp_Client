@@ -84,10 +84,22 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Checksum.cpp">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Checksum.h">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Serializer.cpp">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Serializer.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.cpp">
@@ -96,10 +108,16 @@
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/ack_packet.h">
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/AckPacket.cpp">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/data_packet.h">
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/AckPacket.h">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/DataPacket.cpp">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/DataPacket.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/netutils.c">

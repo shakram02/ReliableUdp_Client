@@ -4,11 +4,10 @@
 
 #ifndef ENHANCEDUDPCLIENT_ACKPACKETS_H
 #define ENHANCEDUDPCLIENT_ACKPACKETS_H
-struct ack_packet
+struct AckPacket
 {
     unsigned short cksum;
     unsigned short len;
     unsigned intackno;
-
 };
 #endif //ENHANCEDUDPCLIENT_ACKPACKETS_H

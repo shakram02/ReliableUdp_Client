@@ -4,15 +4,30 @@
 CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o: ../libs/netutils.c
 CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o: ../libs/netutils.h
 
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o: ../Checksum.cpp
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o: ../Checksum.h
+CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o: ../libs/DataPacket.h
+
 CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o: ../FileWriter.cpp
 CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o: ../FileWriter.h
+
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o: ../Serializer.cpp
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o: ../Serializer.h
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o: ../libs/AckPacket.h
+CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o: ../libs/DataPacket.h
 
 CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o: .././libs/netutils.h
 CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o: ../SocketClient.cpp
 CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o: ../SocketClient.h
 
+CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o: ../libs/AckPacket.cpp
+CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o: ../libs/AckPacket.h
+
+CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o: ../libs/DataPacket.cpp
+CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o: ../libs/DataPacket.h
+
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: .././libs/netutils.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../SocketClient.h
-CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../libs/data_packet.h
+CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../libs/DataPacket.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../main.cpp
 

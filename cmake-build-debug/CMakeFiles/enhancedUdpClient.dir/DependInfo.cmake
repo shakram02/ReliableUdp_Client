@@ -13,8 +13,12 @@ set(CMAKE_C_COMPILER_ID "GNU")
 set(CMAKE_C_TARGET_INCLUDE_PATH
   )
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Checksum.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o"
   "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o"
+  "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/Serializer.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o"
   "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o"
+  "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/AckPacket.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o"
+  "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/DataPacket.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o"
   "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
