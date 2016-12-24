@@ -37,9 +37,13 @@ int main()
     string handshake_msg("hndshk");
     sock.HandshakeServer(handshake_msg);
 
-    vector<char> dummy_msg;
+    string files[3] = {
+            string("mizo.txt"),
+            string("pixi.ico"),
+            string("zwp.jpg")
+    };
 
-    string file_name("mizo.txt");
+    string file_name = files[0];
 
     basic_string<char> file_request("FILE-");
     file_request.append(file_name);
@@ -60,21 +64,24 @@ int main()
         return -1;
     }
 
-// TODO wrong packet count and content
+    // TODO wrong packet count and content
     pack0 = pack0.substr(strlen(SERV_FILESZ_HEADER), pack0.size() - 1);
     char *pckt_num_ptr = (char *) pack0.c_str();
     //ptr[pack0.size()] = 0;
-    cout << "Expected packet number:" << pckt_num_ptr << "  " << pack0 << endl;
 
-    int file_size = stoi(pckt_num_ptr, nullptr, 0);
+    cout << "Expected packet number:" << pckt_num_ptr << endl;
 
-    for (int j = 0; j < file_size; ++j) {
-        int packet_size;
+    int packet_count = stoi(pckt_num_ptr, nullptr, 0);
+
+
+    for (int j = 0; j < packet_count; ++j) {
+
+        int packet_size = 0;
         const basic_string<char> packet_content = sock.ReceivePacket(&packet_size);
         //ptr[packet_size] = 0;    // Terminate the thing ( though this is out of the array :3 )
 
         writer.Write((char *) packet_content.data(), packet_size);
-        cout << "Packet #" << j << " ";
+        cout << "Packet #" << j << "Packet size " << packet_size << " Bytes" << endl;
     }
 
 

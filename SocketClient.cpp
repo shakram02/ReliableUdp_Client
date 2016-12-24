@@ -98,7 +98,7 @@ basic_string<char> SocketClient::ReceivePacket(int *size)
         fprintf(stderr, "An error occurred during initialization, can't call function ReceivePacket");
         exit(-1);
     }
-    cout << endl << endl << endl;
+    cout << endl;
     char buf[BUF_LEN] = {0};
 
     long int num_bytes;

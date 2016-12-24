@@ -43,6 +43,7 @@ void FileWriter::Write(char *buffer, unsigned int size)
 FileWriter::~FileWriter()
 {
     if (out_file.is_open()) {
+        cout << "File writer flushed" << endl;
         out_file.close();
     }
 }
