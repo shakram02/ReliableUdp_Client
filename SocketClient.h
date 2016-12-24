@@ -44,7 +44,7 @@ public:
  * @param recvHandler
  * @return
  */
-    basic_string<char> ReceivePacket(int *size);
+    long ReceivePacket(void **buf);
 
     ~SocketClient();
 

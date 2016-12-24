@@ -51,11 +51,13 @@ int main()
     FileWriter writer((char *) file_name.c_str());
     sock.SendPacket(file_request);
 
-    int file_header_packet_size;
-    string pack0 = sock.ReceivePacket(&file_header_packet_size);
+    void *file_header;
+    long rcv_count = sock.ReceivePacket(&file_header);
 
     // Trim the last element as it's garbage because a string is being received
-    pack0 = pack0.substr(0, file_header_packet_size);
+
+    string pack0((char *) file_header);
+    cout << "Received:" << pack0 << endl;
 
     int pos = (int) pack0.find(SERV_FILESZ_HEADER);
 
@@ -76,11 +78,11 @@ int main()
 
     for (int j = 0; j < packet_count; ++j) {
 
-        int packet_size = 0;
-        const basic_string<char> packet_content = sock.ReceivePacket(&packet_size);
-        //ptr[packet_size] = 0;    // Terminate the thing ( though this is out of the array :3 )
 
-        writer.Write((char *) packet_content.data(), packet_size);
+        void *packet_content;
+        long packet_size = sock.ReceivePacket(&packet_content);
+
+        writer.Write(packet_content, packet_size);
         cout << "Packet #" << j << "Packet size " << packet_size << " Bytes" << endl;
     }
 

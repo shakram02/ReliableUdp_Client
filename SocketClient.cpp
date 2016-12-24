@@ -91,7 +91,7 @@ void SocketClient::SendPacket(basic_string<char> &data)
     return;
 }
 
-basic_string<char> SocketClient::ReceivePacket(int *size)
+long SocketClient::ReceivePacket(void **buf)
 {
 
     if (!is_initialized) {
@@ -99,10 +99,10 @@ basic_string<char> SocketClient::ReceivePacket(int *size)
         exit(-1);
     }
     cout << endl;
-    char buf[BUF_LEN] = {0};
-
+    //char buf[BUF_LEN] = {0};
+    void *ptr = calloc(BUF_LEN, sizeof(char));
     long int num_bytes;
-    num_bytes = recvfrom(this->socket_fd, buf, sizeof(buf), 0,
+    num_bytes = recvfrom(this->socket_fd, ptr, BUF_LEN * sizeof(char), 0,
             NULL, NULL);  // Don't care about the sender, it's known ( maybe add it back for more security checks)
 
     if (num_bytes == 0) {
@@ -114,15 +114,15 @@ basic_string<char> SocketClient::ReceivePacket(int *size)
         // DEBUG
         cout << "Received " << num_bytes << " bytes" << endl;
 
-        char msg[num_bytes + 1] = {0};
-        memcpy(&msg, buf, (size_t) num_bytes);
-        //msg[num_bytes] = 0;   // TODO WEIRD TODO TODO
+
+        (*buf) = calloc((size_t) num_bytes, sizeof(char));
+        memcpy((*buf), ptr, (size_t) num_bytes);
+
 
         totalReceivedBytes += num_bytes;
-        *size = (int) num_bytes;
-        return basic_string<char>(msg);
+        return num_bytes;
     }
-    return basic_string<char>();
+    return 0;
 }
 
 void SocketClient::SwitchToRedirectedSocket(char *message)
