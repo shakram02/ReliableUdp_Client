@@ -16,10 +16,8 @@
  * @param server_addr Server Address
  * @param server_port Port of the server
  */
-SocketClient::SocketClient(const string &server_addr, const unsigned short server_port,
-        void recv_callback(char *, long))
+SocketClient::SocketClient(const string &server_addr, const unsigned short server_port)
 {
-    this->recv_handler = recv_callback;
     this->server_addr = string(server_addr);
     InitializeSocket(server_port);
 }
@@ -93,8 +91,9 @@ void SocketClient::SendPacket(basic_string<char> &data)
     return;
 }
 
-long int SocketClient::ReceivePacket()
+basic_string<char> SocketClient::ReceivePacket(int *size)
 {
+
     if (!is_initialized) {
         fprintf(stderr, "An error occurred during initialization, can't call function ReceivePacket");
         exit(-1);
@@ -106,22 +105,24 @@ long int SocketClient::ReceivePacket()
     num_bytes = recvfrom(this->socket_fd, buf, sizeof(buf), 0,
             NULL, NULL);  // Don't care about the sender, it's known ( maybe add it back for more security checks)
 
-
     if (num_bytes == 0) {
         // TODO client closed connection
-        return 0;
     } else if (num_bytes == -1) {
         // TODO Log error
         log_error("timeout");
-        return -1;
     } else {
         // DEBUG
-        cout << "Received \"" << buf << "\"" << num_bytes << " bytes" << endl;
-        this->recv_handler(buf, num_bytes);   // Fire the event
+        cout << "Received " << num_bytes << " bytes" << endl;
+
+        char msg[num_bytes + 1] = {0};
+        memcpy(&msg, buf, (size_t) num_bytes);
+        //msg[num_bytes] = 0;   // TODO WEIRD TODO TODO
 
         totalReceivedBytes += num_bytes;
+        *size = (int) num_bytes;
+        return basic_string<char>(msg);
     }
-    return totalReceivedBytes;
+    return basic_string<char>();
 }
 
 void SocketClient::SwitchToRedirectedSocket(char *message)

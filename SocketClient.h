@@ -27,8 +27,7 @@ public:
     * @param server_addr Server Address
     * @param server_port Port of the server
     */
-    SocketClient(const string &server_addr, const unsigned short server_port,
-            void recv_callback(char *chunk, long chunk_size));
+    SocketClient(const string &server_addr, const unsigned short server_port);
 
 
     /**
@@ -45,7 +44,7 @@ public:
  * @param recvHandler
  * @return
  */
-    long int ReceivePacket();
+    basic_string<char> ReceivePacket(int *size);
 
     ~SocketClient();
 
@@ -64,7 +63,7 @@ private:
     sockaddr_in endpoint;
     string server_addr;
 
-    void (*recv_handler)(char *chunk, long chunk_size);
+    //void (*recv_handler)(char *chunk, long chunk_size);
 
     void SwitchToRedirectedSocket(char *message);
 

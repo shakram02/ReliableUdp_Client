@@ -93,4 +93,6 @@ SocketClient.h
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
 libs/DataPacket.h
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/libs/DataPacket.h
+FileWriter.h
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h
 

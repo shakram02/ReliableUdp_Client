@@ -6,44 +6,43 @@
 #include "FileWriter.h"
 
 
-FileWriter::FileWriter(char *fileName)
+FileWriter::FileWriter(char *inp_file_name)
 {
-    this->fileName = (char *) malloc(strlen(fileName) + 1);
-    strcpy(this->fileName, fileName);
+    this->file_name = string(inp_file_name);
 
     // TODO use exceptions
 //    try
 //    {
 //        // Just checking if the file exists
-//        outFile.open(this->fileName, ios::in);
+//        out_file.open(this->file_name, ios::in);
 //    }
 //    catch (exception &exc)
 //    {
 //        cout << "Unable to open the file, " << exc.what() << endl;
 //    }
 
-    outFile.open(this->fileName, ios::in);
-    if (!outFile.is_open())
-    {
+    out_file.open(this->file_name, ios::binary);
+    if (!out_file.is_open()) {
         fprintf(stderr, "Failed to open file");
 
         return;
     }
-    outFile.close();
+    out_file.close();
 }
 
-void FileWriter::Write(char *buffer)
+void FileWriter::Write(char *buffer, unsigned int size)
 {
-    if (!outFile.is_open())
-    {
-        outFile.open(this->fileName, ios::app | ios::binary);
+    if (!out_file.is_open()) {
+        out_file.open(this->file_name, ios::app | ios::binary);
     }
-    outFile.write(buffer, strlen(buffer));
-    outFile.close();
+    out_file.write(buffer, size);
+    out_file.close();
 
 }
 
 FileWriter::~FileWriter()
 {
-    free(this->fileName);
+    if (out_file.is_open()) {
+        out_file.close();
+    }
 }

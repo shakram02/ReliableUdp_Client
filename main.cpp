@@ -1,9 +1,11 @@
 #include "SocketClient.h"
 #include "libs/DataPacket.h"
+#include "FileWriter.h"
 
 using namespace std;
-#define SERVER_IP_ADDR "192.168.1.7"
-
+//#define SERVER_IP_ADDR "192.168.1.7"
+#define SERVER_IP_ADDR "127.0.0.1"
+#define SERV_FILESZ_HEADER "FILESIZE-"
 #define PORT_NUM 62135
 
 /**
@@ -30,18 +32,54 @@ int main()
     //sock.SendPacket("hndshk", sizeof("hndshk"));
     //sock.ReceivePacket(woot);
 
-    for (int i = 0; i < 10; ++i) {
-        cout << endl << "#" << i << endl;
-        SocketClient sock(string(SERVER_IP_ADDR), PORT_NUM, woot);
-        string handshake_msg("hndshk");
-        sock.HandshakeServer(handshake_msg);
 
-        vector<char> dummy_msg;
-        string success = "FILE-mizo.txt";
+    SocketClient sock(string(SERVER_IP_ADDR), PORT_NUM);
+    string handshake_msg("hndshk");
+    sock.HandshakeServer(handshake_msg);
 
-        basic_string<char> d(success);
-        sock.SendPacket(d);
+    vector<char> dummy_msg;
+
+    string file_name("mizo.txt");
+
+    basic_string<char> file_request("FILE-");
+    file_request.append(file_name);
+
+    FileWriter writer((char *) file_name.c_str());
+    sock.SendPacket(file_request);
+
+    int file_header_packet_size;
+    string pack0 = sock.ReceivePacket(&file_header_packet_size);
+
+    // Trim the last element as it's garbage because a string is being received
+    pack0 = pack0.substr(0, file_header_packet_size);
+
+    int pos = (int) pack0.find(SERV_FILESZ_HEADER);
+
+    if (pos != 0) {
+        cerr << "Malformed file header" << endl;
+        return -1;
     }
+
+// TODO wrong packet count and content
+    pack0 = pack0.substr(strlen(SERV_FILESZ_HEADER), pack0.size() - 1);
+    char *pckt_num_ptr = (char *) pack0.c_str();
+    //ptr[pack0.size()] = 0;
+    cout << "Expected packet number:" << pckt_num_ptr << "  " << pack0 << endl;
+
+    int file_size = stoi(pckt_num_ptr, nullptr, 0);
+
+    for (int j = 0; j < file_size; ++j) {
+        int packet_size;
+        const basic_string<char> packet_content = sock.ReceivePacket(&packet_size);
+        //ptr[packet_size] = 0;    // Terminate the thing ( though this is out of the array :3 )
+
+        writer.Write((char *) packet_content.data(), packet_size);
+        cout << "Packet #" << j << " ";
+    }
+
+
+    writer.~FileWriter();
+
     //string msg;
 //    while (1)
 //    {

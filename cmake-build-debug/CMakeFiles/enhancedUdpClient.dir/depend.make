@@ -27,6 +27,7 @@ CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o: ../libs/DataPacket.cpp
 CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o: ../libs/DataPacket.h
 
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: .././libs/netutils.h
+CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../FileWriter.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../SocketClient.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../libs/DataPacket.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../main.cpp

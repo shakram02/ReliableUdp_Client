@@ -16,15 +16,15 @@ class FileWriter
 public:
     /**
      * Manages writing to file and writing big files
-     * @param fileName
+     * @param inp_file_name
      */
-    FileWriter(char *fileName);
+    FileWriter(char *inp_file_name);
 
     /**
      * Writes an array of bytes to the file
      * @param buffer bytes to write
      */
-    void Write(char *buffer);
+    void Write(char *buffer, unsigned int size);
 
     /**
      * Disposes the FileWrite allocated resources
@@ -32,8 +32,8 @@ public:
     ~FileWriter();
 
 private:
-    ofstream outFile;
-    char *fileName;
+    ofstream out_file;
+    string file_name;
 };
 
 
