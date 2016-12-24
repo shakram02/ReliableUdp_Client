@@ -43,7 +43,7 @@ int main()
             string("zwp.jpg")
     };
 
-    string file_name = files[0];
+    string file_name = files[1];
 
     basic_string<char> file_request("FILE-");
     file_request.append(file_name);
