@@ -43,7 +43,7 @@ int main()
             string("zwp.jpg")
     };
 
-    string file_name = files[1];
+    string file_name = files[2];
 
     basic_string<char> file_request("FILE-");
     file_request.append(file_name);
@@ -55,11 +55,10 @@ int main()
     long rcv_count = sock.ReceivePacket(&file_header);
 
     // Trim the last element as it's garbage because a string is being received
+    string file_header_packet((char *) file_header);
+    cout << "Received:" << file_header_packet << endl;
 
-    string pack0((char *) file_header);
-    cout << "Received:" << pack0 << endl;
-
-    int pos = (int) pack0.find(SERV_FILESZ_HEADER);
+    int pos = (int) file_header_packet.find(SERV_FILESZ_HEADER);
 
     if (pos != 0) {
         cerr << "Malformed file header" << endl;
@@ -67,9 +66,9 @@ int main()
     }
 
     // TODO wrong packet count and content
-    pack0 = pack0.substr(strlen(SERV_FILESZ_HEADER), pack0.size() - 1);
-    char *pckt_num_ptr = (char *) pack0.c_str();
-    //ptr[pack0.size()] = 0;
+    file_header_packet = file_header_packet.substr(strlen(SERV_FILESZ_HEADER), file_header_packet.size() - 1);
+    char *pckt_num_ptr = (char *) file_header_packet.c_str();
+    //ptr[file_header_packet.size()] = 0;
 
     cout << "Expected packet number:" << pckt_num_ptr << endl;
 
@@ -78,12 +77,17 @@ int main()
 
     for (int j = 0; j < packet_count; ++j) {
 
-
         void *packet_content;
         long packet_size = sock.ReceivePacket(&packet_content);
 
         writer.Write(packet_content, packet_size);
         cout << "Packet #" << j << "Packet size " << packet_size << " Bytes" << endl;
+
+        string d("RECV-");
+        d.append(to_string(j));
+        sock.SendPacket(d);
+
+
     }
 
 
