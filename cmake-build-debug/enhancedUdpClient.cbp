@@ -8,43 +8,43 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
+				<Option working_dir="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
+				<Option working_dir="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
+				<Option working_dir="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="enhancedUdpClient">
-				<Option output="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/enhancedUdpClient" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
+				<Option output="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/enhancedUdpClient" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/../../UdpSocketLib/include"/>
+					<Add directory="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/../../UdpSocketLib/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
@@ -55,20 +55,20 @@
 					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 enhancedUdpClient"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 enhancedUdpClient"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="enhancedUdpClient/fast">
-				<Option output="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/enhancedUdpClient" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
+				<Option output="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/enhancedUdpClient" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/../../UdpSocketLib/include"/>
+					<Add directory="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/../../UdpSocketLib/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
@@ -79,32 +79,38 @@
 					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 enhancedUdpClient/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 enhancedUdpClient/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp">
+		<Unit filename="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/ClientSocket.cpp">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h">
+		<Unit filename="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/ClientSocket.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.cpp">
+		<Unit filename="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h">
+		<Unit filename="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h">
+		<Unit filename="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/GbnReceiver.cpp">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp">
+		<Unit filename="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/GbnReceiver.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/CMakeLists.txt">
+		<Unit filename="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/main.cpp">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

@@ -14,10 +14,12 @@ extern "C"
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <DataPacket.h>
+#include <BinarySerializer.h>
 
 using namespace std;
 
-class SocketClient
+class ClientSocket
 {
 public:
 
@@ -26,7 +28,7 @@ public:
     * @param server_addr Server Address
     * @param server_port Port of the server
     */
-    SocketClient(const string &server_addr, const unsigned short server_port);
+    ClientSocket(const string &server_addr, const unsigned short server_port);
 
 
     /**
@@ -45,13 +47,18 @@ public:
  */
     long ReceiveRaw(void **buf);
 
-    ~SocketClient();
+    bool ReceiveDataPacket(DataPacket *data_pckt);
+
+    ~ClientSocket();
 
     int HandshakeServer(string &handshake);
+
 
 private:
 
     void InitializeSocket(const unsigned short server_port);
+
+    bool LogSockError(long num_bytes);
 
     /**
      * File descriptor for the open socket

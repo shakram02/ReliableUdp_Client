@@ -3,7 +3,9 @@
 //
 
 
-#include "SocketClient.h"
+
+
+#include "ClientSocket.h"
 #include "globaldefs.h"
 
 /**
@@ -11,14 +13,14 @@
  * @param server_addr Server Address
  * @param server_port Port of the server
  */
-SocketClient::SocketClient(const string &server_addr, const unsigned short server_port)
+ClientSocket::ClientSocket(const string &server_addr, const unsigned short server_port)
 {
     this->server_addr = string(server_addr);
     InitializeSocket(server_port);
 }
 
 
-int SocketClient::HandshakeServer(string &handshake)
+int ClientSocket::HandshakeServer(string &handshake)
 {
     // Don't check for byte count sent with UDP, it's meaningless
 
@@ -85,13 +87,7 @@ int SocketClient::HandshakeServer(string &handshake)
     return 1;
 }
 
-
-/**
- * Sends an array of bytes (unsigned char) to the server
- * @param data Message content to be sent ( reason for char* )
- * @return the number of bytes that were actually sent
- */
-void SocketClient::SendPacket(void *data, unsigned int len)
+void ClientSocket::SendPacket(void *data, unsigned int len)
 {
     if ((sendto(socket_fd, data, len, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
 #if LOG >= 1
@@ -102,7 +98,7 @@ void SocketClient::SendPacket(void *data, unsigned int len)
     return;
 }
 
-long SocketClient::ReceiveRaw(void **buf)
+long ClientSocket::ReceiveRaw(void **buf)
 {
 
     if (!is_initialized) {
@@ -111,41 +107,46 @@ long SocketClient::ReceiveRaw(void **buf)
 #endif
         exit(-1);
     }
-#if LOG >= 3
-    cout << endl;
-#endif
-    //char buf[BUF_LEN] = {0};
+
     void *ptr = calloc(BUF_LEN, sizeof(char));
     long int num_bytes;
     num_bytes = recvfrom(this->socket_fd, ptr, BUF_LEN * sizeof(char), 0,
             NULL, NULL);  // Don't care about the sender, it's known ( maybe add it back for more security checks)
 
-    if (num_bytes == 0) {
-        // TODO client closed connection
-#if LOG >= 1
-        log_error("connection closed");
-#endif
-    } else if (num_bytes == -1) {
-        // TODO Log error
-#if LOG >= 1
-        log_error("timeout");
-#endif
-    } else {
+    if (LogSockError(num_bytes))return 0;
 
-#if LOG >= 3
-        cout << "Received " << num_bytes << " bytes" << endl;
-#endif
+    (*buf) = calloc((size_t) num_bytes, sizeof(char));
+    memcpy((*buf), ptr, (size_t) num_bytes);
 
-        (*buf) = calloc((size_t) num_bytes, sizeof(char));
-        memcpy((*buf), ptr, (size_t) num_bytes);
-
-        totalReceivedBytes += num_bytes;
-        return num_bytes;
-    }
-    return 0;
+    free(ptr);
+    totalReceivedBytes += num_bytes;
+    return num_bytes;
 }
 
-void SocketClient::SwitchToRedirectedSocket(char *message)
+bool ClientSocket::ReceiveDataPacket(DataPacket *data_pckt)
+{
+    void *buf = 0;
+
+    int num_bytes = (int) ReceiveRaw(&buf);
+    if (num_bytes < 1)return false;
+
+    DataPacket *temp;
+    BinarySerializer::DeserializeDataPacket(buf, (unsigned int) num_bytes, &temp);
+
+    data_pckt->chksum = temp->chksum;
+    data_pckt->seqno = temp->seqno;
+    data_pckt->len = temp->len;
+
+
+    //cout << "Packet length:" << temp->len << endl;
+    memcpy(data_pckt->data, temp->data, temp->len);
+
+    free(buf);
+
+    return true;
+}
+
+void ClientSocket::SwitchToRedirectedSocket(char *message)
 {
     string redirect_message = string(message);
     redirect_message.replace(0, strlen(WELCOME_HEADER), "");
@@ -155,7 +156,8 @@ void SocketClient::SwitchToRedirectedSocket(char *message)
     InitializeSocket((unsigned short) stoi(redirect_message));
 }
 
-void SocketClient::InitializeSocket(const unsigned short server_port)
+
+void ClientSocket::InitializeSocket(const unsigned short server_port)
 {
     memset(&endpoint, 0, sizeof(endpoint));
 
@@ -177,8 +179,8 @@ void SocketClient::InitializeSocket(const unsigned short server_port)
     timeval timeout;
     // Removing memset causes unidentified behaviour as the values are originally garbage
     memset(&timeout, 0, sizeof(timeout));
-    timeout.tv_sec = 3;
-
+    timeout.tv_sec = RCV_TIMEO_SEC;
+    timeout.tv_usec = RCV_TIMEO_USEC;
     if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeval)) < 0) {
 #if LOG >= 1
         log_error("set receive timeout");
@@ -192,7 +194,29 @@ void SocketClient::InitializeSocket(const unsigned short server_port)
     }
 }
 
-SocketClient::~SocketClient()
+bool ClientSocket::LogSockError(long num_bytes)
+{
+    bool is_err = false;
+    if (num_bytes == 0) {
+#if LOG >= 1
+        log_error("connection closed");
+#endif
+        is_err = true;
+    } else if (num_bytes == -1) {
+#if LOG >= 1
+        log_error("timeout");
+#endif
+
+        is_err = true;
+    } else {
+#if LOG >= 3
+        cout << endl << "Received " << num_bytes << " bytes" << endl;
+#endif
+    }
+    return is_err;
+}
+
+ClientSocket::~ClientSocket()
 {
     if (!is_initialized) {
         return;

@@ -4,9 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o"
-  "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o"
-  "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/main.cpp.o"
+  "/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/ClientSocket.cpp" "/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/ClientSocket.cpp.o"
+  "/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp" "/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o"
+  "/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/GbnReceiver.cpp" "/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o"
+  "/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/main.cpp" "/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
