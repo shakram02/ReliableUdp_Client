@@ -6,16 +6,17 @@
 #ifndef ENHANCEDUDPCLIENT_SOCKETCLIENT_H
 #define ENHANCEDUDPCLIENT_SOCKETCLIENT_H
 
-extern "C"
-{
-#include "netutils.h"
-};
+//extern "C"
+//{
+//#include "netutils.h"
+//};
 
 #include <iostream>
 #include <cstdlib>
 #include <vector>
 #include <DataPacket.h>
 #include <BinarySerializer.h>
+#include <netinet/in.h>
 
 using namespace std;
 
@@ -56,6 +57,7 @@ public:
 
 private:
 
+    bool is_disposed=false;
     void InitializeSocket(const unsigned short server_port);
 
     bool LogSockError(long num_bytes);
@@ -69,6 +71,7 @@ private:
     sockaddr_in endpoint;
     string server_addr;
 
+    void log_error(const char *func_name);
     //void (*recv_handler)(char *chunk, long chunk_size);
 
     void SwitchToRedirectedSocket(char *message);

@@ -7,7 +7,7 @@ set(PROJECT_LINK_LIBS libUdpSocketLib.so)
 link_directories(../../UdpSocketLib/cmake-build-debug)
 ##set ( PROJECT_LINK_LIBS libtestStudent.a )    # static lib
 
-find_package(Boost COMPONENTS system filesystem REQUIRED)
+find_package(Boost COMPONENTS system filesystem thread REQUIRED)
 set(SOURCE_FILES main.cpp ClientSocket.cpp ClientSocket.h FileWriter.cpp FileWriter.h globaldefs.h GbnReceiver.cpp GbnReceiver.h)
 
 # add the include folder that will ahve the headers
@@ -16,6 +16,6 @@ include_directories(../../UdpSocketLib/include)
 add_executable(enhancedUdpClient ${SOURCE_FILES})
 
 # add the library for linking
-target_link_libraries(enhancedUdpClient ${PROJECT_LINK_LIBS} ${Boost_SYSTEM_LIBRARY})
+target_link_libraries(enhancedUdpClient ${PROJECT_LINK_LIBS} ${Boost_SYSTEM_LIBRARY} ${Boost_LIBRARIES} ${BOOST_THREAD_USE_LIB})
 
 

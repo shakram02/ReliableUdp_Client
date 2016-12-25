@@ -9,23 +9,27 @@
 #include <queue>
 #include "ClientSocket.h"
 #include "globaldefs.h"
+#include <boost/thread/thread.hpp>
 
 typedef void *BinaryContainer;
 typedef void **BinaryContainerArray;
 
 class GbnReceiver
 {
-    ClientSocket client_sock;
+    ClientSocket *client_sock;
     int last_acked_seq_num = -1;
     unsigned int window_size;
 
-    GbnReceiver(unsigned int window_size, ClientSocket sock);
 
     bool AckWindow();
 
-    void ReceiveThread();
 
-    std::queue<int> received_queue;
+    std::queue<DataPacket> received_queue;
+
+public:
+    GbnReceiver(unsigned int window_size, ClientSocket *sock);
+
+    void ReceiveThread();
 };
 
 

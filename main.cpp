@@ -2,6 +2,7 @@
 
 #include "FileWriter.h"
 #include "globaldefs.h"
+#include "GbnReceiver.h"
 #include <boost/lockfree/queue.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -20,7 +21,7 @@ void woot(char *msg, long int size)
     cout << "Message:\"" << msg << "\"" << endl;
 }
 
-#define FILE_IDX 2
+#define FILE_IDX 0
 
 int main()
 {
@@ -28,7 +29,8 @@ int main()
     string handshake_msg("hndshk");
     sock.HandshakeServer(handshake_msg);
 
-    string files[3] = {
+    string files[4] = {
+            string("zmini.txt"),
             string("zooz.txt"),
             string("pixi.ico"),
             string("zwp.jpg")
@@ -71,64 +73,30 @@ int main()
     cout << "Working..." << endl;
 #endif
 
-
-    for (int j = 0; j < packet_count; ++j) {
-
-//        void *packet_content;
-//        packet_size = sock.ReceiveRaw(&packet_content);
+    GbnReceiver receiver(5, &sock);
+    auto *thread = new boost::thread(boost::bind(&GbnReceiver::ReceiveThread, receiver));
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(5000));
+    thread->interrupt();
+    cout << "Thread is deaad";
+//    for (int j = 0; j < packet_count; ++j) {
 //
-//        DataPacket *pck;
-//        BinarySerializer::DeserializeDataPacket(packet_content, 0, &pck);
+//        DataPacket pck;
+//        sock.ReceiveDataPacket(&pck);
+//        writer.Write(pck.data, pck.len);
 //
-//#if LOG >= 3
-//        cout << "Packet #" << pck->seqno
-//             << ", Packet size " << packet_size << " Bytes"
-//             << ", Packet content " << pck->data
+//
+//        cout << "Packet #" << pck.seqno
+//             << ", Packet size " << pck.len << " Bytes"
 //             << endl;
-//#endif
-//        // TODO take a notice, the last packet is padded with zeros
-//        // This should be removed before writing the data
-//        // TODO checksum the data
-//        writer.Write(pck->data, pck->len);
 //
-//        free(packet_content);
-
-        DataPacket pck;
-        sock.ReceiveDataPacket(&pck);
-        writer.Write(pck.data, pck.len);
-
-
-        cout << "Packet #" << pck.seqno
-             << ", Packet size " << pck.len << " Bytes"
-             << endl;
-
-
-        AckPacket ack(pck.seqno);
-        void *raw_ptr;
-        BinarySerializer::SerializeAckPacket(&ack, &raw_ptr);
-
-        sock.SendPacket(raw_ptr, sizeof(AckPacket));
-    }
-
-
-//    long packet_size = 1;
-//    while (packet_size) {
 //
-//        void *packet_content;
-//        packet_size = sock.ReceiveRaw(&packet_content);
-//
-//        DataPacket *pck;
-//        BinarySerializer::DeserializeDataPacket(packet_content, 0, &pck);
-//
-//        writer.Write(pck->data, pck->len);
-//
-//        AckPacket ack(pck->seqno);
+//        AckPacket ack(pck.seqno);
 //        void *raw_ptr;
 //        BinarySerializer::SerializeAckPacket(&ack, &raw_ptr);
 //
 //        sock.SendPacket(raw_ptr, sizeof(AckPacket));
 //    }
-
-    writer.~FileWriter();
+//
+//    writer.~FileWriter();
     return 0;
 }

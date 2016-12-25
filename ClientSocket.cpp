@@ -5,6 +5,9 @@
 
 
 
+#include <cstring>
+#include <zconf.h>
+#include <arpa/inet.h>
 #include "ClientSocket.h"
 #include "globaldefs.h"
 
@@ -41,45 +44,45 @@ int ClientSocket::HandshakeServer(string &handshake)
     cout << " Socket:" << this->socket_fd << endl;
 #endif
 
-    if (num_bytes == -1) {
-        // TODO Log error
-        log_error("timeout");
-        return -1;
-    } else {
-        // DEBUG
+    if (LogSockError(num_bytes))return 0;
+
+// DEBUG
 #if LOG >= 3
-        cout << "#DEBUG Handshake received:\"" << buf
-             << "\" Size:" << num_bytes << " bytes" << endl;
+    cout << "#DEBUG Handshake received:\"" << buf
+         << "\" Size:" << num_bytes << " bytes" <<
+         endl;
 #endif
 
-        close(this->socket_fd);  // Close the welcome socket
-        SwitchToRedirectedSocket(buf);
+    close(this->socket_fd);  // Close the welcome socket
+    SwitchToRedirectedSocket(buf);
 
-        string redirect_confirm(REDIRECT_SUCCESS);
+    string redirect_confirm(REDIRECT_SUCCESS);
 
-        cout << "Sending:" << redirect_confirm.c_str() << endl;
-        if ((sendto(socket_fd, redirect_confirm.c_str(),
-                redirect_confirm.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+    cout << "Sending:" << redirect_confirm.c_str() << endl;
+    if ((sendto(socket_fd, redirect_confirm.c_str(), redirect_confirm.size(),
+            0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
 #if LOG >= 1
-            log_error("Handshake# send to server");
+        log_error("Handshake# send to server");
 #endif
-            exit(1);
-        }
+        exit(1);
+    }
 
-        memset(buf, 0, PROTOCOL_MAX_PACKET_LENGTH);
-        int bytes = (int) recvfrom(this->socket_fd, buf, sizeof(buf), 0, NULL, NULL);
-        if (string(buf) == string(REDIRECT_OK)) {
+    memset(buf, 0, PROTOCOL_MAX_PACKET_LENGTH);
+    int n_bytes = (int) recvfrom(this->socket_fd, buf, sizeof(buf), 0, NULL, NULL);
+
+    LogSockError(n_bytes);
+
+    if (string(buf) == string(REDIRECT_OK)) {
 #if LOG >= 2
-            cout << "Server redirect confirmation received" << endl;
+        cout << "Server redirect confirmation received" << endl;
 #endif
-        } else {
+    } else {
 #if LOG >= 1
-            cerr << "Bad confirmation received:\"" << string(buf) << "\"" << endl;
+        cerr << "Bad confirmation received:\"" << string(buf)
+             << "\"" << endl;
 #endif
-            log_error("Confirm Failed");
-            exit(2);
-
-        }
+        log_error("Confirm Failed");
+        exit(2);
     }
 
     is_initialized = true;
@@ -204,13 +207,13 @@ bool ClientSocket::LogSockError(long num_bytes)
         is_err = true;
     } else if (num_bytes == -1) {
 #if LOG >= 1
-        log_error("timeout");
+        log_error("recvfrom err");
 #endif
 
         is_err = true;
     } else {
 #if LOG >= 3
-        cout << endl << "Received " << num_bytes << " bytes" << endl;
+        //cout << endl << "Received " << num_bytes << " bytes" << endl;
 #endif
     }
     return is_err;
@@ -218,8 +221,16 @@ bool ClientSocket::LogSockError(long num_bytes)
 
 ClientSocket::~ClientSocket()
 {
+    if (is_disposed)return;
+    is_disposed = true;
     if (!is_initialized) {
         return;
     }
     close(this->socket_fd);
+
+}
+
+void ClientSocket::log_error(const char *func_name)
+{
+    fprintf(stderr, "%s:%s\n", func_name, strerror(errno));
 }

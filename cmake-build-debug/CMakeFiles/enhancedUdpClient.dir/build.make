@@ -169,6 +169,12 @@ enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/build.make
 enhancedUdpClient: /usr/lib/x86_64-linux-gnu/libboost_system.so
+enhancedUdpClient: /usr/lib/x86_64-linux-gnu/libboost_system.so
+enhancedUdpClient: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+enhancedUdpClient: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+enhancedUdpClient: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
+enhancedUdpClient: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
+enhancedUdpClient: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
 enhancedUdpClient: CMakeFiles/enhancedUdpClient.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ahmed/code/c/Backup-UDP/restore0/ReliableUdpTransfer/enhancedUdpClient/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable enhancedUdpClient"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/enhancedUdpClient.dir/link.txt --verbose=$(VERBOSE)
