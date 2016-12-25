@@ -100,15 +100,18 @@ int main()
     void *pck;
     long packet_size = sock.ReceivePacket(&pck);
 
-    DataPacket d = BinarySerializer::DeserializeDataPacket(pck, packet_size);
+    cout << "Received " << packet_size << " bytes" << endl;
+    DataPacket *d;
+    BinarySerializer::DeserializeDataPacket(pck, sizeof(DataPacket), &d);
 
-    cout << "Binary deserialized data:" << d.data << endl;
+    cout << "Data: " << d->data << endl;
+    cout << "Sequence number:" << d->seqno << endl;
 
-    AckPacket ack(d.seqno);
+    AckPacket ack(d->seqno);
     void *ackpck;
-    BinarySerializer::SerializeAckPacket(ack, &ackpck);
+    BinarySerializer::SerializeAckPacket(&ack, &ackpck);
 
-    sock.SendPacket(ackpck, sizeof(AckPacket));
+    sock.SendPacket(ackpck, sizeof(ack));
     asm("nop");
     //string msg;
 //    while (1)

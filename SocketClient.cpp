@@ -29,7 +29,7 @@ int SocketClient::HandshakeServer(string &handshake)
 
     if ((sendto(socket_fd, handshake.c_str(),
             handshake.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
-        log_error("send to server");
+        log_error("Handshake# send to server");
         exit(1);
     }
 
@@ -57,7 +57,7 @@ int SocketClient::HandshakeServer(string &handshake)
         cout << "Sending:" << redirect_confirm.c_str() << endl;
         if ((sendto(socket_fd, redirect_confirm.c_str(),
                 redirect_confirm.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
-            log_error("send to server");
+            log_error("Handshake# send to server");
             exit(1);
         }
 
@@ -85,7 +85,7 @@ int SocketClient::HandshakeServer(string &handshake)
 void SocketClient::SendPacket(void *data, unsigned int len)
 {
     if ((sendto(socket_fd, data, len, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
-        log_error("send to server");
+        log_error("Send# send to server");
         // TODO handle timeout or send failure
     }
     return;
