@@ -37,6 +37,8 @@ cstring
 -
 FileWriter.h
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h
+globaldefs.h
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h
 
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h
 fstream
@@ -49,6 +51,8 @@ exception
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.cpp
 SocketClient.h
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
+globaldefs.h
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h
 
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
 netutils.h
@@ -60,6 +64,8 @@ cstdlib
 vector
 -
 
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h
+
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp
 SocketClient.h
 /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
@@ -69,4 +75,6 @@ DataPacket.h
 -
 BinarySerializer.h
 -
+globaldefs.h
+/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h
 

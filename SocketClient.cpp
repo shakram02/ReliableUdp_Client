@@ -4,12 +4,7 @@
 
 
 #include "SocketClient.h"
-
-#define BUF_LEN 256
-#define WELCOME_HEADER "redirect"
-#define REDIRECT_SUCCESS "REDIRECT SUCCESSFUL"
-#define PROTOCOL_MAX_PACKET_LENGTH 64
-#define REDIRECT_OK "OK"
+#include "globaldefs.h"
 
 /**
  * Creates a new client socket that connects to the specified server address and port
@@ -29,7 +24,9 @@ int SocketClient::HandshakeServer(string &handshake)
 
     if ((sendto(socket_fd, handshake.c_str(),
             handshake.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+#if LOG >= 1
         log_error("Handshake# send to server");
+#endif
         exit(1);
     }
 
@@ -38,7 +35,9 @@ int SocketClient::HandshakeServer(string &handshake)
     long int num_bytes;
 
     num_bytes = recvfrom(this->socket_fd, buf, sizeof(buf), 0, (sockaddr *) NULL, NULL);
+#if LOG >= 2
     cout << " Socket:" << this->socket_fd << endl;
+#endif
 
     if (num_bytes == -1) {
         // TODO Log error
@@ -46,8 +45,10 @@ int SocketClient::HandshakeServer(string &handshake)
         return -1;
     } else {
         // DEBUG
+#if LOG >= 3
         cout << "#DEBUG Handshake received:\"" << buf
              << "\" Size:" << num_bytes << " bytes" << endl;
+#endif
 
         close(this->socket_fd);  // Close the welcome socket
         SwitchToRedirectedSocket(buf);
@@ -57,16 +58,22 @@ int SocketClient::HandshakeServer(string &handshake)
         cout << "Sending:" << redirect_confirm.c_str() << endl;
         if ((sendto(socket_fd, redirect_confirm.c_str(),
                 redirect_confirm.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+#if LOG >= 1
             log_error("Handshake# send to server");
+#endif
             exit(1);
         }
 
         memset(buf, 0, PROTOCOL_MAX_PACKET_LENGTH);
         int bytes = (int) recvfrom(this->socket_fd, buf, sizeof(buf), 0, NULL, NULL);
         if (string(buf) == string(REDIRECT_OK)) {
+#if LOG >= 2
             cout << "Server redirect confirmation received" << endl;
+#endif
         } else {
+#if LOG >= 1
             cerr << "Bad confirmation received:\"" << string(buf) << "\"" << endl;
+#endif
             log_error("Confirm Failed");
             exit(2);
 
@@ -87,7 +94,9 @@ int SocketClient::HandshakeServer(string &handshake)
 void SocketClient::SendPacket(void *data, unsigned int len)
 {
     if ((sendto(socket_fd, data, len, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+#if LOG >= 1
         log_error("Send# send to server");
+#endif
         // TODO handle timeout or send failure
     }
     return;
@@ -97,10 +106,14 @@ long SocketClient::ReceiveRaw(void **buf)
 {
 
     if (!is_initialized) {
+#if LOG >= 1
         fprintf(stderr, "An error occurred during initialization, can't call function ReceiveRaw");
+#endif
         exit(-1);
     }
+#if LOG >= 3
     cout << endl;
+#endif
     //char buf[BUF_LEN] = {0};
     void *ptr = calloc(BUF_LEN, sizeof(char));
     long int num_bytes;
@@ -109,17 +122,22 @@ long SocketClient::ReceiveRaw(void **buf)
 
     if (num_bytes == 0) {
         // TODO client closed connection
+#if LOG >= 1
+        log_error("connection closed");
+#endif
     } else if (num_bytes == -1) {
         // TODO Log error
+#if LOG >= 1
         log_error("timeout");
+#endif
     } else {
-        // DEBUG
-        cout << "Received " << num_bytes << " bytes" << endl;
 
+#if LOG >= 3
+        cout << "Received " << num_bytes << " bytes" << endl;
+#endif
 
         (*buf) = calloc((size_t) num_bytes, sizeof(char));
         memcpy((*buf), ptr, (size_t) num_bytes);
-
 
         totalReceivedBytes += num_bytes;
         return num_bytes;
@@ -131,7 +149,9 @@ void SocketClient::SwitchToRedirectedSocket(char *message)
 {
     string redirect_message = string(message);
     redirect_message.replace(0, strlen(WELCOME_HEADER), "");
+#if LOG >= 2
     cout << "Redirect port:" << redirect_message << endl;
+#endif
     InitializeSocket((unsigned short) stoi(redirect_message));
 }
 
@@ -143,10 +163,14 @@ void SocketClient::InitializeSocket(const unsigned short server_port)
     endpoint.sin_port = htons(server_port);
 
     if (inet_pton(AF_INET, this->server_addr.c_str(), &endpoint.sin_addr) == -1) {
+#if LOG >= 1
         log_error("Ip to network conversion");
+#endif
     }
     if ((this->socket_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
+#if LOG >= 1
         log_error("socket creation");
+#endif
     }
 
 
@@ -156,11 +180,15 @@ void SocketClient::InitializeSocket(const unsigned short server_port)
     timeout.tv_sec = 3;
 
     if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeval)) < 0) {
+#if LOG >= 1
         log_error("set receive timeout");
+#endif
     }
     if (setsockopt(this->socket_fd, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(timeval)) < 0) {
         // Whatever we're sending might be locked, so a send timeout is set
+#if LOG >= 1
         log_error("set send timeout");
+#endif
     }
 }
 

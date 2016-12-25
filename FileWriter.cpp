@@ -4,7 +4,7 @@
 
 #include <cstring>
 #include "FileWriter.h"
-
+#include "globaldefs.h"
 
 FileWriter::FileWriter(char *inp_file_name)
 {
@@ -23,7 +23,9 @@ FileWriter::FileWriter(char *inp_file_name)
 
     out_file.open(this->file_name, ios::binary);
     if (!out_file.is_open()) {
+#if LOG >= 1
         fprintf(stderr, "Failed to open file");
+#endif
 
         return;
     }
@@ -43,7 +45,9 @@ void FileWriter::Write(void *buffer, unsigned int size)
 FileWriter::~FileWriter()
 {
     if (out_file.is_open()) {
-        cout << "File writer flushed" << endl;
         out_file.close();
+#if LOG >= 2
+        cout << "File writer flushed" << endl;
+#endif
     }
 }

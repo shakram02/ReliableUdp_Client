@@ -98,6 +98,9 @@
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp">
 			<Option target="enhancedUdpClient"/>
 		</Unit>

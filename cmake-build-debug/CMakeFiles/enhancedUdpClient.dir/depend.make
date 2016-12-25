@@ -3,10 +3,12 @@
 
 CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o: ../FileWriter.cpp
 CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o: ../FileWriter.h
+CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o: ../globaldefs.h
 
 CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o: ../../../UdpSocketLib/include/netutils.h
 CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o: ../SocketClient.cpp
 CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o: ../SocketClient.h
+CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o: ../globaldefs.h
 
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../../../UdpSocketLib/include/AckPacket.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../../../UdpSocketLib/include/BinarySerializer.h
@@ -14,5 +16,6 @@ CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../../../UdpSocketLib/include/DataP
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../../../UdpSocketLib/include/netutils.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../FileWriter.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../SocketClient.h
+CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../globaldefs.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o: ../main.cpp
 

@@ -4,10 +4,12 @@
 CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o
  /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.cpp
  /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h
+ /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h
 CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.o
  ../../../UdpSocketLib/include/netutils.h
  /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.cpp
  /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
+ /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h
 CMakeFiles/enhancedUdpClient.dir/main.cpp.o
  ../../../UdpSocketLib/include/AckPacket.h
  ../../../UdpSocketLib/include/BinarySerializer.h
@@ -15,4 +17,5 @@ CMakeFiles/enhancedUdpClient.dir/main.cpp.o
  ../../../UdpSocketLib/include/netutils.h
  /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/FileWriter.h
  /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/SocketClient.h
+ /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/globaldefs.h
  /home/ahmed/code/c/ReliableUdpTransfer/enhancedUdpClient/main.cpp
