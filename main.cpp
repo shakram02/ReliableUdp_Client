@@ -1,6 +1,9 @@
 #include "SocketClient.h"
-#include "libs/DataPacket.h"
+
 #include "FileWriter.h"
+#include <DataPacket.h>
+#include <BinarySerializer.h>
+
 
 using namespace std;
 //#define SERVER_IP_ADDR "192.168.1.7"
@@ -75,24 +78,31 @@ int main()
     int packet_count = stoi(pckt_num_ptr, nullptr, 0);
 
 
-    for (int j = 0; j < packet_count; ++j) {
 
-        void *packet_content;
-        long packet_size = sock.ReceivePacket(&packet_content);
-
-        writer.Write(packet_content, packet_size);
-        cout << "Packet #" << j << "Packet size " << packet_size << " Bytes" << endl;
-
-        string d("RECV-");
-        d.append(to_string(j));
-        sock.SendPacket(d);
-
-
-    }
+//    for (int j = 0; j < packet_count; ++j) {
+//
+//        void *packet_content;
+//        long packet_size = sock.ReceivePacket(&packet_content);
+//
+//        writer.Write(packet_content, packet_size);
+//        cout << "Packet #" << j << "Packet size " << packet_size << " Bytes" << endl;
+//
+//        string d("RECV-");
+//        d.append(to_string(j));
+//        sock.SendPacket(d);
+//
+//
+//    }
 
 
     writer.~FileWriter();
 
+    void *pck;
+    long packet_size = sock.ReceivePacket(&pck);
+
+    DataPacket d = BinarySerializer::DeserializeDataPacket(pck, packet_size);
+
+    asm("nop");
     //string msg;
 //    while (1)
 //    {
@@ -108,7 +118,7 @@ int main()
 //
 //        DataPacket *pRec = reinterpret_cast<DataPacket *>(packed);
 //
-////    cout << "Unpacked:" << pRec->data << endl;
+//    cout << "Unpacked:" << pRec->data << endl;
 //        sock.SendPacket(packed, sizeof(DataPacket));
 //        sock.ReceivePacket(woot);
 //    }
@@ -131,13 +141,6 @@ int main()
 //            break;
 //        }
 //    }
-
-
-    //FileWriter r("mizo.txt");
-
-    //r.Write("hello\n");
-    //r.Write("hello1\n");
-    //r.Write("hello2");
     return 0;
 }
 

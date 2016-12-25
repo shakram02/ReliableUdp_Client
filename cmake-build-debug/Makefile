@@ -123,33 +123,6 @@ enhancedUdpClient/fast:
 	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/build
 .PHONY : enhancedUdpClient/fast
 
-Checksum.o: Checksum.cpp.o
-
-.PHONY : Checksum.o
-
-# target to build an object file
-Checksum.cpp.o:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.o
-.PHONY : Checksum.cpp.o
-
-Checksum.i: Checksum.cpp.i
-
-.PHONY : Checksum.i
-
-# target to preprocess a source file
-Checksum.cpp.i:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.i
-.PHONY : Checksum.cpp.i
-
-Checksum.s: Checksum.cpp.s
-
-.PHONY : Checksum.s
-
-# target to generate assembly for a file
-Checksum.cpp.s:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/Checksum.cpp.s
-.PHONY : Checksum.cpp.s
-
 FileWriter.o: FileWriter.cpp.o
 
 .PHONY : FileWriter.o
@@ -177,33 +150,6 @@ FileWriter.cpp.s:
 	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.s
 .PHONY : FileWriter.cpp.s
 
-Serializer.o: Serializer.cpp.o
-
-.PHONY : Serializer.o
-
-# target to build an object file
-Serializer.cpp.o:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.o
-.PHONY : Serializer.cpp.o
-
-Serializer.i: Serializer.cpp.i
-
-.PHONY : Serializer.i
-
-# target to preprocess a source file
-Serializer.cpp.i:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.i
-.PHONY : Serializer.cpp.i
-
-Serializer.s: Serializer.cpp.s
-
-.PHONY : Serializer.s
-
-# target to generate assembly for a file
-Serializer.cpp.s:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/Serializer.cpp.s
-.PHONY : Serializer.cpp.s
-
 SocketClient.o: SocketClient.cpp.o
 
 .PHONY : SocketClient.o
@@ -230,87 +176,6 @@ SocketClient.s: SocketClient.cpp.s
 SocketClient.cpp.s:
 	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/SocketClient.cpp.s
 .PHONY : SocketClient.cpp.s
-
-libs/AckPacket.o: libs/AckPacket.cpp.o
-
-.PHONY : libs/AckPacket.o
-
-# target to build an object file
-libs/AckPacket.cpp.o:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.o
-.PHONY : libs/AckPacket.cpp.o
-
-libs/AckPacket.i: libs/AckPacket.cpp.i
-
-.PHONY : libs/AckPacket.i
-
-# target to preprocess a source file
-libs/AckPacket.cpp.i:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.i
-.PHONY : libs/AckPacket.cpp.i
-
-libs/AckPacket.s: libs/AckPacket.cpp.s
-
-.PHONY : libs/AckPacket.s
-
-# target to generate assembly for a file
-libs/AckPacket.cpp.s:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/AckPacket.cpp.s
-.PHONY : libs/AckPacket.cpp.s
-
-libs/DataPacket.o: libs/DataPacket.cpp.o
-
-.PHONY : libs/DataPacket.o
-
-# target to build an object file
-libs/DataPacket.cpp.o:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.o
-.PHONY : libs/DataPacket.cpp.o
-
-libs/DataPacket.i: libs/DataPacket.cpp.i
-
-.PHONY : libs/DataPacket.i
-
-# target to preprocess a source file
-libs/DataPacket.cpp.i:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.i
-.PHONY : libs/DataPacket.cpp.i
-
-libs/DataPacket.s: libs/DataPacket.cpp.s
-
-.PHONY : libs/DataPacket.s
-
-# target to generate assembly for a file
-libs/DataPacket.cpp.s:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/DataPacket.cpp.s
-.PHONY : libs/DataPacket.cpp.s
-
-libs/netutils.o: libs/netutils.c.o
-
-.PHONY : libs/netutils.o
-
-# target to build an object file
-libs/netutils.c.o:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.o
-.PHONY : libs/netutils.c.o
-
-libs/netutils.i: libs/netutils.c.i
-
-.PHONY : libs/netutils.i
-
-# target to preprocess a source file
-libs/netutils.c.i:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.i
-.PHONY : libs/netutils.c.i
-
-libs/netutils.s: libs/netutils.c.s
-
-.PHONY : libs/netutils.s
-
-# target to generate assembly for a file
-libs/netutils.c.s:
-	$(MAKE) -f CMakeFiles/enhancedUdpClient.dir/build.make CMakeFiles/enhancedUdpClient.dir/libs/netutils.c.s
-.PHONY : libs/netutils.c.s
 
 main.o: main.cpp.o
 
@@ -348,27 +213,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... enhancedUdpClient"
-	@echo "... Checksum.o"
-	@echo "... Checksum.i"
-	@echo "... Checksum.s"
 	@echo "... FileWriter.o"
 	@echo "... FileWriter.i"
 	@echo "... FileWriter.s"
-	@echo "... Serializer.o"
-	@echo "... Serializer.i"
-	@echo "... Serializer.s"
 	@echo "... SocketClient.o"
 	@echo "... SocketClient.i"
 	@echo "... SocketClient.s"
-	@echo "... libs/AckPacket.o"
-	@echo "... libs/AckPacket.i"
-	@echo "... libs/AckPacket.s"
-	@echo "... libs/DataPacket.o"
-	@echo "... libs/DataPacket.i"
-	@echo "... libs/DataPacket.s"
-	@echo "... libs/netutils.o"
-	@echo "... libs/netutils.i"
-	@echo "... libs/netutils.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
