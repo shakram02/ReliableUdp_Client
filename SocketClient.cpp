@@ -82,9 +82,9 @@ int SocketClient::HandshakeServer(string &handshake)
  * @param data Message content to be sent ( reason for char* )
  * @return the number of bytes that were actually sent
  */
-void SocketClient::SendPacket(basic_string<char> &data)
+void SocketClient::SendPacket(void *data, unsigned int len)
 {
-    if ((sendto(socket_fd, data.c_str(), data.size(), 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
+    if ((sendto(socket_fd, data, len, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
         log_error("send to server");
         // TODO handle timeout or send failure
     }

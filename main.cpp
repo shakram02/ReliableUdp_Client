@@ -52,7 +52,7 @@ int main()
     file_request.append(file_name);
 
     FileWriter writer((char *) file_name.c_str());
-    sock.SendPacket(file_request);
+    sock.SendPacket((void *) file_request.c_str(), file_request.size());
 
     void *file_header;
     long rcv_count = sock.ReceivePacket(&file_header);
@@ -102,6 +102,13 @@ int main()
 
     DataPacket d = BinarySerializer::DeserializeDataPacket(pck, packet_size);
 
+    cout << "Binary deserialized data:" << d.data << endl;
+
+    AckPacket ack(d.seqno);
+    void *ackpck;
+    BinarySerializer::SerializeAckPacket(ack, &ackpck);
+
+    sock.SendPacket(ackpck, sizeof(AckPacket));
     asm("nop");
     //string msg;
 //    while (1)
