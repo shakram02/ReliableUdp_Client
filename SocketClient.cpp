@@ -74,6 +74,8 @@ int SocketClient::HandshakeServer(string &handshake)
     }
 
     is_initialized = true;
+    // TODO choose return values
+    return 1;
 }
 
 
@@ -91,11 +93,11 @@ void SocketClient::SendPacket(void *data, unsigned int len)
     return;
 }
 
-long SocketClient::ReceivePacket(void **buf)
+long SocketClient::ReceiveRaw(void **buf)
 {
 
     if (!is_initialized) {
-        fprintf(stderr, "An error occurred during initialization, can't call function ReceivePacket");
+        fprintf(stderr, "An error occurred during initialization, can't call function ReceiveRaw");
         exit(-1);
     }
     cout << endl;

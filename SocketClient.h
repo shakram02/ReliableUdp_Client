@@ -16,7 +16,6 @@ extern "C"
 #include <vector>
 
 using namespace std;
-typedef long int FileSize;
 
 class SocketClient
 {
@@ -44,7 +43,7 @@ public:
  * @param recvHandler
  * @return
  */
-    long ReceivePacket(void **buf);
+    long ReceiveRaw(void **buf);
 
     ~SocketClient();
 

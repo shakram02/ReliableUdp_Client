@@ -33,7 +33,7 @@ int main()
 //    char msg[248] = {0};
 
     //sock.SendPacket("hndshk", sizeof("hndshk"));
-    //sock.ReceivePacket(woot);
+    //sock.ReceiveRaw(woot);
 
 
     SocketClient sock(string(SERVER_IP_ADDR), PORT_NUM);
@@ -55,7 +55,7 @@ int main()
     sock.SendPacket((void *) file_request.c_str(), file_request.size());
 
     void *file_header;
-    long rcv_count = sock.ReceivePacket(&file_header);
+    sock.ReceiveRaw(&file_header);
 
     // Trim the last element as it's garbage because a string is being received
     string file_header_packet((char *) file_header);
@@ -78,41 +78,53 @@ int main()
     int packet_count = stoi(pckt_num_ptr, nullptr, 0);
 
 
+    long packet_size = 1;
+    for (int j = 0; j < packet_count && packet_size; ++j) {
 
-//    for (int j = 0; j < packet_count; ++j) {
-//
-//        void *packet_content;
-//        long packet_size = sock.ReceivePacket(&packet_content);
-//
-//        writer.Write(packet_content, packet_size);
-//        cout << "Packet #" << j << "Packet size " << packet_size << " Bytes" << endl;
-//
+        void *packet_content;
+        packet_size = sock.ReceiveRaw(&packet_content);
+
+        DataPacket *pck;
+        BinarySerializer::DeserializeDataPacket(packet_content, 0, &pck);
+
+        cout << "Packet #" << pck->seqno
+             << ", Packet size " << packet_size << " Bytes"
+             //<< ", Packet content " << pck->data
+             << endl;
+        writer.Write((char *) pck->data, pck->len);
+
+
 //        string d("RECV-");
 //        d.append(to_string(j));
 //        sock.SendPacket(d);
-//
-//
-//    }
+
+        AckPacket ack(pck->seqno);
+        void *raw_ptr;
+        BinarySerializer::SerializeAckPacket(&ack, &raw_ptr);
+
+        sock.SendPacket(raw_ptr, sizeof(AckPacket));
+    }
 
 
     writer.~FileWriter();
 
-    void *pck;
-    long packet_size = sock.ReceivePacket(&pck);
-
-    cout << "Received " << packet_size << " bytes" << endl;
-    DataPacket *d;
-    BinarySerializer::DeserializeDataPacket(pck, sizeof(DataPacket), &d);
-
-    cout << "Data: " << d->data << endl;
-    cout << "Sequence number:" << d->seqno << endl;
-
-    AckPacket ack(d->seqno);
-    void *ackpck;
-    BinarySerializer::SerializeAckPacket(&ack, &ackpck);
-
-    sock.SendPacket(ackpck, sizeof(ack));
-    asm("nop");
+//    void *pck;
+//    long packet_size = sock.ReceiveRaw(&pck);
+//
+//    DataPacket *d;
+//    BinarySerializer::DeserializeDataPacket(pck, sizeof(DataPacket), &d);
+//
+//    cout << "Data: \"" << d->data
+//         << "\" Data length: " << d->len << " bytes, "
+//         << "Sequence number:" << d->seqno
+//         << endl;
+//
+//    AckPacket ack(d->seqno);
+//    void *ackpck;
+//    BinarySerializer::SerializeAckPacket(&ack, &ackpck);
+//
+//    sock.SendPacket(ackpck, sizeof(ack));
+//    asm("nop");
     //string msg;
 //    while (1)
 //    {
@@ -130,7 +142,7 @@ int main()
 //
 //    cout << "Unpacked:" << pRec->data << endl;
 //        sock.SendPacket(packed, sizeof(DataPacket));
-//        sock.ReceivePacket(woot);
+//        sock.ReceiveRaw(woot);
 //    }
 
 
@@ -144,7 +156,7 @@ int main()
 //
 //        const char *d = in.c_str();
 //        sock.SendPacket(packed);
-//        sock.ReceivePacket(woot);
+//        sock.ReceiveRaw(woot);
 //
 //        if (in == "exit")
 //        {
