@@ -34,7 +34,7 @@ void GbnReceiver::ReceiveThread()
             BinarySerializer::DeserializeDataPacket(buf, (unsigned int) len, &pck);
             //cout << "RECV:" << pck->data << endl;
             this->packets.push(pck);
-            //cout << " ACK:" << pck->seqno << endl;
+            cout << "-->RCV SEQNO:" << pck->seqno << endl;
         } else {
             // Nothing received
             cout << " Got nothing" << endl;
@@ -55,15 +55,21 @@ void GbnReceiver::AckThread()
         DataPacket *to_be_acked;
         if (this->packets.pop(to_be_acked)) {   // FIXME leak? (this item was pushed by an allocated pointer)
 
+            cout << " ACK SEQNO:" << to_be_acked->seqno << endl;
             client_sock->SendAckPacket(to_be_acked->seqno);
+
             boost::this_thread::sleep_for(boost::chrono::milliseconds(1));  // Wait for the packet to be sent
+
 
             if (to_be_acked->len == 0) {
                 free(to_be_acked);  // Don't leak the last packet
                 cout << "Transmission completed" << endl;
                 return;
             } else {
-                //cout << "Data:" << to_be_acked.data << " , #" << to_be_acked.seqno << endl;
+                //cout << " ACK SEQNO:" << to_be_acked->seqno << endl;
+//                cout
+//                        //<< "Data:" << to_be_acked->data
+//                        << " #" << to_be_acked->seqno << endl;
                 this->writer->Write(to_be_acked->data, to_be_acked->len);
             }
             free(to_be_acked);

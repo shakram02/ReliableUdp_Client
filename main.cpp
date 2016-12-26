@@ -13,15 +13,8 @@ using namespace std;
  * @param msg Contains the socket message
  * @param ip Contains the server ip
  */
-void woot(char *msg, long int size)
-{
-    //DataPacket *rec = reinterpret_cast<DataPacket *>(msg);
-    //cout << "WOOT: \"" << rec->len << "\"" << endl;
-    //cout << "Found:" << rec->data << endl;
-    cout << "Message:\"" << msg << "\"" << endl;
-}
 
-#define FILE_IDX 3
+#define FILE_IDX 1
 
 int main()
 {
