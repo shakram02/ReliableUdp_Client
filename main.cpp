@@ -77,29 +77,10 @@ int main()
     boost::thread rcv_th(boost::bind(&GbnReceiver::ReceiveThread, boost::ref(receiver)));
     boost::thread ack_th(boost::bind(&GbnReceiver::AckThread, boost::ref(receiver)));
 
-    boost::this_thread::sleep_for(boost::chrono::milliseconds(60 * 1000));
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(10 * 1000));
+    cout << "Interrupting the threads..." << endl;
     rcv_th.interrupt();
     ack_th.interrupt();
-    //cout << "Thread is deaad";
-//    for (int j = 0; j < packet_count; ++j) {
-//
-//        DataPacket pck;
-//        sock.ReceiveDataPacket(&pck);
-//        writer.Write(pck.data, pck.len);
-//
-//
-//        cout << "Packet #" << pck.seqno
-//             << ", Packet size " << pck.len << " Bytes"
-//             << endl;
-//
-//
-//        AckPacket ack(pck.seqno);
-//        void *raw_ptr;
-//        BinarySerializer::SerializeAckPacket(&ack, &raw_ptr);
-//
-//        sock.SendPacket(raw_ptr, sizeof(AckPacket));
-//    }
-//
-//    writer.~FileWriter();
+
     return 0;
 }

@@ -48,8 +48,6 @@ void GbnReceiver::AckThread()
     while (!boost::this_thread::interruption_requested()) {
 
         if (this->packets.empty()) {
-            // go to bed for a while
-            //boost::this_thread::sleep_for(boost::chrono::milliseconds(5));
             continue;
         }
 
@@ -58,7 +56,12 @@ void GbnReceiver::AckThread()
         if (this->packets.pop(to_be_acked)) {   // FIXME leak? (this item was pushed by an allocated pointer)
 
             client_sock->SendAckPacket(to_be_acked.seqno);
-            boost::this_thread::sleep_for(boost::chrono::milliseconds(5));  // Wait for the packet to be sent
+            boost::this_thread::sleep_for(boost::chrono::milliseconds(1));  // Wait for the packet to be sent
+
+            if (to_be_acked.len == 0) {
+                cout << "Transmission completed" << endl;
+                return;
+            }
 
             //cout << "Data:" << to_be_acked.data << " , #" << to_be_acked.seqno << endl;
             this->writer->Write(to_be_acked.data, to_be_acked.len);
