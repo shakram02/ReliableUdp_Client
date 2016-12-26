@@ -26,7 +26,7 @@ class GbnReceiver
 
     bool AckWindow();
 
-    boost::lockfree::queue<DataPacket> packets;
+    boost::lockfree::queue<DataPacket *> packets;
     //std::queue<DataPacket> received_queue;
 
 public:
