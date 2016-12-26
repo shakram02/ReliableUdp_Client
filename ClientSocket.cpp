@@ -133,8 +133,11 @@ bool ClientSocket::ReceiveDataPacket(DataPacket *data_pckt)
     int num_bytes = (int) ReceiveRaw(&buf);
     if (num_bytes < 1)return false;
 
+    char *baf = (char *) buf;
+
     DataPacket *temp;
-    BinarySerializer::DeserializeDataPacket(buf, (unsigned int) num_bytes, &temp);
+    //BinarySerializer::DeserializeDataPacket(buf, (unsigned int) num_bytes, &temp);
+    temp = reinterpret_cast<DataPacket *>(buf);
 
     data_pckt->chksum = temp->chksum;
     data_pckt->seqno = temp->seqno;

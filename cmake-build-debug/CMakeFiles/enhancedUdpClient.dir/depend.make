@@ -16,6 +16,7 @@ CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o: ../../../UdpSocketLib/includ
 CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o: ../../../UdpSocketLib/include/BinarySerializer.h
 CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o: ../../../UdpSocketLib/include/DataPacket.h
 CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o: ../ClientSocket.h
+CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o: ../FileWriter.h
 CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o: ../GbnReceiver.cpp
 CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o: ../GbnReceiver.h
 CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o: ../globaldefs.h

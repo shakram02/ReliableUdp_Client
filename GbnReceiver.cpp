@@ -23,16 +23,18 @@ void GbnReceiver::ReceiveThread()
 
         if (boost::this_thread::interruption_requested())return;
 
-        unique_ptr<DataPacket> pck{new DataPacket()};
-        int len = (int) client_sock->ReceiveDataPacket(pck.get());
+        //unique_ptr<DataPacket> pck{new DataPacket()};
+        void *buf;
+        DataPacket *pck;
+
+        int len = (int) client_sock->ReceiveRaw(&buf);
 
         if (len > 0) {
 
+            BinarySerializer::DeserializeDataPacket(buf, len, &pck);
+            cout << "RECV:" << pck->data << endl;
             this->packets.push(*pck);
-            this->client_sock->SendAckPacket(pck->seqno);
-            this->writer->Write(pck->data, pck->len);
-
-            cout << " ACK:" << pck->seqno << endl;
+            //cout << " ACK:" << pck->seqno << endl;
         } else {
             // Nothing received
             cout << " Got nothing" << endl;
@@ -47,12 +49,20 @@ void GbnReceiver::AckThread()
 
         if (this->packets.empty()) {
             // go to bed for a while
-            boost::this_thread::sleep_for(boost::chrono::milliseconds(5));
+            //boost::this_thread::sleep_for(boost::chrono::milliseconds(5));
+            continue;
         }
 
+        cout << "Ack thread" << endl;
         DataPacket to_be_acked;
-        if (this->packets.pop(to_be_acked)) {
+        if (this->packets.pop(to_be_acked)) {   // FIXME leak?
+
             client_sock->SendAckPacket(to_be_acked.seqno);
+
+            cout << "Data:" << to_be_acked.data << endl;
+            this->writer->Write(to_be_acked.data, to_be_acked.len);
+
+            //delete to_be_acked;
         }
 
     }
