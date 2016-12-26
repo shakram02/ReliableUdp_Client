@@ -21,7 +21,7 @@ void woot(char *msg, long int size)
     cout << "Message:\"" << msg << "\"" << endl;
 }
 
-#define FILE_IDX 1
+#define FILE_IDX 3
 
 int main()
 {
@@ -77,7 +77,7 @@ int main()
     boost::thread rcv_th(boost::bind(&GbnReceiver::ReceiveThread, boost::ref(receiver)));
     boost::thread ack_th(boost::bind(&GbnReceiver::AckThread, boost::ref(receiver)));
 
-    boost::this_thread::sleep_for(boost::chrono::milliseconds(5000));
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(60 * 1000));
     rcv_th.interrupt();
     ack_th.interrupt();
     //cout << "Thread is deaad";
