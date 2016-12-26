@@ -230,6 +230,19 @@ ClientSocket::~ClientSocket()
 
 }
 
+void ClientSocket::SendAckPacket(unsigned int seqno)
+{
+    //AckPacket *ack_pckt = new AckPacket(seqno);
+
+    AckPacket ack_pckt(seqno);
+    void *raw_ptr;
+    BinarySerializer::SerializeAckPacket(&ack_pckt, &raw_ptr);
+
+    SendPacket(raw_ptr, sizeof(AckPacket));
+
+    //delete ack_pckt;
+}
+
 void ClientSocket::log_error(const char *func_name)
 {
     fprintf(stderr, "%s:%s\n", func_name, strerror(errno));

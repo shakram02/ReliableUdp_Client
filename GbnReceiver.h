@@ -9,7 +9,9 @@
 #include <queue>
 #include "ClientSocket.h"
 #include "globaldefs.h"
+#include "FileWriter.h"
 #include <boost/thread/thread.hpp>
+#include <boost/lockfree/queue.hpp>
 
 typedef void *BinaryContainer;
 typedef void **BinaryContainerArray;
@@ -17,19 +19,22 @@ typedef void **BinaryContainerArray;
 class GbnReceiver
 {
     ClientSocket *client_sock;
+    FileWriter *writer;
     int last_acked_seq_num = -1;
     unsigned int window_size;
 
 
     bool AckWindow();
 
-
-    std::queue<DataPacket> received_queue;
+    boost::lockfree::queue<DataPacket> packets;
+    //std::queue<DataPacket> received_queue;
 
 public:
-    GbnReceiver(unsigned int window_size, ClientSocket *sock);
+    GbnReceiver(unsigned int window_size, ClientSocket *sock, FileWriter *writer);
 
     void ReceiveThread();
+
+    void AckThread();
 };
 
 

@@ -54,10 +54,12 @@ public:
 
     int HandshakeServer(string &handshake);
 
+    void SendAckPacket(unsigned int seqno);
 
 private:
 
-    bool is_disposed=false;
+    bool is_disposed = false;
+
     void InitializeSocket(const unsigned short server_port);
 
     bool LogSockError(long num_bytes);
