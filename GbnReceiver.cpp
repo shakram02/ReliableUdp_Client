@@ -25,9 +25,10 @@ void GbnReceiver::StartReceiving()
 
             //BinarySerializer::DeserializeDataPacket(buf, &pck);
             this->packets.push(pck);
-            cout << "-->RCV SEQNO [" << pck->seqno << "]" << endl;
+            cout << "<-- | RCV [" << pck->seqno << "]" << endl;
+
         } else {
-            cout << " Got nothing" << endl;
+            cerr << "-*- | Time out" << endl;
             free(pck);  // Kill memory leaks
         }
     }
@@ -44,19 +45,18 @@ void GbnReceiver::StartAcking()
             continue;
         }
 
-        // TODO check the sequence number of the incoming packet, then act upon it
         DataPacket *to_be_acked;
         if (this->packets.pop(to_be_acked)) {
 
             // The popped packet isn't the one I'm waiting for
             if (to_be_acked->seqno != (this->last_acked_seq_num + 1)) {
-                cerr << "Bad seq num [" << to_be_acked->seqno << "]" << endl;
+                cerr << "#-- | Bad SEQ [" << to_be_acked->seqno << "]" << endl;
 
                 free(to_be_acked);  // Don't leak the last packet
                 continue; // Do nothing, the server will timeout on its own
             }
 
-            cout << " ACK SEQNO [" << to_be_acked->seqno << "]" << endl;
+            cout << "--> | ACK [" << to_be_acked->seqno << "]" << endl;
             client_sock->SendAckPacket(to_be_acked->seqno);
 
             this->last_acked_seq_num++;
@@ -70,7 +70,6 @@ void GbnReceiver::StartAcking()
                 this->writer->Write(to_be_acked->data, to_be_acked->len);
             }
             free(to_be_acked);
-
         }
     }
 }

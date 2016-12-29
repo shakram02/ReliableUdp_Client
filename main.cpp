@@ -16,7 +16,7 @@ using namespace std;
  * @param ip Contains the server ip
  */
 
-#define FILE_IDX 1
+#define FILE_IDX 2
 
 int main()
 {
@@ -24,9 +24,10 @@ int main()
     string handshake_msg("hndshk");
     sock.HandshakeServer(handshake_msg);
 
-    string files[2] = {
+    string files[3] = {
             string("zooz.txt"),
             string("txrxPc.png"),
+            string("Pro Git.pdf")
     };
 
     string file_name = files[FILE_IDX];

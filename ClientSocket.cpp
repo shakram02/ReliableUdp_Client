@@ -3,8 +3,6 @@
 //
 
 
-
-
 #include <cstring>
 #include <zconf.h>
 #include <arpa/inet.h>
@@ -210,7 +208,9 @@ bool ClientSocket::LogSockError(long num_bytes, string function_name)
         is_err = true;
     } else if (num_bytes == -1) {
 #if LOG >= 1
-        log_error(function_name.append("#recvfrom err").c_str());
+        if (errno != EAGAIN && errno != EWOULDBLOCK) {
+            log_error(function_name.append("# receive err").c_str());
+        }
 #endif
 
         is_err = true;
@@ -235,18 +235,13 @@ ClientSocket::~ClientSocket()
 
 void ClientSocket::SendAckPacket(unsigned int seqno)
 {
-    //AckPacket *ack_pckt = new AckPacket(seqno);
-
-
+    // Allocate on the stack
     AckPacket ack_pckt(seqno);
-    cout << "ACK send [" << ack_pckt.ack_num << "]" << endl;
 
-    void *raw_ptr;
+    void *raw_ptr;  // Pointer to stack location, doesn't need to be freed
     BinarySerializer::SerializeAckPacket(&ack_pckt, &raw_ptr);
 
     SendPacket(raw_ptr, sizeof(AckPacket));
-
-    //delete ack_pckt;
 }
 
 void ClientSocket::log_error(const char *func_name)
