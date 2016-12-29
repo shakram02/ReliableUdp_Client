@@ -44,7 +44,7 @@ int ClientSocket::HandshakeServer(string &handshake)
     cout << " Socket:" << this->socket_fd << endl;
 #endif
 
-    if (LogSockError(num_bytes))return 0;
+    if (LogSockError(num_bytes, string("Protocol#1")))return 0;
 
 // DEBUG
 #if LOG >= 3
@@ -70,7 +70,7 @@ int ClientSocket::HandshakeServer(string &handshake)
     memset(buf, 0, PROTOCOL_MAX_PACKET_LENGTH);
     int n_bytes = (int) recvfrom(this->socket_fd, buf, sizeof(buf), 0, NULL, NULL);
 
-    LogSockError(n_bytes);
+    LogSockError(n_bytes, string("Protocol#2"));
 
     if (string(buf) == string(REDIRECT_OK)) {
 #if LOG >= 2
@@ -116,7 +116,7 @@ long ClientSocket::ReceiveRaw(void **buf)
     num_bytes = recvfrom(this->socket_fd, ptr, BUF_LEN * sizeof(char), 0,
             NULL, NULL);  // Don't care about the sender, it's known ( maybe add it back for more security checks)
 
-    if (LogSockError(num_bytes))return 0;
+    if (LogSockError(num_bytes, "ReceiveRaw"))return 0;
 
     (*buf) = calloc((size_t) num_bytes, sizeof(char));
     memcpy((*buf), ptr, (size_t) num_bytes);
@@ -200,17 +200,17 @@ void ClientSocket::InitializeSocket(const unsigned short server_port)
     }
 }
 
-bool ClientSocket::LogSockError(long num_bytes)
+bool ClientSocket::LogSockError(long num_bytes, string function_name)
 {
     bool is_err = false;
     if (num_bytes == 0) {
 #if LOG >= 1
-        log_error("connection closed");
+        log_error(function_name.append("#connection closed").c_str());
 #endif
         is_err = true;
     } else if (num_bytes == -1) {
 #if LOG >= 1
-        log_error("recvfrom err");
+        log_error(function_name.append("#recvfrom err").c_str());
 #endif
 
         is_err = true;

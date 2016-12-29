@@ -14,24 +14,22 @@ GbnReceiver::GbnReceiver(unsigned int window_size, ClientSocket *sock, FileWrite
 
 void GbnReceiver::StartReceiving()
 {
-    bool is_receiving = true;
-    while (is_receiving) {
 
-        if (boost::this_thread::interruption_requested())return;
+    while (this->is_receiving && !boost::this_thread::interruption_requested()) {
 
-        void *buf;
-        DataPacket *pck;
 
-        int len = (int) client_sock->ReceiveRaw(&buf);
+        DataPacket *pck = (DataPacket *) calloc(1, sizeof(DataPacket));
+
+        int len = (int) client_sock->ReceiveDataPacket(pck);
 
         if (len > 0) {
 
-            BinarySerializer::DeserializeDataPacket(buf, &pck);
+            //BinarySerializer::DeserializeDataPacket(buf, &pck);
             this->packets.push(pck);
             cout << "-->RCV SEQNO [" << pck->seqno << "]" << endl;
         } else {
             cout << " Got nothing" << endl;
-            is_receiving = false;
+            //is_receiving = false;
         }
     }
 }
@@ -52,8 +50,10 @@ void GbnReceiver::StartAcking()
         if (this->packets.pop(to_be_acked)) {
 
             // The popped packet isn't the one I'm waiting for
-            if (to_be_acked->seqno > (this->last_acked_seq_num + 1)) {
+            if (to_be_acked->seqno != (this->last_acked_seq_num + 1)) {
                 cerr << "Bad seq num [" << to_be_acked->seqno << "]" << endl;
+
+                free(to_be_acked);  // Don't leak the last packet
                 continue; // Do nothing, the server will timeout on its own
             }
 
@@ -64,13 +64,10 @@ void GbnReceiver::StartAcking()
 
             if (to_be_acked->len == 0) {
                 cout << "Transmission completed at packet [" << to_be_acked->seqno << "]" << endl;
-                //free(to_be_acked);  // Don't leak the last packet
-                //return;
+                this->is_receiving = false;
+                free(to_be_acked);  // Don't leak the last packet
+                return;
             } else {
-                //cout << " ACK SEQNO:" << to_be_acked->seqno << endl;
-//                cout
-//                        //<< "Data:" << to_be_acked->data
-//                        << " #" << to_be_acked->seqno << endl;
                 this->writer->Write(to_be_acked->data, to_be_acked->len);
             }
             free(to_be_acked);

@@ -17,6 +17,7 @@ class GbnReceiver
 {
     ClientSocket *client_sock;
     FileWriter *writer;
+    bool is_receiving=true;
     int last_acked_seq_num = -1;
     unsigned int window_size;
 

@@ -62,7 +62,7 @@ private:
 
     void InitializeSocket(const unsigned short server_port);
 
-    bool LogSockError(long num_bytes);
+    bool LogSockError(long num_bytes, string function_name);
 
     /**
      * File descriptor for the open socket
