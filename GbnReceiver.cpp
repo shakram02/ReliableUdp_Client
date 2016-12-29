@@ -17,7 +17,6 @@ void GbnReceiver::StartReceiving()
 
     while (this->is_receiving && !boost::this_thread::interruption_requested()) {
 
-
         DataPacket *pck = (DataPacket *) calloc(1, sizeof(DataPacket));
 
         int len = (int) client_sock->ReceiveDataPacket(pck);
@@ -29,7 +28,7 @@ void GbnReceiver::StartReceiving()
             cout << "-->RCV SEQNO [" << pck->seqno << "]" << endl;
         } else {
             cout << " Got nothing" << endl;
-            //is_receiving = false;
+            free(pck);  // Kill memory leaks
         }
     }
 }
