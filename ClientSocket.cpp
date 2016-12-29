@@ -237,7 +237,10 @@ void ClientSocket::SendAckPacket(unsigned int seqno)
 {
     //AckPacket *ack_pckt = new AckPacket(seqno);
 
+
     AckPacket ack_pckt(seqno);
+    cout << "ACK send [" << ack_pckt.ack_num << "]" << endl;
+
     void *raw_ptr;
     BinarySerializer::SerializeAckPacket(&ack_pckt, &raw_ptr);
 

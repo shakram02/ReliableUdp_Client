@@ -13,9 +13,6 @@
 #include <boost/thread/thread.hpp>
 #include <boost/lockfree/queue.hpp>
 
-typedef void *BinaryContainer;
-typedef void **BinaryContainerArray;
-
 class GbnReceiver
 {
     ClientSocket *client_sock;
@@ -23,18 +20,14 @@ class GbnReceiver
     int last_acked_seq_num = -1;
     unsigned int window_size;
 
-
-    bool AckWindow();
-
     boost::lockfree::queue<DataPacket *> packets;
-    //std::queue<DataPacket> received_queue;
 
 public:
     GbnReceiver(unsigned int window_size, ClientSocket *sock, FileWriter *writer);
 
-    void ReceiveThread();
+    void StartReceiving();
 
-    void AckThread();
+    void StartAcking();
 };
 
 

@@ -8,6 +8,8 @@
 
 using namespace std;
 
+// TODO use smart pointers everywhere
+
 /**
  * Event handler for socket packet receive events
  * @param msg Contains the socket message
@@ -22,11 +24,9 @@ int main()
     string handshake_msg("hndshk");
     sock.HandshakeServer(handshake_msg);
 
-    string files[4] = {
-            string("zmini.txt"),
+    string files[2] = {
             string("zooz.txt"),
-            string("pixi.ico"),
-            string("zwp.jpg")
+            string("txrxPc.png"),
     };
 
     string file_name = files[FILE_IDX];
@@ -67,8 +67,8 @@ int main()
 #endif
 
     GbnReceiver receiver(5, &sock, &writer);
-    boost::thread rcv_th(boost::bind(&GbnReceiver::ReceiveThread, boost::ref(receiver)));
-    boost::thread ack_th(boost::bind(&GbnReceiver::AckThread, boost::ref(receiver)));
+    boost::thread rcv_th(boost::bind(&GbnReceiver::StartReceiving, boost::ref(receiver)));
+    boost::thread ack_th(boost::bind(&GbnReceiver::StartAcking, boost::ref(receiver)));
 
     boost::this_thread::sleep_for(boost::chrono::milliseconds(10 * 1000));
     cout << "Interrupting the threads..." << endl;
