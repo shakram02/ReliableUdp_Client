@@ -71,8 +71,6 @@ int main()
     boost::thread rcv_th(boost::bind(&GbnReceiver::StartReceiving, boost::ref(receiver)));
     boost::thread ack_th(boost::bind(&GbnReceiver::StartAcking, boost::ref(receiver), packet_count));
 
-    //boost::this_thread::sleep_for(boost::chrono::milliseconds(30 * 1000));
-
     rcv_th.join();
     ack_th.join();
     cout << "Thread tasks complete..." << endl;
