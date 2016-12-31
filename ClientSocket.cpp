@@ -128,22 +128,16 @@ bool ClientSocket::ReceiveDataPacket(DataPacket *data_pckt)
 {
     void *buf = 0;
 
+    // The receive function allocates the right amount of memory
+    // to the given input void*
+
     int num_bytes = (int) ReceiveRaw(&buf);
     if (num_bytes < 1)return false;
 
-    char *baf = (char *) buf;
-
     DataPacket *temp;
-    //BinarySerializer::DeserializeDataPacket(buf, (unsigned int) num_bytes, &temp);
     temp = reinterpret_cast<DataPacket *>(buf);
 
-    data_pckt->chksum = temp->chksum;
-    data_pckt->seqno = temp->seqno;
-    data_pckt->len = temp->len;
-
-
-    //cout << "Packet length:" << temp->len << endl;
-    memcpy(data_pckt->data, temp->data, temp->len);
+    data_pckt->Clone(temp);
 
     free(buf);
 

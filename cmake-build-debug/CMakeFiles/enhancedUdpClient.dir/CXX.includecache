@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-../../../UdpSocketLib/include/AckPacket.h
+../../../clg_ReliableUdp_Lib/include/AckPacket.h
 
-../../../UdpSocketLib/include/BinarySerializer.h
+../../../clg_ReliableUdp_Lib/include/BinarySerializer.h
 AckPacket.h
-../../../UdpSocketLib/include/AckPacket.h
+../../../clg_ReliableUdp_Lib/include/AckPacket.h
 
-../../../UdpSocketLib/include/DataPacket.h
+../../../clg_ReliableUdp_Lib/include/DataPacket.h
 globaldefs.h
-../../../UdpSocketLib/include/globaldefs.h
+../../../clg_ReliableUdp_Lib/include/globaldefs.h
 
 /home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/ClientSocket.cpp
 cstring

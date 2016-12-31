@@ -14,7 +14,8 @@ GbnReceiver::GbnReceiver(unsigned int window_size, ClientSocket *sock, FileWrite
 
 void GbnReceiver::StartReceiving()
 {
-
+    int max_fails_of_packet = 9;
+    int fails_of_packet = 0;
     while (this->is_receiving && !boost::this_thread::interruption_requested()) {
 
         DataPacket *pck = (DataPacket *) calloc(1, sizeof(DataPacket));
@@ -23,25 +24,36 @@ void GbnReceiver::StartReceiving()
 
         if (len > 0) {
 
-            //BinarySerializer::DeserializeDataPacket(buf, &pck);
+            // Reset fail count on valid packet
+            fails_of_packet = 0;
             this->packets.push(pck);
             cout << "<-- | RCV [" << pck->seqno << "]" << endl;
-
         } else {
-            cerr << "-*- | Time out" << endl;
+
+            if (this->is_receiving) {
+                cerr << "-*- | Timeout" << endl;
+            }
             free(pck);  // Kill memory leaks
+
+            // TODO terminate of many fails
+            if (fails_of_packet++ == max_fails_of_packet) {
+                this->is_receiving = false;
+                return;
+            }
         }
     }
 }
 
-void GbnReceiver::StartAcking()
+void GbnReceiver::StartAcking(int frag_count)
 {
+
     while (!boost::this_thread::interruption_requested()) {
 
         // Wait for packets to be sent and print out
-        boost::this_thread::sleep_for(boost::chrono::microseconds(200));
+
 
         if (this->packets.empty()) {
+            boost::this_thread::sleep_for(boost::chrono::milliseconds(5));
             continue;
         }
 

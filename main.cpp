@@ -16,7 +16,7 @@ using namespace std;
  * @param ip Contains the server ip
  */
 
-#define FILE_IDX 2
+#define FILE_IDX 0
 
 int main()
 {
@@ -27,7 +27,7 @@ int main()
     string files[3] = {
             string("zooz.txt"),
             string("txrxPc.png"),
-            string("Pro Git.pdf")
+            string("Pro Git.pdf"),
     };
 
     string file_name = files[FILE_IDX];
@@ -69,7 +69,7 @@ int main()
 
     GbnReceiver receiver(5, &sock, &writer);
     boost::thread rcv_th(boost::bind(&GbnReceiver::StartReceiving, boost::ref(receiver)));
-    boost::thread ack_th(boost::bind(&GbnReceiver::StartAcking, boost::ref(receiver)));
+    boost::thread ack_th(boost::bind(&GbnReceiver::StartAcking, boost::ref(receiver), packet_count));
 
     //boost::this_thread::sleep_for(boost::chrono::milliseconds(30 * 1000));
 

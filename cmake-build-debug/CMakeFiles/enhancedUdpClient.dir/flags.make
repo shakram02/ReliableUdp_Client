@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/../../UdpSocketLib/include 
+CXX_INCLUDES = -I/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/../../clg_ReliableUdp_Lib/include 
 

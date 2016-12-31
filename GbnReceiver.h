@@ -28,7 +28,7 @@ public:
 
     void StartReceiving();
 
-    void StartAcking();
+    void StartAcking(int frag_count);
 };
 
 
