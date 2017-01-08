@@ -18,22 +18,22 @@ void GbnReceiver::StartReceiving()
     int fails_of_packet = 0;
     while (this->is_receiving && !boost::this_thread::interruption_requested()) {
 
-        DataPacket *pck = (DataPacket *) calloc(1, sizeof(DataPacket));
+        unique_ptr<Packet> unq_pckt;
+        int len = (int) client_sock->ReceiveDataPacket(unq_pckt);
 
-        int len = (int) client_sock->ReceiveDataPacket(pck);
 
         if (len > 0) {
 
             // Reset fail count on valid packet
             fails_of_packet = 0;
-            this->packets.push(pck);
-            cout << "<-- | RCV [" << pck->seqno << "]" << endl;
+            cout << "<-- | RCV [" << unq_pckt->header->seqno << "]" << endl;
+            this->packets.push(unq_pckt.release());
         } else {
 
             if (this->is_receiving) {
                 cerr << "-*- | Timeout" << endl;
             }
-            free(pck);  // Kill memory leaks
+            //free(pck);  // Kill memory leaks
 
             // TODO terminate of many fails
             if (fails_of_packet++ == max_fails_of_packet) {
@@ -57,31 +57,36 @@ void GbnReceiver::StartAcking(int frag_count)
             continue;
         }
 
-        DataPacket *to_be_acked;
-        if (this->packets.pop(to_be_acked)) {
+        Packet *temp;
+        if (!this->packets.pop(temp)) continue;  // queue is empty
 
-            // The popped packet isn't the one I'm waiting for
-            if (to_be_acked->seqno != (this->last_acked_seq_num + 1)) {
-                cerr << "#-- | Bad SEQ [" << to_be_acked->seqno << "]" << endl;
+        unique_ptr<Packet> to_be_acked(temp);   // Put the packet in a container
 
-                free(to_be_acked);  // Don't leak the last packet
-                continue; // Do nothing, the server will timeout on its own
-            }
+        // The popped packet isn't the one I'm waiting for
+        if (to_be_acked->header->seqno != (this->last_acked_seq_num + 1)) {
+            cerr << "#-- | Bad SEQ [" << to_be_acked->header->seqno << "]" << endl;
+            continue; // Do nothing, the server will timeout on its own
+        }
 
-            cout << "--> | ACK [" << to_be_acked->seqno << "]" << endl;
-            client_sock->SendAckPacket(to_be_acked->seqno);
+        cout << "--> | ACK [" << to_be_acked->header->seqno << "]" << endl;
+        client_sock->SendAckPacket(to_be_acked->header->seqno);
 
-            this->last_acked_seq_num++;
+        this->last_acked_seq_num++;
 
-            if (to_be_acked->len == 0) {
-                cout << "Transmission completed at packet [" << to_be_acked->seqno << "]" << endl;
-                this->is_receiving = false;
-                free(to_be_acked);  // Don't leak the last packet
-                return;
+        if (to_be_acked->header->dataLen == 0) {
+            cout << "Transmission completed at packet [" << to_be_acked->header->seqno << "]" << endl;
+            this->is_receiving = false;
+            return;
+        } else {
+            unique_ptr<ByteVector> data;
+            if (to_be_acked->GetData(data)) {
+                cout << "Data recv.:" << data->data() << endl;
+                //string s(to_be_acked->GetData().data());
+                //this->writer->Write(const_cast<char *> (s.c_str()), to_be_acked->len);
             } else {
-                this->writer->Write(to_be_acked->data, to_be_acked->len);
-            }
-            free(to_be_acked);
+                cout << "ACK receive" << endl;
+            };
         }
     }
+
 }

@@ -14,8 +14,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
-#include <DataPacket.h>
-#include <BinarySerializer.h>
+#include <Packet.h>
 #include <netinet/in.h>
 
 using namespace std;
@@ -37,7 +36,7 @@ public:
     * @param data Message content to be sent
     * @return the number of bytes that were actually sent
     */
-    void SendPacket(void *data, unsigned int data_len);
+    void SendPacket(byte *data, unsigned int data_len);
 
 /**
  * This function receives only 1 packet, when an attempt is made to connect to the server
@@ -48,7 +47,7 @@ public:
  */
     long ReceiveRaw(void **buf);
 
-    bool ReceiveDataPacket(DataPacket *data_pckt);
+    bool ReceiveDataPacket(unique_ptr<Packet> &data_pckt);
 
     ~ClientSocket();
 

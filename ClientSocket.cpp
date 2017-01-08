@@ -88,7 +88,7 @@ int ClientSocket::HandshakeServer(string &handshake)
     return 1;
 }
 
-void ClientSocket::SendPacket(void *data, unsigned int len)
+void ClientSocket::SendPacket(byte *data, unsigned int len)
 {
     if ((sendto(socket_fd, data, len, 0, (sockaddr *) &endpoint, sizeof(endpoint))) == -1) {
 #if LOG >= 1
@@ -124,7 +124,7 @@ long ClientSocket::ReceiveRaw(void **buf)
     return num_bytes;
 }
 
-bool ClientSocket::ReceiveDataPacket(DataPacket *data_pckt)
+bool ClientSocket::ReceiveDataPacket(unique_ptr<Packet> &data_pckt)
 {
     void *buf = 0;
 
@@ -132,14 +132,13 @@ bool ClientSocket::ReceiveDataPacket(DataPacket *data_pckt)
     // to the given input void*
 
     int num_bytes = (int) ReceiveRaw(&buf);
-    if (num_bytes < 1)return false;
+    if (num_bytes < 1) {
+        data_pckt.reset();
+        return false;
+    }
 
-    DataPacket *temp;
-    temp = reinterpret_cast<DataPacket *>(buf);
-
-    data_pckt->Clone(temp);
-
-    free(buf);
+    // buf is moved to the data_packet
+    data_pckt = Packet::Create((byte *) buf, (unsigned short) num_bytes);
 
     return true;
 }
@@ -230,12 +229,11 @@ ClientSocket::~ClientSocket()
 void ClientSocket::SendAckPacket(unsigned int seqno)
 {
     // Allocate on the stack
-    AckPacket ack_pckt(seqno);
+    unique_ptr<ByteVector> empty = nullptr;
+    Packet ack(empty, seqno);
 
-    void *raw_ptr;  // Pointer to stack location, doesn't need to be freed
-    BinarySerializer::SerializeAckPacket(&ack_pckt, &raw_ptr);
-
-    SendPacket(raw_ptr, sizeof(AckPacket));
+    unique_ptr<ByteVector> raw = ack.Serialize();
+    SendPacket(raw->data(), (unsigned int) raw->size());
 }
 
 void ClientSocket::log_error(const char *func_name)

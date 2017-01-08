@@ -32,12 +32,12 @@ FileWriter::FileWriter(char *inp_file_name)
     out_file.close();
 }
 
-void FileWriter::Write(void *buffer, unsigned int size)
+void FileWriter::Write(char *buffer, unsigned int size)
 {
     if (!out_file.is_open()) {
         out_file.open(this->file_name, ios::app | ios::binary);
     }
-    out_file.write((char *) buffer, size);
+    out_file.write(buffer, size);
     out_file.close();
 
 }

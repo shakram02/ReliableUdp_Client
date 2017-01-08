@@ -17,11 +17,11 @@ class GbnReceiver
 {
     ClientSocket *client_sock;
     FileWriter *writer;
-    bool is_receiving=true;
+    bool is_receiving = true;
     int last_acked_seq_num = -1;
     unsigned int window_size;
 
-    boost::lockfree::queue<DataPacket *> packets;
+    boost::lockfree::queue<Packet *> packets;
 
 public:
     GbnReceiver(unsigned int window_size, ClientSocket *sock, FileWriter *writer);

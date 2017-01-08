@@ -24,7 +24,7 @@ public:
      * Writes an array of bytes to the file
      * @param buffer bytes to write
      */
-    void Write(void *buffer, unsigned int size);
+    void Write(char *buffer, unsigned int size);
 
     /**
      * Disposes the FileWrite allocated resources

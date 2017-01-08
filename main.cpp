@@ -36,7 +36,7 @@ int main()
     file_request.append(file_name);
 
     FileWriter writer((char *) file_name.c_str());
-    sock.SendPacket((void *) file_request.c_str(), (unsigned int) file_request.size());
+    sock.SendPacket((byte *) file_request.c_str(), (unsigned int) file_request.size());
 
     void *file_header;
     sock.ReceiveRaw(&file_header);

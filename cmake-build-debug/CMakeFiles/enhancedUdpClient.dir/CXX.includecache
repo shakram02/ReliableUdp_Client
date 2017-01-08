@@ -6,15 +6,29 @@
 
 #IncludeRegexTransform: 
 
-../../../clg_ReliableUdp_Lib/include/AckPacket.h
+../../../clg_ReliableUdp_Lib/include/Packet.h
+UdpLibGlobaldefs.h
+../../../clg_ReliableUdp_Lib/include/UdpLibGlobaldefs.h
+vector
+-
+memory
+-
+sstream
+-
+PacketHeader.h
+-
 
-../../../clg_ReliableUdp_Lib/include/BinarySerializer.h
-AckPacket.h
-../../../clg_ReliableUdp_Lib/include/AckPacket.h
+../../../clg_ReliableUdp_Lib/include/PacketHeader.h
+UdpLibGlobaldefs.h
+../../../clg_ReliableUdp_Lib/include/UdpLibGlobaldefs.h
+memory
+-
 
-../../../clg_ReliableUdp_Lib/include/DataPacket.h
-globaldefs.h
-../../../clg_ReliableUdp_Lib/include/globaldefs.h
+../../../clg_ReliableUdp_Lib/include/UdpLibGlobaldefs.h
+vector
+-
+memory
+-
 
 /home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/ClientSocket.cpp
 cstring
@@ -35,9 +49,7 @@ cstdlib
 -
 vector
 -
-DataPacket.h
--
-BinarySerializer.h
+Packet.h
 -
 netinet/in.h
 -
