@@ -76,13 +76,13 @@ void GbnReceiver::StartAcking(int frag_count)
         if (to_be_acked->header->dataLen == 0) {
             cout << "Transmission completed at packet [" << to_be_acked->header->seqno << "]" << endl;
             this->is_receiving = false;
+
             return;
         } else {
             unique_ptr<ByteVector> data;
             if (to_be_acked->GetData(data)) {
-                cout << "Data recv.:" << data->data() << endl;
-                //string s(to_be_acked->GetData().data());
-                //this->writer->Write(const_cast<char *> (s.c_str()), to_be_acked->len);
+                //cout << "Data recv.:" << data->data() << endl;
+                this->writer->Write(*data);
             } else {
                 cout << "ACK receive" << endl;
             };

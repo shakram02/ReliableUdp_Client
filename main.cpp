@@ -16,7 +16,7 @@ using namespace std;
  * @param ip Contains the server ip
  */
 
-#define FILE_IDX 0
+#define FILE_IDX 1
 
 int main()
 {
@@ -35,7 +35,7 @@ int main()
     basic_string<char> file_request("FILE-");
     file_request.append(file_name);
 
-    FileWriter writer((char *) file_name.c_str());
+    FileWriter writer(file_name);
     sock.SendPacket((byte *) file_request.c_str(), (unsigned int) file_request.size());
 
     void *file_header;

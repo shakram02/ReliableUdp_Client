@@ -21,6 +21,9 @@ class GbnReceiver
     int last_acked_seq_num = -1;
     unsigned int window_size;
 
+    // A pointer must be used, as the lockfree queue needs
+    // types with simple destructor and copy constructor
+    // which aren't valid for the unique pointer
     boost::lockfree::queue<Packet *> packets;
 
 public:
