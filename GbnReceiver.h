@@ -15,6 +15,9 @@
 
 class GbnReceiver
 {
+    // TODO convert ClientSocket and FileWriter to unique pointers
+    // the underlying objects must be allocated on the heap
+    // not the stack (as what's currently happening)
     ClientSocket *client_sock;
     FileWriter *writer;
     bool is_receiving = true;

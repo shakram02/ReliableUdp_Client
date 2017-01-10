@@ -52,6 +52,9 @@ int ClientSocket::HandshakeServer(string &handshake)
 #endif
 
     close(this->socket_fd);  // Close the welcome socket
+    // TODO create another socket object,
+    // leave the main socket for the main communication
+    // TODO client can request more than one file at the same time?
     SwitchToRedirectedSocket(buf);
 
     string redirect_confirm(REDIRECT_SUCCESS);
@@ -239,4 +242,29 @@ void ClientSocket::SendAckPacket(unsigned int seqno)
 void ClientSocket::log_error(const char *func_name)
 {
     fprintf(stderr, "%s:%s\n", func_name, strerror(errno));
+}
+
+void ClientSocket::RequestFile(string file_name, int &packet_count)
+{
+    string file_request("FILE-");
+    file_request.append(file_name);
+
+    this->SendPacket((byte *) file_request.c_str(), (unsigned int) file_request.size());
+
+    void *file_header;
+    this->ReceiveRaw(&file_header);
+
+    // Trim the last element as it's garbage because a string is being received
+    string file_header_packet((char *) file_header);
+
+    int pos = (int) file_header_packet.find(SERV_FILESZ_HEADER);
+
+    if (pos != 0) {
+        packet_count = -1;
+    }
+
+    // TODO wrong packet count and content ?
+    file_header_packet = file_header_packet.substr(strlen(SERV_FILESZ_HEADER), file_header_packet.size() - 1);
+    char *packet_count_str = (char *) file_header_packet.c_str();
+    packet_count = stoi(packet_count_str, nullptr, 0);
 }

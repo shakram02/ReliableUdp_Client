@@ -31,22 +31,6 @@ public:
     ClientSocket(const string &server_addr, const unsigned short server_port);
 
 
-    /**
-    * Sends an array of bytes (unsigned char) to the server
-    * @param data Message content to be sent
-    * @return the number of bytes that were actually sent
-    */
-    void SendPacket(byte *data, unsigned int data_len);
-
-/**
- * This function receives only 1 packet, when an attempt is made to connect to the server
- * a handshake message is sent, then the server redirects the client to another port
- * if a receive operation times out, this function will report to the caller
- * @param recvHandler
- * @return
- */
-    long ReceiveRaw(void **buf);
-
     bool ReceiveDataPacket(unique_ptr<Packet> &data_pckt);
 
     ~ClientSocket();
@@ -55,7 +39,24 @@ public:
 
     void SendAckPacket(unsigned int seqno);
 
+    void RequestFile(string fileName, int &packetCount);
+
 private:
+    /**
+    * Sends an array of bytes (unsigned char) to the server
+    * @param data Message content to be sent
+    * @return the number of bytes that were actually sent
+    */
+    void SendPacket(byte *data, unsigned int data_len);
+
+    /**
+     * This function receives only 1 packet, when an attempt is made to connect to the server
+     * a handshake message is sent, then the server redirects the client to another port
+     * if a receive operation times out, this function will report to the caller
+     * @param recvHandler
+     * @return
+     */
+    long ReceiveRaw(void **buf);
 
     bool is_disposed = false;
 

@@ -57,6 +57,8 @@ netinet/in.h
 /home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/FileWriter.cpp
 cstring
 -
+vector
+-
 FileWriter.h
 /home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/FileWriter.h
 globaldefs.h
