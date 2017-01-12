@@ -18,8 +18,11 @@ class GbnReceiver
     // TODO convert ClientSocket and FileWriter to unique pointers
     // the underlying objects must be allocated on the heap
     // not the stack (as what's currently happening)
-    ClientSocket *client_sock;
-    FileWriter *writer;
+
+    //ClientSocket*client_sock;
+    //FileWriter*writer;
+    RawUdpSocket *client_sock;
+    unique_ptr<FileWriter> writer;
     bool is_receiving = true;
     int last_acked_seq_num = -1;
     unsigned int window_size;
@@ -30,11 +33,13 @@ class GbnReceiver
     boost::lockfree::queue<Packet *> packets;
 
 public:
-    GbnReceiver(unsigned int window_size, ClientSocket *sock, FileWriter *writer);
+    //GbnReceiver(unsigned int window_size, ClientSocket *sock, FileWriter *writer);
+
+    GbnReceiver(unsigned int window_size, RawUdpSocket *sock, unique_ptr<FileWriter> &writer);
 
     void StartReceiving();
 
-    void StartAcking(int frag_count);
+    void StartAcking(AddressInfo &server_info);
 };
 
 

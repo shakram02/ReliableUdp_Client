@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/ClientSocket.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/ClientSocket.cpp.o"
+  "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/FileTransfer.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o"
   "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/FileWriter.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o"
   "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/GbnReceiver.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/GbnReceiver.cpp.o"
   "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/main.cpp" "/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/cmake-build-debug/CMakeFiles/enhancedUdpClient.dir/main.cpp.o"

@@ -11,7 +11,7 @@ link_directories(${Udp_Lib_Directory}/cmake-build-debug)
 ##set ( PROJECT_LINK_LIBS libtestStudent.a )    # static lib
 
 find_package(Boost COMPONENTS system filesystem thread REQUIRED)
-set(SOURCE_FILES main.cpp ClientSocket.cpp ClientSocket.h FileWriter.cpp FileWriter.h globaldefs.h GbnReceiver.cpp GbnReceiver.h)
+set(SOURCE_FILES main.cpp ClientSocket.cpp ClientSocket.h FileWriter.cpp FileWriter.h globaldefs.h GbnReceiver.cpp GbnReceiver.h FileTransfer.cpp FileTransfer.h)
 
 # add the include folder that will ahve the headers
 include_directories(${Udp_Lib_Directory}/include)

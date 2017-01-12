@@ -6,16 +6,13 @@
 #ifndef ENHANCEDUDPCLIENT_SOCKETCLIENT_H
 #define ENHANCEDUDPCLIENT_SOCKETCLIENT_H
 
-//extern "C"
-//{
-//#include "netutils.h"
-//};
-
 #include <iostream>
 #include <cstdlib>
 #include <vector>
 #include <Packet.h>
 #include <netinet/in.h>
+#include <AddressInfo.h>
+#include <RawUdpSocket.h>
 
 using namespace std;
 
@@ -35,11 +32,9 @@ public:
 
     ~ClientSocket();
 
-    int HandshakeServer(string &handshake);
+    int InitFileRequest(string &handshake);
 
     void SendAckPacket(unsigned int seqno);
-
-    void RequestFile(string fileName, int &packetCount);
 
 private:
     /**
@@ -72,13 +67,10 @@ private:
     bool is_initialized = false;
     sockaddr_in endpoint;
     string server_addr;
+    unique_ptr<RawUdpSocket> socket;
+    unique_ptr<AddressInfo> server_info;
 
     void log_error(const char *func_name);
-    //void (*recv_handler)(char *chunk, long chunk_size);
-
-    void SwitchToRedirectedSocket(char *message);
-
-
 };
 
 #endif //ENHANCEDUDPCLIENT_SOCKETCLIENT_H
