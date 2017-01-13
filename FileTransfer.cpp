@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstring>
 #include "FileTransfer.h"
-#include "globaldefs.h"
+#include "client_config.h"
 
 using std::cout;
 using std::endl;
@@ -18,6 +18,8 @@ FileTransfer::FileTransfer(string server_ip, unsigned short request_port_number,
 
     string redirect_ok(REDIRECT_SUCCESS);
     this->request_socket->SendString(*this->request_server_info, redirect_ok);
+
+    this->request_socket->SetReceiveTimeout(RCV_TIMEO_SEC, RCV_TIMEO_USEC);
 
     try {
         AssertRedirectionOk();

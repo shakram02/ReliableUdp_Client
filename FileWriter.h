@@ -26,6 +26,8 @@ public:
      */
     void Write(std::vector<unsigned char> &buffer);
 
+    void Close();
+
     /**
      * Disposes the FileWrite allocated resources
      */

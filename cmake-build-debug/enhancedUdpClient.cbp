@@ -86,10 +86,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/ClientSocket.cpp">
-			<Option target="enhancedUdpClient"/>
-		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/ClientSocket.h">
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/AbstractReceiver.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/FileTransfer.cpp">
@@ -110,7 +107,13 @@
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/GbnReceiver.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
-		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/globaldefs.h">
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/MainSocket.cpp">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/MainSocket.h">
+			<Option target="enhancedUdpClient"/>
+		</Unit>
+		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/client_config.h">
 			<Option target="enhancedUdpClient"/>
 		</Unit>
 		<Unit filename="/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/main.cpp">

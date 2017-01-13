@@ -7,24 +7,18 @@
 
 
 #include <queue>
-#include "ClientSocket.h"
-#include "globaldefs.h"
+#include "MainSocket.h"
+#include "client_config.h"
 #include "FileWriter.h"
+#include "AbstractReceiver.h"
 #include <boost/thread/thread.hpp>
 #include <boost/lockfree/queue.hpp>
 
-class GbnReceiver
-{
-    // TODO convert ClientSocket and FileWriter to unique pointers
-    // the underlying objects must be allocated on the heap
-    // not the stack (as what's currently happening)
+// TODO GBN receiver and FileTransfer classes have overlapping functionality
+// which needs to be eliminated
 
-    //ClientSocket*client_sock;
-    //FileWriter*writer;
-    RawUdpSocket *client_sock;
-    unique_ptr<FileWriter> writer;
-    bool is_receiving = true;
-    int last_acked_seq_num = -1;
+class GbnReceiver : public AbstractReceiver
+{
     unsigned int window_size;
 
     // A pointer must be used, as the lockfree queue needs
@@ -32,14 +26,20 @@ class GbnReceiver
     // which aren't valid for the unique pointer
     boost::lockfree::queue<Packet *> packets;
 
+    void Receive();
+
+    void StartAcking();
+
 public:
-    //GbnReceiver(unsigned int window_size, ClientSocket *sock, FileWriter *writer);
 
-    GbnReceiver(unsigned int window_size, RawUdpSocket *sock, unique_ptr<FileWriter> &writer);
+    GbnReceiver(unsigned int window_size,
+            unique_ptr<RawUdpSocket> &sock,
+            unique_ptr<FileWriter> &writer, AddressInfo &server_info);
 
-    void StartReceiving();
+    void StartReceiving() override;
 
-    void StartAcking(AddressInfo &server_info);
+    void StopReceiving() override;
+
 };
 
 

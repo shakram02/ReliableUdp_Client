@@ -5,7 +5,7 @@
 #include <cstring>
 #include <vector>
 #include "FileWriter.h"
-#include "globaldefs.h"
+#include "client_config.h"
 
 FileWriter::FileWriter(string &inp_file_name)
 {
@@ -56,5 +56,12 @@ FileWriter::~FileWriter()
 #if LOG >= 2
         cout << "File writer flushed" << endl;
 #endif
+    }
+}
+
+void FileWriter::Close()
+{
+    if (out_file.is_open()) {
+        out_file.close();
     }
 }
