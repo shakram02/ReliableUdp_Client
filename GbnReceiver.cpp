@@ -26,10 +26,8 @@ void GbnReceiver::StartReceiving()
     // TODO, make the start receiving function call another function with a thread creation,
     // so the user just calls start receiving without having to worry about threads
 
-    boost::thread
-    rcv_th(boost::bind(&GbnReceiver::Receive, boost::ref(*this)));
-    boost::thread
-    ack_th(boost::bind(&GbnReceiver::StartAcking, boost::ref(*this)));
+    boost::thread rcv_th(boost::bind(&GbnReceiver::Receive, boost::ref(*this)));
+    boost::thread ack_th(boost::bind(&GbnReceiver::StartAcking, boost::ref(*this)));
 
     rcv_th.join();
     ack_th.join();
