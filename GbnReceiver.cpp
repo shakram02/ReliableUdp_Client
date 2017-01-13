@@ -7,8 +7,8 @@
 #include "GbnReceiver.h"
 
 GbnReceiver::GbnReceiver(unsigned int window_size,
-        unique_ptr<RawUdpSocket> &sock,
-        unique_ptr<FileWriter> &f_writer,
+        unique_ptr <RawUdpSocket> &sock,
+        unique_ptr <FileWriter> &f_writer,
         AddressInfo &server_info) :
         packets(window_size),
         AbstractReceiver(server_info, f_writer, sock)
@@ -26,8 +26,10 @@ void GbnReceiver::StartReceiving()
     // TODO, make the start receiving function call another function with a thread creation,
     // so the user just calls start receiving without having to worry about threads
 
-    boost::thread rcv_th(boost::bind(&GbnReceiver::Receive, boost::ref(*this)));
-    boost::thread ack_th(boost::bind(&GbnReceiver::StartAcking, boost::ref(*this)));
+    boost::thread
+    rcv_th(boost::bind(&GbnReceiver::Receive, boost::ref(*this)));
+    boost::thread
+    ack_th(boost::bind(&GbnReceiver::StartAcking, boost::ref(*this)));
 
     rcv_th.join();
     ack_th.join();
@@ -50,7 +52,7 @@ void GbnReceiver::StartAcking()
         Packet *temp;
         if (!this->packets.pop(temp)) continue;  // queue is empty  // TODO remove this, redundant
 
-        unique_ptr<Packet> to_be_acked(temp);   // Put the packet in a container
+        unique_ptr <Packet> to_be_acked(temp);   // Put the packet in a container
 
         // The popped packet isn't the one I'm waiting for
         if (to_be_acked->header->seqno != (this->last_acked_seq_num + 1)) {
@@ -59,8 +61,8 @@ void GbnReceiver::StartAcking()
         }
 
         cout << "--> | ACK [" << to_be_acked->header->seqno << "]" << endl;
-        unique_ptr<ByteVector> data = nullptr;
-        unique_ptr<Packet> ack(new Packet(data, to_be_acked->header->seqno));
+        unique_ptr <ByteVector> data = nullptr;
+        unique_ptr <Packet> ack(new Packet(data, to_be_acked->header->seqno));
         file_transfer_socket->SendPacket(this->server_info, ack);
 
         this->last_acked_seq_num++;
@@ -96,16 +98,14 @@ void GbnReceiver::Receive()
 //            // TODO cleanup and pause AKCing
 //        }
 
-        try {
-            unique_ptr<Packet> unq_pckt = file_transfer_socket->ReceivePacket();
 
+        unique_ptr <Packet> unq_pckt;
+        if (file_transfer_socket->ReceivePacket(unq_pckt)) {
             // Reset fail count on valid packet, this isn't reached on timeout
             fails_of_packet = 0;
             cout << "<-- | RCV [" << unq_pckt->header->seqno << "]" << endl;
             this->packets.push(unq_pckt.release());
-        }
-        catch (std::runtime_error &excption) {
-
+        } else {
             if (!this->is_receiving) return;
 
             cerr << "-*- | Timeout" << endl;
@@ -116,5 +116,29 @@ void GbnReceiver::Receive()
             this->is_receiving = false;
             return;
         }
+
     }
+
+//        try {
+//            unique_ptr<Packet> unq_pckt = file_transfer_socket->ReceivePacket();
+//
+//            // Reset fail count on valid packet, this isn't reached on timeout
+//            fails_of_packet = 0;
+//            cout << "<-- | RCV [" << unq_pckt->header->seqno << "]" << endl;
+//            this->packets.push(unq_pckt.release());
+//        }
+//        catch (std::runtime_error &excption) {
+//
+//            if (!this->is_receiving) return;
+//
+//            cerr << "-*- | Timeout" << endl;
+//
+//            // TODO terminate of many fails
+//            if (fails_of_packet++ != max_fails_of_packet)continue;
+//
+//            this->is_receiving = false;
+//            return;
+//        }
 }
+
+
