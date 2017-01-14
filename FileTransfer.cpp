@@ -4,33 +4,37 @@
 
 #include <iostream>
 #include <cstring>
+#include <thread>
 #include "FileTransfer.h"
 #include "client_config.h"
+#include "GbnReceiver.h"
 
 using std::cout;
 using std::endl;
 
-FileTransfer::FileTransfer(string server_ip, unsigned short request_port_number, string file_name)
+FileTransfer::FileTransfer(string server_ip,
+        unsigned short request_port_number,
+        string file_name,
+        AbstractReceiver *receiver)
         : file_name(file_name)
 {
-    this->request_server_info = unique_ptr<AddressInfo>(new AddressInfo(server_ip, request_port_number));
-    this->request_socket = unique_ptr<RawUdpSocket>(new RawUdpSocket(*this->request_server_info));
+    this->receiver = unique_ptr<AbstractReceiver>(receiver);
+    // TODO the open socket should send to the server on the given port
+    this->request_end_point = unique_ptr<AddressInfo>(new AddressInfo(server_ip, request_port_number));
 
+    // Create a socket for this file transfer
+    string client_ip(LOOP_BCK_IP);
+    this->request_socket = unique_ptr<RawUdpSocket>(new RawUdpSocket(client_ip));
+
+    // Confirm redirection, set the timeout for redirection assertion
+    // from the server as a relatively large value
     string redirect_ok(REDIRECT_SUCCESS);
-    this->request_socket->SendString(*this->request_server_info, redirect_ok);
+    this->request_socket->SendString(*(this->request_end_point), redirect_ok);
+    this->request_socket->SetReceiveTimeout(INITIAL_RCV_TIMEO_SEC, INITIAL_RCV_TIMEO_USEC);
 
-    this->request_socket->SetReceiveTimeout(RCV_TIMEO_SEC, RCV_TIMEO_USEC);
-
-    try {
-        AssertRedirectionOk();
-    } catch (std::runtime_error &err) {
-        // TODO fail
-    }
-}
-
-void FileTransfer::AssertRedirectionOk()
-{
+    // After getting the confirmation, decrease the timeout as the file transfer will start
     string temp = this->request_socket->ReceiveString();
+    this->request_socket->SetReceiveTimeout(RCV_TIMEO_SEC, RCV_TIMEO_USEC);
 
     if (temp != string(REDIRECT_OK)) {
         throw std::runtime_error("Bad confirmation received:");
@@ -43,10 +47,14 @@ int FileTransfer::GetFileChunkCount()
     string file_request(FILE_REQUEST_HEADER);
     file_request.append(file_name);
 
-    this->request_socket->SendString(*this->request_server_info, file_request);
-    string file_header_packet = this->request_socket->ReceiveString();
+    cout << "Port:" << this->request_end_point->port_number
+         << ", IP:" << this->request_end_point->ip << endl;
 
-    cout << "REPLY:" << file_header_packet << endl;
+    this->request_socket->SendString(*this->request_end_point, file_request);
+    AddressInfo inf;
+    string file_header_packet = this->request_socket->ReceiveString(inf);
+
+    cout << " Reply:" << file_header_packet << endl;
 
     // Trim the last element as it's garbage because a string is being received
     int pos = (int) file_header_packet.find(SERV_FILESZ_HEADER);
@@ -58,4 +66,14 @@ int FileTransfer::GetFileChunkCount()
     // TODO wrong packet count and content ?
     file_header_packet = file_header_packet.substr(strlen(SERV_FILESZ_HEADER), file_header_packet.size() - 1);
     return std::stoi(file_header_packet.c_str(), nullptr, 0);
+}
+
+void FileTransfer::StartReceive()
+{
+    this->receiver->StartReceiving(this->request_socket, *this->request_end_point);
+}
+
+void FileTransfer::StopReceive()
+{
+    this->receiver->StopReceiving();
 }

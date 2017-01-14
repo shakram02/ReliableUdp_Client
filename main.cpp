@@ -19,11 +19,6 @@ using namespace std;
 
 #define FILE_IDX 1
 
-void no()
-{
-    cout << "NOOOO" << endl;
-}
-
 int main()
 {
     MainSocket sock(string(SERVER_IP_ADDR), PORT_NUM);
@@ -35,7 +30,7 @@ int main()
 
     if (redirect_port < 0)exit(-1);
 
-    string files[3] = {
+    const string files[3] = {
             string("zooz.txt"),
             string("txrxPc.png"),
             string("Pro Git.pdf"),
@@ -43,16 +38,28 @@ int main()
 
     string file_name = files[FILE_IDX];
     cout << "Requesting file" << endl;
-    AddressInfo server_info(string(SERVER_IP_ADDR), (unsigned short) redirect_port);
+    AddressInfo endpoint(string(SERVER_IP_ADDR), (unsigned short) redirect_port);
 
-    FileTransfer transfer(string(SERVER_IP_ADDR), (unsigned short) redirect_port, file_name);
-    int packet_count = transfer.GetFileChunkCount();
+    cout << "Redirecting socket" << endl;
+    string serv_ip = string(SERVER_IP_ADDR);
 
+    // TODO FACTORY!!!!
     unique_ptr<FileWriter> writer = unique_ptr<FileWriter>(new FileWriter(file_name));
+    GbnReceiver *receiver = new GbnReceiver(5, writer);
 
-    GbnReceiver receiver(5, transfer.request_socket, writer, server_info);
+    FileTransfer transfer(serv_ip, (unsigned short) redirect_port, file_name,
+            static_cast<AbstractReceiver *>(receiver));
 
-    receiver.StartReceiving();
+    int packet_count = transfer.GetFileChunkCount();
+    cout << "Packet count:" << packet_count << endl;
+
+
+    cout << "DBG#" << endpoint.port_number << endl;
+
+    transfer.StartReceive();
+
+
+
     //boost::thread rcv_th(boost::bind(&GbnReceiver::StartReceiving, boost::ref(receiver)));
     //rcv_th.join();
 

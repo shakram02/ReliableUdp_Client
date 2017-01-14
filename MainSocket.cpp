@@ -12,9 +12,7 @@ MainSocket::MainSocket(const string &server_addr, const unsigned short server_po
     server_info = unique_ptr<AddressInfo>(new AddressInfo(server_addr, server_port));
     this->server_addr = string(server_addr);
 
-    AddressInfo info(this->server_addr, server_port);
-
-    this->socket = unique_ptr<RawUdpSocket>(new RawUdpSocket(info));
+    this->socket = unique_ptr<RawUdpSocket>(new RawUdpSocket(*this->server_info));
     this->socket->SetReceiveTimeout(RCV_TIMEO_SEC, RCV_TIMEO_USEC);
     this->socket->SetSendTimeout(RCV_TIMEO_SEC, RCV_TIMEO_USEC);
 }

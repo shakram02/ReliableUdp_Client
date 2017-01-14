@@ -18,22 +18,19 @@ protected:
 
     std::atomic<bool> is_receiving;
     int last_acked_seq_num = -1;
-    AddressInfo server_info;
+    AddressInfo endpoint;
+
+
+    AbstractReceiver(unique_ptr<FileWriter> &writer) :
+            writer(std::move(writer))
+    {}
 
 public:
-
-    AbstractReceiver(const AddressInfo &server_info, unique_ptr<FileWriter> &writer,
-            unique_ptr<RawUdpSocket> &file_trans_socket) :
-
-            server_info(server_info),
-            writer(std::move(writer)),
-            file_transfer_socket(std::move(file_trans_socket))
-    {}
 
     virtual ~AbstractReceiver()
     {};
 
-    virtual void StartReceiving()=0;
+    virtual void StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressInfo endpoint)=0;
 
     virtual void StopReceiving()=0;
 };

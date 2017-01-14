@@ -9,6 +9,7 @@
 #include<memory>
 #include <AddressInfo.h>
 #include <RawUdpSocket.h>
+#include "AbstractReceiver.h"
 
 using std::string;
 using std::unique_ptr;
@@ -16,16 +17,20 @@ using std::unique_ptr;
 class FileTransfer
 {
 public:
-    FileTransfer(string server_ip, unsigned short request_port_number, string file_name);
+    FileTransfer(string server_ip, unsigned short request_port_number, string file_name,
+            AbstractReceiver *receiver);
 
     int GetFileChunkCount();
 
-    unique_ptr<AddressInfo> request_server_info;
-    unique_ptr<RawUdpSocket> request_socket;
-private:
-string file_name;
+    void StartReceive();
 
-    void AssertRedirectionOk();
+    void StopReceive();
+
+    unique_ptr<AddressInfo> request_end_point;
+    unique_ptr<RawUdpSocket> request_socket;
+    unique_ptr<AbstractReceiver> receiver;
+private:
+    string file_name;
 };
 
 

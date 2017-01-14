@@ -33,10 +33,9 @@ class GbnReceiver : public AbstractReceiver
 public:
 
     GbnReceiver(unsigned int window_size,
-            unique_ptr<RawUdpSocket> &sock,
-            unique_ptr<FileWriter> &writer, AddressInfo &server_info);
+            unique_ptr<FileWriter> &writer);
 
-    void StartReceiving() override;
+    void StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressInfo endpoint) override;
 
     void StopReceiving() override;
 
