@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define FILE_IDX 2
+#define FILE_IDX 1
 
 int main()
 {
@@ -40,7 +40,7 @@ int main()
     FileTransfer transfer(serv_ip, (unsigned short) redirect_port, file_name,
             static_cast<AbstractReceiver *>(receiver));
 
-    int packet_count = transfer.GetFileChunkCount();
+    int packet_count = transfer.GetPacketCount();
     cout << "Packet count:" << packet_count << endl;
     transfer.StartReceive();
 

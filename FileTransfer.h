@@ -20,13 +20,13 @@ public:
     FileTransfer(string server_ip, unsigned short request_port_number, string file_name,
             AbstractReceiver *receiver);
 
-    int GetFileChunkCount();
+    int GetPacketCount();
 
     void StartReceive();
 
     void StopReceive();
 
-    unique_ptr<AddressInfo> request_end_point;
+    unique_ptr<AddressInfo> end_point;
     unique_ptr<RawUdpSocket> request_socket;
     unique_ptr<AbstractReceiver> receiver;
 private:

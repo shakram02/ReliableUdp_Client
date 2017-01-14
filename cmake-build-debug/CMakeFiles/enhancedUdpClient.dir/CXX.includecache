@@ -28,6 +28,8 @@ UdpLibGlobaldefs.h
 memory
 -
 
+../../../clg_ReliableUdp_Lib/include/ProtocolMsgId.h
+
 ../../../clg_ReliableUdp_Lib/include/RawUdpSocket.h
 arpa/inet.h
 -
@@ -79,6 +81,8 @@ AddressInfo.h
 -
 RawUdpSocket.h
 -
+AbstractReceiver.h
+/home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/AbstractReceiver.h
 
 /home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/FileWriter.cpp
 cstring
@@ -127,6 +131,8 @@ MainSocket.h
 /home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/MainSocket.h
 client_config.h
 /home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/client_config.h
+ProtocolMsgId.h
+-
 
 /home/ahmed/code/c/ReliableUdpTransfer/clg_ReliableUdp_Client/MainSocket.h
 iostream

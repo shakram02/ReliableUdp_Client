@@ -16,8 +16,8 @@ FileTransfer::FileTransfer(string server_ip,
         : file_name(file_name)
 {
     this->receiver = unique_ptr<AbstractReceiver>(receiver);
-    // TODO the open socket should send to the server on the given port
-    this->request_end_point = unique_ptr<AddressInfo>(new AddressInfo(server_ip, request_port_number));
+    // the open socket should send to the server on the given port
+    this->end_point = unique_ptr<AddressInfo>(new AddressInfo(server_ip, request_port_number));
 
     // Create a socket for this file transfer
     string client_ip(LOOP_BCK_IP);
@@ -26,7 +26,7 @@ FileTransfer::FileTransfer(string server_ip,
     // Confirm redirection, set the timeout for redirection assertion
     // from the server as a relatively large value
     string redirect_ok(REDIRECT_SUCCESS);
-    this->request_socket->SendString(*(this->request_end_point), redirect_ok);
+    this->request_socket->SendString(*(this->end_point), redirect_ok);
     this->request_socket->SetReceiveTimeout(INITIAL_RCV_TIMEO_SEC, INITIAL_RCV_TIMEO_USEC);
 
     // After getting the confirmation, decrease the timeout as the file transfer will start
@@ -38,12 +38,12 @@ FileTransfer::FileTransfer(string server_ip,
     }
 }
 
-int FileTransfer::GetFileChunkCount()
+int FileTransfer::GetPacketCount()
 {
     string file_request(FILE_REQUEST_HEADER);
     file_request.append(file_name);
 
-    this->request_socket->SendString(*this->request_end_point, file_request);
+    this->request_socket->SendString(*this->end_point, file_request);
     AddressInfo inf;
     string file_header_packet = this->request_socket->ReceiveString(inf);
 
@@ -53,14 +53,19 @@ int FileTransfer::GetFileChunkCount()
         throw std::runtime_error("Couldn't get file info");
     }
 
-    // TODO wrong packet count and content ?
     file_header_packet = file_header_packet.substr(strlen(SERV_FILESZ_HEADER), file_header_packet.size() - 1);
-    return std::stoi(file_header_packet.c_str(), nullptr, 0);
+    int packet_count = std::stoi(file_header_packet.c_str(), nullptr, 0);
+
+    if (packet_count == 0) {
+        // TODO File not found
+    }
+
+    return packet_count;
 }
 
 void FileTransfer::StartReceive()
 {
-    this->receiver->StartReceiving(this->request_socket, *this->request_end_point);
+    this->receiver->StartReceiving(this->request_socket, *this->end_point);
 }
 
 void FileTransfer::StopReceive()

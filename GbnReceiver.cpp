@@ -16,7 +16,7 @@ GbnReceiver::GbnReceiver(unsigned int window_size,
 
 void GbnReceiver::StopReceiving()
 {
-
+    this->is_receiving = false;
 }
 
 void GbnReceiver::StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressInfo endpoint)
@@ -24,8 +24,6 @@ void GbnReceiver::StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressIn
     this->file_transfer_socket = std::move(rcv_socket);
     this->endpoint = endpoint;
     this->is_receiving = true;
-    // TODO, make the start receiving function call another function with a thread creation,
-    // so the user just calls start receiving without having to worry about threads
 
     boost::thread rcv_th(boost::bind(&GbnReceiver::Receive, boost::ref(*this)));
     boost::thread ack_th(boost::bind(&GbnReceiver::StartAcking, boost::ref(*this)));
@@ -42,14 +40,13 @@ void GbnReceiver::StartAcking()
 //            // TODO cleanup and pause AKCing
 //        }
 
-        // Wait for packets to be sent and print out
-        if (this->packets.empty()) {
+        Packet *temp;
+        // Get the next packet
+        if (!this->packets.pop(temp)) {
+            // Queue is empty
             boost::this_thread::sleep_for(boost::chrono::milliseconds(5));
             continue;
         }
-
-        Packet *temp;
-        if (!this->packets.pop(temp)) continue;  // queue is empty  // TODO remove this, redundant
 
         unique_ptr<Packet> to_be_acked(temp);   // Put the packet in a container
 
@@ -60,23 +57,24 @@ void GbnReceiver::StartAcking()
         }
 
         cout << "--> | ACK [" << to_be_acked->header->seqno << "]" << endl;
-        unique_ptr<ByteVector> data = nullptr;
-        unique_ptr<Packet> ack(new Packet(data, to_be_acked->header->seqno));
 
+        unique_ptr<Packet> ack(new Packet(to_be_acked->header->seqno));
         file_transfer_socket->SendPacket(this->endpoint, ack);
-
         this->last_acked_seq_num++;
 
+        unique_ptr<ByteVector> data = nullptr;
         bool is_final_ack = to_be_acked->header->dataLen == 0;
         if (!is_final_ack && to_be_acked->GetData(data)) {
             //cout << "Data recv.:" << data->data() << endl;
             this->writer->Write(*data);
 
         } else if (is_final_ack) {
+
             cout << "Transmission completed at packet [" << to_be_acked->header->seqno << "]" << endl;
             this->is_receiving = false;
             this->writer->Close();
             return;
+
         } else {
             cerr << "Corrupt packet" << endl;
         }

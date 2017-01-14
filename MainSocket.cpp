@@ -6,6 +6,7 @@
 #include <cstring>
 #include "MainSocket.h"
 #include "client_config.h"
+#include <ProtocolMsgId.h>
 
 MainSocket::MainSocket(const string &server_addr, const unsigned short server_port)
 {
@@ -19,9 +20,16 @@ MainSocket::MainSocket(const string &server_addr, const unsigned short server_po
 
 int MainSocket::InitFileRequest(string &handshake)
 {
-    this->socket->SendString(*this->server_info, handshake);
+    this->socket->SendStringPacket(*this->server_info, handshake, ID_HAND_SHAKE);
 
-    string temp = this->socket->ReceiveString();
+    string temp;
+    int seqno = this->socket->ReceiveStringPacket(temp);
+
+    if (seqno != ID_GO_REDIRECT) {
+        string err("Bad protocol message ");
+        err.append(to_string(seqno));
+        throw std::runtime_error(err);
+    }
 
     temp.replace(0, strlen(WELCOME_HEADER), "");
     cout << "Redirect port:" << temp << endl;
