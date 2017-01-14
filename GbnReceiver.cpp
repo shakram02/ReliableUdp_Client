@@ -4,6 +4,7 @@
 
 // TODO create a base class for the GBN and Selective Repeat receivers
 // TODO use the timers
+#include <thread>
 #include "GbnReceiver.h"
 
 GbnReceiver::GbnReceiver(unsigned int window_size,
@@ -22,7 +23,7 @@ void GbnReceiver::StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressIn
 {
     this->file_transfer_socket = std::move(rcv_socket);
     this->endpoint = endpoint;
-
+    this->is_receiving = true;
     // TODO, make the start receiving function call another function with a thread creation,
     // so the user just calls start receiving without having to worry about threads
 
@@ -61,6 +62,7 @@ void GbnReceiver::StartAcking()
         cout << "--> | ACK [" << to_be_acked->header->seqno << "]" << endl;
         unique_ptr<ByteVector> data = nullptr;
         unique_ptr<Packet> ack(new Packet(data, to_be_acked->header->seqno));
+
         file_transfer_socket->SendPacket(this->endpoint, ack);
 
         this->last_acked_seq_num++;
@@ -79,7 +81,6 @@ void GbnReceiver::StartAcking()
             cerr << "Corrupt packet" << endl;
         }
     }
-
 }
 
 void GbnReceiver::Receive()
@@ -88,14 +89,11 @@ void GbnReceiver::Receive()
     int max_fails_of_packet = 9;
     int fails_of_packet = 0;
 
-    this->is_receiving = true;
-
     while (this->is_receiving) {
 
 //        if (boost::this_thread::interruption_requested()) {
 //            // TODO cleanup and pause AKCing
 //        }
-
 
         unique_ptr<Packet> unq_pckt;
         if (file_transfer_socket->ReceivePacket(unq_pckt)) {
@@ -120,5 +118,3 @@ void GbnReceiver::Receive()
 
     }
 }
-
-

@@ -6,8 +6,12 @@ CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../../../clg_ReliableUdp_Li
 CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../../../clg_ReliableUdp_Lib/include/PacketHeader.h
 CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../../../clg_ReliableUdp_Lib/include/RawUdpSocket.h
 CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../../../clg_ReliableUdp_Lib/include/UdpLibGlobaldefs.h
+CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../AbstractReceiver.h
 CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../FileTransfer.cpp
 CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../FileTransfer.h
+CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../FileWriter.h
+CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../GbnReceiver.h
+CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../MainSocket.h
 CMakeFiles/enhancedUdpClient.dir/FileTransfer.cpp.o: ../client_config.h
 
 CMakeFiles/enhancedUdpClient.dir/FileWriter.cpp.o: ../FileWriter.cpp

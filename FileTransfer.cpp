@@ -9,9 +9,6 @@
 #include "client_config.h"
 #include "GbnReceiver.h"
 
-using std::cout;
-using std::endl;
-
 FileTransfer::FileTransfer(string server_ip,
         unsigned short request_port_number,
         string file_name,
@@ -43,24 +40,17 @@ FileTransfer::FileTransfer(string server_ip,
 
 int FileTransfer::GetFileChunkCount()
 {
-
     string file_request(FILE_REQUEST_HEADER);
     file_request.append(file_name);
-
-    cout << "Port:" << this->request_end_point->port_number
-         << ", IP:" << this->request_end_point->ip << endl;
 
     this->request_socket->SendString(*this->request_end_point, file_request);
     AddressInfo inf;
     string file_header_packet = this->request_socket->ReceiveString(inf);
 
-    cout << " Reply:" << file_header_packet << endl;
-
-    // Trim the last element as it's garbage because a string is being received
     int pos = (int) file_header_packet.find(SERV_FILESZ_HEADER);
 
     if (pos != 0) {
-        return -1;  // Signal fail
+        throw std::runtime_error("Couldn't get file info");
     }
 
     // TODO wrong packet count and content ?
