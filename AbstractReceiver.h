@@ -21,9 +21,8 @@ protected:
     AddressInfo endpoint;
 
 
-    AbstractReceiver(unique_ptr<FileWriter> &writer) :
-            writer(std::move(writer))
-    {}
+    AbstractReceiver(string file_name)
+    { this->writer = unique_ptr<FileWriter>(new FileWriter(file_name)); }
 
 public:
 

@@ -8,8 +8,8 @@
 #include "GbnReceiver.h"
 
 GbnReceiver::GbnReceiver(unsigned int window_size,
-        unique_ptr<FileWriter> &f_writer) :
-        packets(window_size), AbstractReceiver(f_writer)
+        string file_name) :
+        packets(window_size), AbstractReceiver(file_name)
 {
     this->window_size = window_size;
 }
@@ -69,10 +69,11 @@ void GbnReceiver::StartAcking()
             this->writer->Write(*data);
 
         } else if (is_final_ack) {
-            // TODO if sending this fails, send it again till an ackback is received
+            // TODO if sending the final ACK fails, client doesn't need to send it again
             cout << "Transmission completed at packet [" << to_be_acked->header->seqno << "]" << endl;
             this->is_receiving = false;
             this->writer->Close();
+
             return;
 
         } else {

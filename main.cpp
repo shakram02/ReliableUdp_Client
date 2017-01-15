@@ -36,8 +36,7 @@ int main()
     cout << "Redirecting socket" << endl;
 
     // TODO FACTORY!!!!
-    unique_ptr<FileWriter> writer = unique_ptr<FileWriter>(new FileWriter(file_name));
-    GbnReceiver *receiver = new GbnReceiver(5, writer);
+    GbnReceiver *receiver = new GbnReceiver(5, file_name);
 
     FileTransfer transfer(serv_ip, (unsigned short) redirect_port, file_name,
             static_cast<AbstractReceiver *>(receiver));

@@ -17,7 +17,7 @@
 // TODO GBN receiver and FileTransfer classes have overlapping functionality
 // which needs to be eliminated
 
-class GbnReceiver : public AbstractReceiver
+class GbnReceiver : public virtual AbstractReceiver
 {
     unsigned int window_size;
 
@@ -32,8 +32,7 @@ class GbnReceiver : public AbstractReceiver
 
 public:
 
-    GbnReceiver(unsigned int window_size,
-            unique_ptr<FileWriter> &writer);
+    GbnReceiver(unsigned int window_size, string file_name);
 
     void StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressInfo endpoint) override;
 
