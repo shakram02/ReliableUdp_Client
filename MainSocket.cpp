@@ -6,7 +6,7 @@
 #include <cstring>
 #include "MainSocket.h"
 #include "client_config.h"
-#include <ProtocolMsgId.h>
+#include <ProtocolDef.h>
 
 MainSocket::MainSocket(const string &server_addr, const unsigned short server_port)
 {
@@ -20,7 +20,7 @@ MainSocket::MainSocket(const string &server_addr, const unsigned short server_po
 
 int MainSocket::InitFileRequest(string &handshake)
 {
-    this->socket->SendStringPacket(*this->server_info, handshake, ID_HAND_SHAKE);
+    this->socket->SendStringPacket(*this->server_info, handshake, ID_HNDSHK_CLNT);
 
     string temp;
     int seqno = this->socket->ReceiveStringPacket(temp);
@@ -31,7 +31,7 @@ int MainSocket::InitFileRequest(string &handshake)
         throw std::runtime_error(err);
     }
 
-    temp.replace(0, strlen(WELCOME_HEADER), "");
+    temp.replace(0, strlen(GO_REDIRECT_SRV), "");
     cout << "Redirect port:" << temp << endl;
 
     return (stoi(temp));

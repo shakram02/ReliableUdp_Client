@@ -8,6 +8,7 @@
 #include "FileTransfer.h"
 #include "client_config.h"
 #include "GbnReceiver.h"
+#include <ProtocolDef.h>
 
 FileTransfer::FileTransfer(string server_ip,
         unsigned short request_port_number,
@@ -25,35 +26,40 @@ FileTransfer::FileTransfer(string server_ip,
 
     // Confirm redirection, set the timeout for redirection assertion
     // from the server as a relatively large value
-    string redirect_ok(REDIRECT_SUCCESS);
-    this->request_socket->SendString(*(this->end_point), redirect_ok);
+    string redirect_ok(REDIRECT_SUCC_CLNT);
+
+    this->request_socket->SendStringPacket(*(this->end_point), redirect_ok, ID_REDIRECT_SUCC_CLNT);
     this->request_socket->SetReceiveTimeout(INITIAL_RCV_TIMEO_SEC, INITIAL_RCV_TIMEO_USEC);
 
-    // After getting the confirmation, decrease the timeout as the file transfer will start
-    string temp = this->request_socket->ReceiveString();
-    this->request_socket->SetReceiveTimeout(RCV_TIMEO_SEC, RCV_TIMEO_USEC);
-
-    if (temp != string(REDIRECT_OK)) {
+    string temp;
+    if (this->request_socket->ReceiveStringPacket(temp) != ID_REDIRECT_OK_SRV) {
+        // TODO fail
         throw std::runtime_error("Bad confirmation received:");
     }
+    // After getting the confirmation, decrease the timeout as the file transfer will start
+    this->request_socket->SetReceiveTimeout(RCV_TIMEO_SEC, RCV_TIMEO_USEC);
 }
 
 int FileTransfer::GetPacketCount()
 {
-    string file_request(FILE_REQUEST_HEADER);
+    string file_request(FILE_NAME_CLNT);
     file_request.append(file_name);
 
-    this->request_socket->SendString(*this->end_point, file_request);
-    AddressInfo inf;
-    string file_header_packet = this->request_socket->ReceiveString(inf);
+    this->request_socket->SendStringPacket(*this->end_point, file_request, ID_FILE_NAME_CLNT);
 
-    int pos = (int) file_header_packet.find(SERV_FILESZ_HEADER);
+    string file_header_packet;
+    if (this->request_socket->ReceiveStringPacket(file_header_packet) != ID_FILE_SZ_SRV) {
+        // TODO bad file count packet
+        throw std::runtime_error("Bad protocol message ");
+    }
+
+    int pos = (int) file_header_packet.find(FILE_SZ_SRV);
 
     if (pos != 0) {
         throw std::runtime_error("Couldn't get file info");
     }
 
-    file_header_packet = file_header_packet.substr(strlen(SERV_FILESZ_HEADER), file_header_packet.size() - 1);
+    file_header_packet = file_header_packet.substr(strlen(FILE_SZ_SRV), file_header_packet.size() - 1);
     int packet_count = std::stoi(file_header_packet.c_str(), nullptr, 0);
 
     if (packet_count == 0) {

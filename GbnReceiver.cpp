@@ -69,7 +69,7 @@ void GbnReceiver::StartAcking()
             this->writer->Write(*data);
 
         } else if (is_final_ack) {
-
+            // TODO if sending this fails, send it again till an ackback is received
             cout << "Transmission completed at packet [" << to_be_acked->header->seqno << "]" << endl;
             this->is_receiving = false;
             this->writer->Close();

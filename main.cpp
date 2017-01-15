@@ -1,3 +1,4 @@
+#include <ProtocolDef.h>
 #include "MainSocket.h"
 
 #include "FileWriter.h"
@@ -11,8 +12,8 @@ using namespace std;
 
 int main()
 {
-    MainSocket sock(string(SERVER_IP_ADDR), PORT_NUM);
-    string sync_msg(HANDSHAKE);
+    MainSocket sock(string(SERVER_IP), PORT_NUM);
+    string sync_msg(HNDSHK_CLNT);
 
     // This method will return a redirect port which
     // will be used to create the file request object
@@ -28,10 +29,11 @@ int main()
 
     string file_name = files[FILE_IDX];
     cout << "Requesting file" << endl;
-    AddressInfo endpoint(string(SERVER_IP_ADDR), (unsigned short) redirect_port);
+
+    string serv_ip = string(SERVER_IP);
+    AddressInfo endpoint(serv_ip, (unsigned short) redirect_port);
 
     cout << "Redirecting socket" << endl;
-    string serv_ip = string(SERVER_IP_ADDR);
 
     // TODO FACTORY!!!!
     unique_ptr<FileWriter> writer = unique_ptr<FileWriter>(new FileWriter(file_name));
