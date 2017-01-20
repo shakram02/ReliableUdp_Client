@@ -7,28 +7,38 @@
 
 
 #include <queue>
-#include "ClientSocket.h"
-#include "globaldefs.h"
+#include "MainSocket.h"
+#include "client_config.h"
 #include "FileWriter.h"
+#include "AbstractReceiver.h"
 #include <boost/thread/thread.hpp>
 #include <boost/lockfree/queue.hpp>
 
-class GbnReceiver
+// TODO GBN receiver and FileTransfer classes have overlapping functionality
+// which needs to be eliminated
+
+class GbnReceiver : public virtual AbstractReceiver
 {
-    ClientSocket *client_sock;
-    FileWriter *writer;
-    bool is_receiving=true;
-    int last_acked_seq_num = -1;
     unsigned int window_size;
 
-    boost::lockfree::queue<DataPacket *> packets;
+    // A pointer must be used, as the lockfree queue needs
+    // types with simple destructor and copy constructor
+    // which aren't valid for the unique pointer
+    boost::lockfree::queue<Packet *> packets;
 
+    void Receive();
+
+    void StartAcking();
+
+    unique_ptr<FileWriter> writer;
 public:
-    GbnReceiver(unsigned int window_size, ClientSocket *sock, FileWriter *writer);
 
-    void StartReceiving();
+    GbnReceiver(unsigned int window_size, unique_ptr<FileWriter> &writer);
 
-    void StartAcking(int frag_count);
+    void StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressInfo endpoint) override;
+
+    void StopReceiving() override;
+
 };
 
 

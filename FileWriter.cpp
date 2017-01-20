@@ -3,12 +3,13 @@
 //
 
 #include <cstring>
+#include <vector>
 #include "FileWriter.h"
-#include "globaldefs.h"
+#include "client_config.h"
 
-FileWriter::FileWriter(char *inp_file_name)
+FileWriter::FileWriter(string &inp_file_name)
 {
-    this->file_name = string(inp_file_name);
+    this->file_name = inp_file_name;
 
     // TODO use exceptions
 //    try
@@ -32,22 +33,35 @@ FileWriter::FileWriter(char *inp_file_name)
     out_file.close();
 }
 
-void FileWriter::Write(void *buffer, unsigned int size)
+void FileWriter::Write(std::vector<unsigned char> &buffer)
 {
+
     if (!out_file.is_open()) {
         out_file.open(this->file_name, ios::app | ios::binary);
     }
-    out_file.write((char *) buffer, size);
-    out_file.close();
+    for (auto i = buffer.begin(); i != buffer.end(); ++i) {
+        out_file << *i;
+    }
+
+    // out_file.close();    // Should i close the file ?
 
 }
 
 FileWriter::~FileWriter()
 {
     if (out_file.is_open()) {
-        out_file.close();
+        {
+            out_file.close();
+        }
 #if LOG >= 2
         cout << "File writer flushed" << endl;
 #endif
+    }
+}
+
+void FileWriter::Close()
+{
+    if (out_file.is_open()) {
+        out_file.close();
     }
 }

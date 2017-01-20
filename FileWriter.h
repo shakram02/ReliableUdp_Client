@@ -18,13 +18,15 @@ public:
      * Manages writing to file and writing big files
      * @param inp_file_name
      */
-    FileWriter(char *inp_file_name);
+    FileWriter(string &inp_file_name);
 
     /**
      * Writes an array of bytes to the file
      * @param buffer bytes to write
      */
-    void Write(void *buffer, unsigned int size);
+    void Write(std::vector<unsigned char> &buffer);
+
+    void Close();
 
     /**
      * Disposes the FileWrite allocated resources
