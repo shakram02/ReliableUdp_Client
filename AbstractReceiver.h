@@ -12,17 +12,18 @@
 
 class AbstractReceiver
 {
+    /**
+     // TODO Refactor the FileWriter into its own layer of the application
+     */
 protected:
     unique_ptr<RawUdpSocket> file_transfer_socket;
-    unique_ptr<FileWriter> writer;
+
 
     std::atomic<bool> is_receiving;
     int last_acked_seq_num = -1;
-    AddressInfo endpoint;
-
-
-    AbstractReceiver(string file_name)
-    { this->writer = unique_ptr<FileWriter>(new FileWriter(file_name)); }
+    AddressInfo server;
+    int last_acked_pkt_id = -1;
+    int lost_winds = 0;
 
 public:
 
@@ -32,6 +33,11 @@ public:
     virtual void StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressInfo endpoint)=0;
 
     virtual void StopReceiving()=0;
+
+    // <packet list queue> ReceiveWindow();
+    // AckPacket();
+
+    //FileTransferState GetCurrentState();
 };
 
 

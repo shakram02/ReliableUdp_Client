@@ -50,7 +50,9 @@ int FileTransfer::GetPacketCount()
     string file_header_packet;
     if (this->request_socket->ReceiveStringPacket(file_header_packet) != ID_FILE_SZ_SRV) {
         // TODO bad file count packet
-        throw std::runtime_error("Bad protocol message ");
+        string err("Bad protocol message,expected: ");
+        err.append(to_string(ID_FILE_SZ_SRV));
+        throw std::runtime_error(err);
     }
 
     int pos = (int) file_header_packet.find(FILE_SZ_SRV);

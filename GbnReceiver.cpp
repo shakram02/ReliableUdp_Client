@@ -7,11 +7,12 @@
 #include <thread>
 #include "GbnReceiver.h"
 
-GbnReceiver::GbnReceiver(unsigned int window_size,
-        string file_name) :
-        packets(window_size), AbstractReceiver(file_name)
+// TODO the file writer is placed here just temporarily
+GbnReceiver::GbnReceiver(unsigned int window_size, unique_ptr<FileWriter> &writer) :
+        packets(window_size)
 {
     this->window_size = window_size;
+    this->writer = std::move(writer);
 }
 
 void GbnReceiver::StopReceiving()
@@ -22,7 +23,7 @@ void GbnReceiver::StopReceiving()
 void GbnReceiver::StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressInfo endpoint)
 {
     this->file_transfer_socket = std::move(rcv_socket);
-    this->endpoint = endpoint;
+    this->server = endpoint;
     this->is_receiving = true;
 
     boost::thread rcv_th(boost::bind(&GbnReceiver::Receive, boost::ref(*this)));
@@ -50,6 +51,8 @@ void GbnReceiver::StartAcking()
 
         unique_ptr<Packet> to_be_acked(temp);   // Put the packet in a container
 
+        // TODO re-ACK pkt with highest in-order seq # when an out of order packet arrives
+
         // The popped packet isn't the one I'm waiting for
         if (to_be_acked->header->seqno != (this->last_acked_seq_num + 1)) {
             cerr << "#-- | Bad SEQ [" << to_be_acked->header->seqno << "]" << endl;
@@ -59,7 +62,7 @@ void GbnReceiver::StartAcking()
         cout << "--> | ACK [" << to_be_acked->header->seqno << "]" << endl;
 
         unique_ptr<Packet> ack(new Packet(to_be_acked->header->seqno));
-        file_transfer_socket->SendPacket(this->endpoint, ack);
+        file_transfer_socket->SendPacket(this->server, ack);
         this->last_acked_seq_num++;
 
         unique_ptr<ByteVector> data = nullptr;
@@ -105,7 +108,7 @@ void GbnReceiver::Receive()
 
         } else {
             if (!this->is_receiving) return;
-
+            // TODO Use true timers !! not the socket's timer
             cerr << "-*- | Timeout" << endl;
 
             // TODO terminate of many fails

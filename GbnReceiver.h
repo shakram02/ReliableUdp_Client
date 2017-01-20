@@ -30,9 +30,10 @@ class GbnReceiver : public virtual AbstractReceiver
 
     void StartAcking();
 
+    unique_ptr<FileWriter> writer;
 public:
 
-    GbnReceiver(unsigned int window_size, string file_name);
+    GbnReceiver(unsigned int window_size, unique_ptr<FileWriter> &writer);
 
     void StartReceiving(unique_ptr<RawUdpSocket> &rcv_socket, AddressInfo endpoint) override;
 
